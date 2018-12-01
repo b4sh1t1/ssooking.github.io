@@ -415,7 +415,7 @@ deb http://mirrors.ustc.edu.cn/kali kali-rolling main non-free contrib
 </code></pre>
 <h2 id="2-更新软件列表并更新软件"><a href="#2-更新软件列表并更新软件" class="headerlink" title="2.更新软件列表并更新软件"></a>2.更新软件列表并更新软件</h2><pre class=" language-bash"><code class="language-bash"><span class="token function">apt-get</span> update <span class="token operator">&amp;</span> <span class="token function">apt-get</span> upgrade -y
 </code></pre>
-<h2 id="3-升级操作系统"><a href="#3-升级操作系统" class="headerlink" title="3.升级操作系统"></a>3.升级操作系统</h2><pre class=" language-bash"><code class="language-bash"> <span class="token function">apt-get</span> dist-upgrade -y
+<h2 id="3-升级操作系统"><a href="#3-升级操作系统" class="headerlink" title="3.升级操作系统"></a>3.升级操作系统</h2><pre class=" language-bash"><code class="language-bash"><span class="token function">apt-get</span> dist-upgrade -y
 </code></pre>
 <p> 如果软件包更新过程中临时中断，可以使用修复命令：</p>
 <pre class=" language-bash"><code class="language-bash">dpkg --configure -a
@@ -427,7 +427,7 @@ deb http://mirrors.ustc.edu.cn/kali kali-rolling main non-free contrib
 dpkg --get-selections <span class="token operator">|</span> <span class="token function">grep</span> linux
 </code></pre>
 <p>删除不用的内核文件image、头文件headers：</p>
-<pre class=" language-bash"><code class="language-bash"> <span class="token function">sudo</span> <span class="token function">apt-get</span> purge 内核文件名 头文件名 
+<pre class=" language-bash"><code class="language-bash"><span class="token function">apt-get</span> purge 内核文件名 头文件名 
 </code></pre>
 <h2 id="5-清理系统"><a href="#5-清理系统" class="headerlink" title="5.清理系统"></a>5.清理系统</h2><pre class=" language-bash"><code class="language-bash"><span class="token function">apt-get</span> clean <span class="token operator">&amp;&amp;</span> <span class="token function">apt-get</span> autoclean <span class="token operator">&amp;&amp;</span> <span class="token function">apt-get</span> autoremove -y　　
 </code></pre>
