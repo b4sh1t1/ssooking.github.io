@@ -394,7 +394,7 @@ useradd -m -G sudo,video,audio,cdrom -s /bin/bash ssooking
                 
 
                 <span class="post-date">
-                    <i class="fa fa-clock-o fa-fw"></i>2018-09-23
+                    <i class="fa fa-clock-o fa-fw"></i>2018-11-23
                 </span>
             </div>
         </div>
@@ -474,6 +474,9 @@ chsh -s /bin/zsh
 <li><code>bleachbit</code>：图形化垃圾清理工具</li>
 <li><code>remmina</code>：远程连接管理工具</li>
 <li><code>filezilla</code>：FTP客户端</li>
+<li><code>cherrytree</code>：本地知识树笔记工具</li>
+<li><code>synapse</code>：系统应用程序快速启动工具</li>
+<li><code></code></li>
 </ul>
 <p>其他值得独立安装的工具</p>
 <ul>
@@ -482,7 +485,7 @@ chsh -s /bin/zsh
 <li><strong>Wechat</strong>：<a href="https://github.com/trazyn/weweChat" target="_blank" rel="noopener">weweChat</a> 、<a href="https://github.com/geeeeeeeeek/electronic-wechat" target="_blank" rel="noopener">electronic-wechat</a></li>
 <li><a href="https://www.typora.io/" target="_blank" rel="noopener">typora</a>：markdown编辑器</li>
 <li><a href="http://www.sublimetext.com/" target="_blank" rel="noopener">sublime text 3</a>：代码编辑器</li>
-<li><a href="http://www.giuspen.com/cherrytree/" target="_blank" rel="noopener">cherrytree</a>：本地知识树笔记工具</li>
+<li><a href="https://github.com/oguzhaninan/Stacer" target="_blank" rel="noopener">stacer</a>：图形化系统优化管理工具</li>
 </ul>
 <h1 id="系统美化"><a href="#系统美化" class="headerlink" title="系统美化"></a>系统美化</h1><p>全局设置:</p>
 <ul>
@@ -623,6 +626,162 @@ NAME<span class="token operator">=</span>`echo <span class="token variable">$NM<
 <p><code>ipv6</code>网络转发：</p>
 <pre class=" language-bash"><code class="language-bash"> <span class="token keyword">echo</span> 1 <span class="token operator">></span> /proc/sys/net/ipv6/conf/all/forwarding
 </code></pre>
+<h1 id="一键安装配置脚本"><a href="#一键安装配置脚本" class="headerlink" title="一键安装配置脚本"></a>一键安装配置脚本</h1><pre class=" language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+
+<span class="token comment" spellcheck="true">#apt-get install fcitx-googlepinyin typora sublime-text </span>
+screenfetch neofetch figlet peek alsa-utils 
+zsh chromium cherrytree bleachbit remmina bless
+
+<span class="token keyword">echo</span> <span class="token string">""</span>
+<span class="token keyword">echo</span> <span class="token string">"=========================================================================="</span>
+<span class="token keyword">echo</span> <span class="token string">"=  Kali Auto Init Tool                                      ="</span>
+<span class="token keyword">echo</span> <span class="token string">"=     Powered by ssooking                               ="</span>
+<span class="token keyword">echo</span> <span class="token string">"=========================================================================="</span>
+
+<span class="token keyword">echo</span> <span class="token string">""</span>
+<span class="token keyword">echo</span> <span class="token string">"[*] 即将自动对kali进行基本配置，建议你根据需要修改脚本。安装配置过程可能需要一会儿，并且由你的网速决定...."</span>
+<span class="token function">read</span> -p <span class="token string">"[*] 请按任意键继续...."</span>
+
+
+<span class="token keyword">echo</span> <span class="token string">"[+] 添加kali源"</span>
+apt-key adv --recv ED444FF07D8D0BF6
+<span class="token keyword">echo</span> <span class="token string">"deb http://http.kali.org/kali kali-rolling main non-free contrib"</span> <span class="token operator">>></span> /etc/apt/sources.list
+<span class="token keyword">echo</span> <span class="token string">"deb http://mirrors.ustc.edu.cn/kali kali-rolling main non-free contrib"</span> <span class="token operator">>></span> /etc/apt/sources.list
+<span class="token keyword">echo</span> <span class="token string">"deb http://mirrors.aliyun.com/debian stable main contrib non-free"</span>  <span class="token operator">>></span> /etc/apt/sources.list
+<span class="token keyword">echo</span> <span class="token string">"[ok] 添加kali源成功！"</span>
+<span class="token keyword">echo</span> <span class="token string">""</span>
+
+<span class="token keyword">echo</span> <span class="token string">"[+] 添加一个普通用户"</span>
+<span class="token function">read</span> -p <span class="token string">"请输入用户名: "</span> username
+<span class="token function">useradd</span> -m -G sudo,video,audio,cdrom -s /bin/bash <span class="token variable">$username</span>
+<span class="token keyword">echo</span> <span class="token string">"请设置用户密码："</span>
+<span class="token function">passwd</span> <span class="token variable">$username</span>
+<span class="token keyword">echo</span> <span class="token string">"[ok] 添加普通用户成功！"</span>
+<span class="token keyword">echo</span> <span class="token string">""</span>
+
+<span class="token comment" spellcheck="true"># 安装内核头文件</span>
+<span class="token keyword">echo</span> <span class="token string">"[+] 安装内核头文件... "</span>
+<span class="token function">apt-get</span> -y <span class="token function">install</span> linux-headers-<span class="token variable"><span class="token variable">$(</span><span class="token function">uname</span> -r<span class="token variable">)</span></span>
+<span class="token keyword">echo</span> <span class="token string">""</span>
+<span class="token keyword">echo</span> <span class="token string">"[ok] 内核头文件安装成功！"</span>
+<span class="token keyword">echo</span> <span class="token string">""</span>
+
+<span class="token comment" spellcheck="true"># 解决kali启动时静音问题</span>
+<span class="token keyword">echo</span> <span class="token string">"[+] 安装 alsa-utils 解决kali启动时静音问题"</span>
+<span class="token function">apt-get</span> -y <span class="token function">install</span> alsa-utils
+<span class="token keyword">echo</span> <span class="token string">"[ok] 安装 alsa-utils 成功！"</span>
+<span class="token keyword">echo</span> <span class="token string">""</span>
+
+<span class="token keyword">echo</span> <span class="token string">"[+] 添加PPPoE拨号连接功能"</span>
+<span class="token function">apt-get</span> <span class="token function">install</span> pppoe pppoeconf 
+<span class="token keyword">echo</span> <span class="token string">"[ok] 安装PPPoE成功!"</span>
+<span class="token keyword">echo</span> <span class="token string">"      >> 你可以使用 nm-connection-editor 命令管理pppoe连接"</span>
+<span class="token keyword">echo</span> <span class="token string">""</span>
+
+<span class="token keyword">echo</span> <span class="token string">"[+] 添加VPN支持: PPTP IPsec/IKEv2 vpnc network-manager-ssh"</span>
+<span class="token function">apt-get</span> -y <span class="token function">install</span> network-manager-pptp network-manager-pptp-gnome network-manager-strongswan network-manager-vpnc network-manager-vpnc-gnome network-manager-ssh
+<span class="token keyword">echo</span> <span class="token string">"[ok] 成功添加vpn支持!"</span>
+<span class="token keyword">echo</span> <span class="token string">""</span>
+
+
+<span class="token comment" spellcheck="true"># Base Tool</span>
+<span class="token keyword">echo</span> <span class="token string">"[+] 安装一些必备系统工具：谷歌拼音输入法、垃圾清理工具、截图工具、快速启动工具、软件包管理工具等"</span>
+<span class="token function">apt-get</span> -y <span class="token function">install</span>  fcitx fcitx-googlepinyin flameshot bleachbit gdebi synaptic synapse catfish scrot vokoscreen chromium
+<span class="token keyword">echo</span> <span class="token string">"[ok] 成功安装系统必备软件!"</span>
+<span class="token keyword">echo</span> <span class="token string">""</span>
+
+<span class="token comment" spellcheck="true"># Server Tools</span>
+<span class="token keyword">echo</span> <span class="token string">"[+] 安装服务器连接管理工具：remmina、filezilla"</span>
+<span class="token function">apt-get</span> -y <span class="token function">install</span> remmina filezilla
+<span class="token keyword">echo</span> <span class="token string">"[ok] 安装服务器连接管理工具成功!"</span>
+<span class="token keyword">echo</span> <span class="token string">""</span>
+
+
+
+<span class="token comment" spellcheck="true"># 美化</span>
+<span class="token keyword">echo</span> <span class="token string">"[+] 设置窗口按钮到左侧"</span>
+gsettings <span class="token keyword">set</span> org.gnome.desktop.wm.preferences button-layout <span class="token string">'close,maximize,minimize:'</span>
+<span class="token keyword">echo</span> <span class="token string">"[ok] 设置窗口按钮到左侧成功！"</span>
+<span class="token keyword">echo</span> <span class="token string">""</span>
+
+<span class="token keyword">echo</span> <span class="token string">"[+] 安装中文字体"</span>
+<span class="token function">apt-get</span> -y <span class="token function">install</span> fonts-wqy-microhei fonts-wqy-zenhei
+<span class="token keyword">echo</span> <span class="token string">"[ok] 安装中文字体成功！"</span>
+<span class="token keyword">echo</span> <span class="token string">""</span>
+
+<span class="token keyword">echo</span> <span class="token string">"[+] 安装基本美化工具"</span>
+<span class="token function">apt-get</span> -y <span class="token function">install</span> zsh screenfetch neofetch figlet peek
+<span class="token comment" spellcheck="true">#apt-get -y install cairo-dock</span>
+<span class="token keyword">echo</span> <span class="token string">"[ok] 安装成功！"</span>
+<span class="token keyword">echo</span> <span class="token string">""</span>
+
+<span class="token keyword">echo</span> <span class="token string">"[+] 删除无用主题"</span>
+<span class="token function">cd</span> /usr/share/themes/ <span class="token operator">&amp;&amp;</span> <span class="token function">rm</span> -rf Albatross Blackbird Bluebird HighContrast Greybird*
+<span class="token keyword">echo</span> <span class="token string">"[ok] 删除成功！"</span>
+
+<span class="token comment" spellcheck="true"># Security Tools</span>
+<span class="token keyword">echo</span> <span class="token string">"[+] 安装图形化十六进制编辑器bless"</span>
+<span class="token function">apt-get</span> -y <span class="token function">install</span> bless
+<span class="token keyword">echo</span> <span class="token string">"[ok] 安装成功！"</span>
+<span class="token keyword">echo</span> <span class="token string">""</span>
+
+<span class="token keyword">echo</span> <span class="token string">"[+] 安装firewalld防火墙及iptables图形化管理工具gufw "</span>
+<span class="token function">apt-get</span> -y <span class="token function">install</span> gufw firewalld firewall-applet
+<span class="token comment" spellcheck="true">#systemctl enable firewalld.service</span>
+<span class="token keyword">echo</span> <span class="token string">"[ok] 安装成功！"</span>
+<span class="token keyword">echo</span> <span class="token string">""</span>
+
+
+<span class="token comment" spellcheck="true"># Install sublime text 3</span>
+<span class="token keyword">echo</span> <span class="token string">"[+] 安装sublime text 3，速度可能会比较慢"</span>
+<span class="token function">wget</span> -qO - https://download.sublimetext.com/sublimehq-pub.gpg <span class="token operator">|</span> <span class="token function">sudo</span> apt-key add -
+<span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> apt-transport-https
+<span class="token keyword">echo</span> <span class="token string">"deb https://download.sublimetext.com/ apt/stable/"</span> <span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">tee</span> /etc/apt/sources.list.d/sublime-text.list
+<span class="token function">apt-get</span> update
+<span class="token function">apt-get</span> <span class="token function">install</span> sublime-text
+
+<span class="token keyword">echo</span> <span class="token string">"[+] 解决sublime-text 中文输入问题"</span>
+<span class="token function">git</span> clone https://github.com/lyfeyaj/sublime-text-imfix.git
+<span class="token function">cd</span> sublime-text-imfix
+<span class="token function">cp</span> ./lib/libsublime-imfix.so /opt/sublime_text/ <span class="token operator">&amp;&amp;</span> <span class="token function">cp</span> ./src/subl /usr/bin/
+<span class="token keyword">echo</span> <span class="token string">"[ok] 修复成功。输入subl命令启动sublime text即可输入中文！"</span>
+<span class="token keyword">echo</span> <span class="token string">""</span>
+
+<span class="token comment" spellcheck="true"># Install typora</span>
+<span class="token keyword">echo</span> <span class="token string">"[+] 安装 typora，速度可能会比较慢"</span>
+<span class="token function">sudo</span> apt-key adv --keyserver keyserver.ubuntu.com --recv-keys BA300B7755AFCFAE
+<span class="token keyword">echo</span> <span class="token string">"deb http://typora.io linux/"</span> <span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">tee</span> /etc/apt/sources.list.d/typora.list
+<span class="token function">sudo</span> <span class="token function">apt-get</span> update -y
+<span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> typora
+<span class="token keyword">echo</span> <span class="token string">""</span>
+
+
+<span class="token keyword">echo</span> <span class="token string">"[+] 安装 node npm"</span>
+<span class="token function">wget</span> https://npm.taobao.org/mirrors/node/v8.9.3/node-v8.9.3.tar.gz
+<span class="token function">tar</span> zxvf node-v8.9.3.tar.gz <span class="token operator">&amp;&amp;</span> <span class="token function">mv</span> node-v8.9.3-linux-x64 /opt
+<span class="token function">ln</span> -s /opt/node-v8.9.3-linux-x64/bin/node /usr/local/bin/node  
+<span class="token function">ln</span> -s /opt/node-v8.9.3-linux-x64/bin/npm /usr/local/bin/npm
+<span class="token function">rm</span> ~/node-v8.9.3.tar.gz
+<span class="token keyword">echo</span> <span class="token string">""</span>
+
+<span class="token keyword">echo</span> <span class="token string">"[+] 清除垃圾 ......"</span>
+<span class="token function">apt-get</span> clean <span class="token operator">&amp;&amp;</span> <span class="token function">apt-get</span> autoclean <span class="token operator">&amp;&amp;</span>  <span class="token function">apt-get</span> autoremove -y　
+<span class="token keyword">echo</span> <span class="token string">"[+] Cleaning OK!"</span>
+
+
+
+<span class="token comment" spellcheck="true"># Install oh-my-zsh</span>
+<span class="token comment" spellcheck="true"># 普通用户就以普通权限安装</span>
+<span class="token function">apt-get</span> <span class="token function">install</span> zsh
+<span class="token keyword">echo</span> <span class="token string">"[+] Install oh-my-zsh"</span>
+sh -c <span class="token string">"<span class="token variable"><span class="token variable">$(</span>curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh<span class="token variable">)</span></span>"</span>
+<span class="token keyword">echo</span> <span class="token string">" Setting oh-my-zsh be the default terminal"</span>
+chsh -s /bin/zsh
+<span class="token keyword">echo</span> <span class="token string">""</span>
+
+neofetch
+<span class="token keyword">echo</span> <span class="token string">"[OK] 所有任务完成!"</span>
+</code></pre>
 
             </div>
             <hr>
@@ -761,7 +920,7 @@ NAME<span class="token operator">=</span>`echo <span class="token variable">$NM<
                     <span class="reprint-tip">转载请注明: </span>
                     <a href="https://ssooking.github.io" class="b-link-green">ssooking's blog</a>
                     <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
-                    <a href="/2018/09/23/kali-rolling-an-zhuang-zhi-hou-de-yi-xie-chang-yong-pei-zhi-zong-jie.md/" class="b-link-green">kali Rolling安装之后的一些常用配置总结</a>
+                    <a href="/2018/11/23/kali-rolling-an-zhuang-zhi-hou-de-yi-xie-chang-yong-pei-zhi-zong-jie/" class="b-link-green">kali Rolling安装之后的一些常用配置总结</a>
                 </p>
             </div>
         </div>
@@ -783,7 +942,7 @@ NAME<span class="token operator">=</span>`echo <span class="token variable">$NM<
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">本篇</div>
             <div class="card">
-                <a href="/2018/09/23/kali-rolling-an-zhuang-zhi-hou-de-yi-xie-chang-yong-pei-zhi-zong-jie.md/">
+                <a href="/2018/11/23/kali-rolling-an-zhuang-zhi-hou-de-yi-xie-chang-yong-pei-zhi-zong-jie/">
                     <div class="card-image">
                         
                         
@@ -799,7 +958,7 @@ useradd -m -G sudo,video,audio,cdrom -s /bin/bash ssooking
 把某个用户添加到组中: sudo usermod -a 用户名 -G 组名递归更改目录/文件所属用户组： </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-09-23
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-11-23
                             </span>
                         <span class="publish-author">
                             
