@@ -1,0 +1,993 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+    
+
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="kali Rolling安装之后的一些常用配置总结, ssooking&#39;s blog">
+    <meta name="description" content="添加普通用户
+useradd -m -G sudo,video,audio,cdrom -s /bin/bash ssooking
+
+把某个用户添加到组中: sudo usermod -a 用户名 -G 组名递归更改目录/文件所属用户组： ">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>kali Rolling安装之后的一些常用配置总结 | ssooking&#39;s blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+<link rel="stylesheet" href="/css/prism-xonokai.css" type="text/css"></head>
+
+</head>
+
+<body>
+
+<header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="container">
+            <div class="nav-wrapper">
+                <div class="brand-logo">
+                    <a href="/" class="waves-effect waves-light">
+                        
+                        <img src="/medias/logo.png" class="logo-img hide-on-small-only">
+                        
+                        <span class="logo-span">ssooking's blog</span>
+                    </a>
+                </div>
+                <a href="#" data-activates="mobile-nav" class="button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>Index</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>Tags</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>Categories</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>Archives</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>About</span>
+        </a>
+    </li>
+    
+    <li>
+        <a id="toggleSearch" class="waves-effect waves-light">
+            <i id="searchIcon" class="mdi-action-search"></i>
+        </a>
+    </li>
+
+</ul>
+
+<div class="side-nav" id="mobile-nav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">ssooking's blog</div>
+        <div class="logo-desc">
+            
+            征途漫漫，步履铿锵，无畏、无惧、无阻！
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                Index
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                Tags
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                Categories
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                Archives
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                About
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/ssooking" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+
+    <div class="social-link"><a href="https://github.com/ssooking" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <i class="fa fa-github"></i>
+</a>
+<a href="mailto:ssooking@yeah.net" class="tooltipped" target="_blank" data-tooltip="mail：ssooking@yeah.net" data-position="top" data-delay="50">
+    <i class="fa fa-envelope-open"></i>
+</a>
+
+<a href="#!" class="tooltipped" data-tooltip="wechat: licg18238296977" data-position="top" data-delay="50">
+    <i class="fa fa-wechat"></i>
+</a>
+
+<a href="#!" class="tooltipped" data-tooltip="QQ: 1652010949" data-position="top" data-delay="50">
+    <i class="fa fa-qq"></i>
+</a>
+
+<a href="https://join.skype.com/invite/PWgoTe4YvrbH" class="tooltipped" target="_blank" data-tooltip="skype：ssooking" data-position="top" data-delay="50">
+    <i class="fa fa-skype"></i>
+</a>
+
+</div>
+</div>
+
+            </div>
+        </div>
+
+        
+        <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/ssooking" class="github-corner tooltipped hide-on-med-and-down" target="_blank" data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewbox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/>
+    </svg>
+</a>
+        
+    </nav>
+</header>
+
+
+
+<div class="bg-cover post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        kali Rolling安装之后的一些常用配置总结
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1,
+    #articleContent h2,
+    #articleContent h3,
+    #articleContent h4,
+    #articleContent h5,
+    #articleContent h6 {
+        padding-top: 76px;
+        margin-top: -76px;
+    }
+
+    #articleContent h1 {
+        line-height: 3.5rem;
+    }
+
+    #articleContent h2 {
+        line-height: 3.2rem;
+    }
+
+    #articleContent h3 {
+        line-height: 2.8rem;
+    }
+
+    #articleContent h4 {
+        line-height: 2.5rem;
+    }
+
+    #articleContent h5 {
+        line-height: 2.2rem;
+    }
+
+    #articleContent h6 {
+        line-height: 1.9rem;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+</style>
+<div class="row">
+    <div class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            
+            <div class="article-tag">
+                
+                <a href="/tags/kali/" target="_blank">
+                    <span class="chip bg-color">kali</span>
+                </a>
+                
+            </div>
+            
+            <div class="post-info">
+                
+                <span class="post-cate">
+                    <i class="fa fa-bookmark fa-fw icon-category"></i>
+                    
+                    <a href="/categories/神兵利器/" class="post-category" target="_blank">
+                        神兵利器
+                    </a>
+                    
+                </span>
+                
+
+                <span class="post-date">
+                    <i class="fa fa-clock-o fa-fw"></i>2018-09-23
+                </span>
+            </div>
+        </div>
+        <hr>
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>添加普通用户</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">useradd</span> -m -G sudo,video,audio,cdrom -s /bin/bash ssooking
+</code></pre>
+<p>把某个用户添加到组中: <code>sudo usermod -a 用户名 -G 组名</code><br>递归更改目录/文件所属用户组： <code>sudo chgrp 用户名 -R MyDocuments/</code><br>递归更改目录/文件拥有者：<code>sudo chown  用户名 -R MyDocuments/</code></p>
+<h1 id="更新升级"><a href="#更新升级" class="headerlink" title="更新升级"></a>更新升级</h1><h2 id="1-添加源："><a href="#1-添加源：" class="headerlink" title="1.添加源："></a>1.添加源：</h2><p><code>vi /etc/apt/sources.list</code>，比较好用的kali源</p>
+<pre class=" language-bash"><code class="language-bash">deb http://http.kali.org/kali kali-rolling main non-free contrib
+deb http://mirrors.aliyun.com/debian stable main contrib non-free
+deb http://mirrors.ustc.edu.cn/kali kali-rolling main non-free contrib
+</code></pre>
+<p>如果是其他系统导入kali源，比如<code>ubuntu</code>，需要导入kali公钥</p>
+<pre class=" language-bash"><code class="language-bash">apt-key adv --recv ED444FF07D8D0BF6
+</code></pre>
+<h2 id="2-更新软件列表并更新软件"><a href="#2-更新软件列表并更新软件" class="headerlink" title="2.更新软件列表并更新软件"></a>2.更新软件列表并更新软件</h2><pre class=" language-bash"><code class="language-bash"><span class="token function">apt-get</span> update <span class="token operator">&amp;</span> <span class="token function">apt-get</span> upgrade -y
+</code></pre>
+<h2 id="3-升级操作系统"><a href="#3-升级操作系统" class="headerlink" title="3.升级操作系统"></a>3.升级操作系统</h2><pre class=" language-bash"><code class="language-bash"> <span class="token function">apt-get</span> dist-upgrade -y
+</code></pre>
+<p> 如果软件包更新过程中临时中断，可以使用修复命令：</p>
+<pre class=" language-bash"><code class="language-bash">dpkg --configure -a
+</code></pre>
+<h2 id="4-安装内核头文件"><a href="#4-安装内核头文件" class="headerlink" title="4.安装内核头文件"></a>4.安装内核头文件</h2><pre class=" language-bash"><code class="language-bash"><span class="token function">apt-get</span> <span class="token function">install</span> linux-headers-<span class="token variable"><span class="token variable">$(</span> <span class="token function">uname</span> -r <span class="token variable">)</span></span>
+</code></pre>
+<p>清理系统软件包和内核：</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">uname</span> –r 查看正在使用的内核
+dpkg --get-selections <span class="token operator">|</span> <span class="token function">grep</span> linux
+</code></pre>
+<p>删除不用的内核文件image、头文件headers：</p>
+<pre class=" language-bash"><code class="language-bash"> <span class="token function">sudo</span> <span class="token function">apt-get</span> purge 内核文件名 头文件名 
+</code></pre>
+<h2 id="5-清理系统"><a href="#5-清理系统" class="headerlink" title="5.清理系统"></a>5.清理系统</h2><pre class=" language-bash"><code class="language-bash"><span class="token function">apt-get</span> clean <span class="token operator">&amp;&amp;</span> <span class="token function">apt-get</span> autoclean <span class="token operator">&amp;&amp;</span> <span class="token function">apt-get</span> autoremove -y　　
+</code></pre>
+<p>详解：</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">apt-get</span> remove 软件名 　　<span class="token comment" spellcheck="true">#删除相应的软件,但保留配置文件</span>
+<span class="token function">apt-get</span> purge 软件名 　　 <span class="token comment" spellcheck="true">#同时清除软件包和软件的配置文件</span>
+<span class="token function">apt-get</span> clean 　　　　　　<span class="token comment" spellcheck="true">#删除软件包缓存（/var/cache/apt/archives）</span>
+<span class="token function">apt-get</span> autoremove 　　　<span class="token comment" spellcheck="true">#自动清理无用的依赖包</span>
+</code></pre>
+<p>清理系统残存配置:</p>
+<pre class=" language-bash"><code class="language-bash">dpkg -l <span class="token operator">|</span><span class="token function">grep</span> ^rc<span class="token operator">|</span><span class="token function">awk</span> <span class="token string">'{print <span class="token variable">$2</span>}'</span> <span class="token operator">|</span><span class="token function">sudo</span> <span class="token function">xargs</span> dpkg -P
+</code></pre>
+<h1 id="安装常用工具"><a href="#安装常用工具" class="headerlink" title="安装常用工具"></a>安装常用工具</h1><h2 id="谷歌拼音"><a href="#谷歌拼音" class="headerlink" title="谷歌拼音"></a>谷歌拼音</h2><pre class=" language-bash"><code class="language-bash"><span class="token function">apt-get</span> <span class="token function">install</span> fcitx fcitx-googlepinyin
+</code></pre>
+<p>安装完毕后重启生效，打开<code>Fcitx Configuration</code></p>
+<p>点左下角那个“+” ，–&gt; 去掉”仅显示当前语言”的勾 –&gt; 找到“googlepinyin”并添加。</p>
+<h2 id="截图工具flameshot"><a href="#截图工具flameshot" class="headerlink" title="截图工具flameshot"></a>截图工具flameshot</h2><pre class=" language-bash"><code class="language-bash"><span class="token function">apt-get</span> <span class="token function">install</span> flameshot
+flameshot config    <span class="token comment" spellcheck="true">#配置flameshot</span>
+flameshot gui        <span class="token comment" spellcheck="true">#截图</span>
+</code></pre>
+<p>去掉最后几项，这样截图界面会清爽很多。</p>
+<p><img src="https://raw.githubusercontent.com/ssooking/imgbed/master/img/kali-rolling-install/20181201135141.png" alt=""></p>
+<p>在<code>系统设置</code>—<code>Keyboard</code>设置中添加快捷键</p>
+<p><img src="https://raw.githubusercontent.com/ssooking/imgbed/master/img/kali-rolling-install/20181201135343.png" alt=""></p>
+<p>使用<code>Ctrl+Alt+A</code>快捷键截图试试</p>
+<p><img src="https://raw.githubusercontent.com/ssooking/imgbed/master/img/kali-rolling-install/20181201135803.png" alt=""></p>
+<h2 id="增加vpn支持"><a href="#增加vpn支持" class="headerlink" title="增加vpn支持"></a>增加vpn支持</h2><pre class=" language-bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> pptpd network-manager-openvpn network-manager-openvpn-gnome network-manager-pptp network-manager-pptp-gnome network-manager-strongswan network-manager-vpnc network-manager-vpnc-gnome
+</code></pre>
+<h2 id="安装oh-my-zsh"><a href="#安装oh-my-zsh" class="headerlink" title="安装oh-my-zsh"></a>安装oh-my-zsh</h2><pre class=" language-bash"><code class="language-bash"><span class="token function">apt-get</span> <span class="token function">install</span> zsh
+sh -c <span class="token string">"<span class="token variable"><span class="token variable">$(</span>curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh<span class="token variable">)</span></span>"</span>2
+chsh -s /bin/zsh
+</code></pre>
+<h2 id="使用蓝牙"><a href="#使用蓝牙" class="headerlink" title="使用蓝牙"></a>使用蓝牙</h2><pre class=" language-bash"><code class="language-bash"><span class="token function">apt-get</span> <span class="token function">install</span> pi-bluetooth bluez bluez-firmware blueman
+</code></pre>
+<p>关键一点：添加pi用户到蓝牙组</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">usermod</span> -G bluetooth -a pi
+<span class="token function">usermod</span> -G bluetooth -a 用户名
+</code></pre>
+<h2 id="一些必备工具"><a href="#一些必备工具" class="headerlink" title="一些必备工具"></a>一些必备工具</h2><p>下面介绍一些<strong><code>非常好用</code></strong>的工具，<code>apt</code>可以直接安装</p>
+<ul>
+<li><code>peek</code>：GIF录制</li>
+<li><code>catfish</code>：文件快速搜素工具，类似windows上的<code>Everything</code></li>
+<li><code>bless</code>：图形化的16进制编辑器</li>
+<li><code>bleachbit</code>：图形化垃圾清理工具</li>
+<li><code>remmina</code>：远程连接管理工具</li>
+<li><code>filezilla</code>：FTP客户端</li>
+</ul>
+<p>其他值得独立安装的工具</p>
+<ul>
+<li><a href="http://www.wps.cn/product/wpslinux/" target="_blank" rel="noopener">wps</a>：office办公</li>
+<li><a href="https://github.com/askme765cs/Wine-QQ-TIM" target="_blank" rel="noopener">QQ/TIM</a>：appimage版qq和tim</li>
+<li><strong>Wechat</strong>：<a href="https://github.com/trazyn/weweChat" target="_blank" rel="noopener">weweChat</a> 、<a href="https://github.com/geeeeeeeeek/electronic-wechat" target="_blank" rel="noopener">electronic-wechat</a></li>
+<li><a href="https://www.typora.io/" target="_blank" rel="noopener">typora</a>：markdown编辑器</li>
+<li><a href="http://www.sublimetext.com/" target="_blank" rel="noopener">sublime text 3</a>：代码编辑器</li>
+<li><a href="http://www.giuspen.com/cherrytree/" target="_blank" rel="noopener">cherrytree</a>：本地知识树笔记工具</li>
+</ul>
+<h1 id="系统美化"><a href="#系统美化" class="headerlink" title="系统美化"></a>系统美化</h1><p>全局设置:</p>
+<ul>
+<li>主题文件： /usr/share/themes/    </li>
+<li>图标文件： /usr/share/icons/            </li>
+<li>背景壁纸： /usr/share/background/ 、 /usr/share/wallpapers</li>
+<li>conky ： /etc/conky/</li>
+</ul>
+<h2 id="修改背景图片"><a href="#修改背景图片" class="headerlink" title="修改背景图片"></a>修改背景图片</h2><p>/usr/share/images/desktop-base    </p>
+<ul>
+<li>login-background.png　　　　进入系统界面的背景图</li>
+<li>kali-grub.png　　　　　　　　grub的背景图片(/usr/share/images/desktop-base)</li>
+<li>kali-wallpaper_1024×786　　之类的是桌面背景图</li>
+</ul>
+<p>修改登录界面图片</p>
+<ul>
+<li>/usr/share/gnome-shell/theme/KaliLogin.png  </li>
+<li>/usr/share/images/desktop-base  desktop-grub.png  kali-grub.png</li>
+</ul>
+<h2 id="修改主题"><a href="#修改主题" class="headerlink" title="修改主题"></a>修改主题</h2><p>主题文件位置：</p>
+<p>gnome主题网站： <a href="https://www.gnome-look.org/" target="_blank" rel="noopener">gnome-look.org</a> </p>
+<p>1.选择GTK主题</p>
+<p>去 <a href="https://www.gnome-look.org/browse/cat/135/" target="_blank" rel="noopener">gnome-look.org</a> 网站下载喜欢的<code>GTK</code>主题。这里我用的是<a href="https://www.opendesktop.org/p/1263666/" target="_blank" rel="noopener">McOS-MJV-Gnome-3.30</a> ，把下载的theme包解压到<code>/usr/share/themes</code>下。</p>
+<p>2.选择图标icons主题</p>
+<p>这里我使用的是：<a href="https://www.opendesktop.org/p/1256209/" target="_blank" rel="noopener">Korla icon theme</a> ，下载完后，把图标主题包解压到<code>/usr/share/icons</code>下。</p>
+<p>3.选择鼠标主题</p>
+<p><a href="https://www.gnome-look.org/browse/cat/107/" target="_blank" rel="noopener">Cursors主题下载</a> ，这里我用的是<a href="https://www.opendesktop.org/p/999353/" target="_blank" rel="noopener">Breeze Black</a> ,下载完后，把鼠标主题解压到<code>/usr/share/icons</code>下。</p>
+<p>打开<code>gnome-tweaks</code>，在外观处选择对应主题</p>
+<p><img src="https://raw.githubusercontent.com/ssooking/imgbed/master/img/kali-rolling-install/20181201142929.png" alt=""></p>
+<p>默认的窗口按钮在右边，gnome环境下，将其换到左边的命令为：</p>
+<pre class=" language-bash"><code class="language-bash">gsettings <span class="token keyword">set</span> org.gnome.desktop.wm.preferences button-layout <span class="token string">'close,maximize,minimize:'</span>
+</code></pre>
+<p>整体效果</p>
+<p><img src="https://raw.githubusercontent.com/ssooking/imgbed/master/img/kali-rolling-install/kali.png" alt=""></p>
+<p> 除了基本美化，还可以使用<code>conky</code>进行美化。</p>
+<h2 id="添加gnome插件"><a href="#添加gnome插件" class="headerlink" title="添加gnome插件"></a>添加gnome插件</h2><p>gnome提供了很多插件，用于丰富gnome功能，我们可以根据需要添加 <a href="https://extensions.gnome.org/" target="_blank" rel="noopener">gnome extensions</a>来拓展功能。但是插件装的太多，会比较卡。插件存放路径：<code>~/.local/share/gnome-shell/extensions/</code>。</p>
+<p>每次装完插件，我们可以按下<code>Alt+F2</code>— 输入<code>r</code>—回车 ，以此重启刷新gnome。</p>
+<p>下面是一些插件举例：</p>
+<ul>
+<li><code>AlternateTab</code>     Alt+Tab切换应用 </li>
+<li><code>Coverflow Alt-Tab</code>  功能与AlternateTab相同，但提供了一个更酷炫的界面 </li>
+<li><code>Applications Menu</code>  顶栏显示应用菜单，我比较少用，但刚从Windows切换过来的或许需要 </li>
+<li><code>Auto Move Windows</code>   当应用创建窗口时自动移动到某个特定的工作空间 </li>
+<li><code>Caffeine</code>    取消自动锁屏 </li>
+<li><code>Clipboard Indicator</code>  剪贴板管理 </li>
+<li><code>Dash to Dock</code>不解释 </li>
+<li><code>EasyScreenCast</code>屏幕录像，做演示时比较方便 （kali默认安装）</li>
+<li><code>Screenshot Tool</code>屏幕截图工具，也具有一些简单的图片编辑功能 </li>
+<li><code>Sound Input &amp; Output Device Chooser</code> 更为方便地调节音量 </li>
+<li><code>Gnomodoro</code>简易番茄钟 </li>
+<li><code>Time ++</code> 番茄钟，Todo-list，计时器等 </li>
+<li><code>Hide Top Bar</code> 全屏时自动隐藏顶栏</li>
+<li><code>Lock Keys</code> 顶栏显示Numlock和Capslock的状态 </li>
+<li><code>NetSpeed</code> 顶栏显示网速，喜欢简洁的Simple net speed也非常不错 </li>
+<li><code>OpenWeather</code>顶栏显示天气情况，gnome自带的weather不支持顶栏显示，用起来不方便 </li>
+<li><code>Places Status Indicator</code>为一些常用目录提供快速入口 </li>
+<li><code>system-monitor</code>  顶栏显示CPU、内存、网速、温度、电池电量等信息，安装前需要解决依赖</li>
+</ul>
+<h1 id="优化设置"><a href="#优化设置" class="headerlink" title="优化设置"></a>优化设置</h1><h2 id="自定义快捷键延时截图"><a href="#自定义快捷键延时截图" class="headerlink" title="自定义快捷键延时截图"></a>自定义快捷键延时截图</h2><pre class=" language-bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> scrot
+scrot -d 5 //延时5秒截图
+</code></pre>
+<p>在<code>系统设置</code>—<code>Keyboard</code>设置中添加快捷键</p>
+<pre class=" language-bash"><code class="language-bash">/bin/sh -c <span class="token string">"scrot -d 5"</span> 
+</code></pre>
+<p><img src="https://raw.githubusercontent.com/ssooking/imgbed/master/img/kali-rolling-install/20181201152522.png" alt=""></p>
+<p>按下快捷键，延时5秒截图完毕后会自动保存到家目录下。</p>
+<h2 id="隐藏终端的用户信息"><a href="#隐藏终端的用户信息" class="headerlink" title="隐藏终端的用户信息"></a>隐藏终端的用户信息</h2><p>  修改家目录的<code>.bashrc</code>文件，添加一行</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">export</span> PS1<span class="token operator">=</span><span class="token string">'\[\033[01;31m\] >>> \[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '</span>
+</code></pre>
+<p>效果如下：</p>
+<p><img src="https://raw.githubusercontent.com/ssooking/imgbed/master/img/20181201131413.png" alt=""></p>
+<h2 id="右键文件编码转换"><a href="#右键文件编码转换" class="headerlink" title="右键文件编码转换"></a>右键文件编码转换</h2><p>kali下常常遇到文本文件因为编码问题而显示乱码的情况</p>
+<p><img src="https://raw.githubusercontent.com/ssooking/imgbed/master/img/kali-rolling-install/20181201151556.png" alt=""></p>
+<p>在<code>~/.local/share/nautilus/scripts</code>目录下新建一个bash文件<code>ConvertZh-CN</code>，内容为：</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+<span class="token function">iconv</span> -f gb18030 -t utf-8 <span class="token variable">$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS</span> -o <span class="token variable">$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS</span>
+</code></pre>
+<p>下次遇到乱码的文件只需要右键选中，在<code>scripts</code>中选择对应处理脚本即可方便地进行转换了，例如：</p>
+<p><img src="https://raw.githubusercontent.com/ssooking/imgbed/master/img/kali-rolling-install/20181201151744.png" alt=""></p>
+<h2 id="右键功能拓展"><a href="#右键功能拓展" class="headerlink" title="右键功能拓展"></a>右键功能拓展</h2><p>主要是<code>~/.local/share/nautilus/scripts</code>目录下增加<code>nautilus</code>脚本文件。可以自己编写，也可以从网上下载，这里有很多：<a href="https://www.opendesktop.org/browse/cat/126/。" target="_blank" rel="noopener">https://www.opendesktop.org/browse/cat/126/。</a></p>
+<h1 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h1><h2 id="网络设备未托管"><a href="#网络设备未托管" class="headerlink" title="网络设备未托管"></a>网络设备未托管</h2><p>此问题表现症状可能是无法正常显示网络连接，比如无线：</p>
+<p><code>vi /etc/NetworkManager/NetworkManager.conf</code>把 <code>managed=false</code> 的 <code>false</code> 改为<code>true</code></p>
+<h1 id="右键创建文件功能"><a href="#右键创建文件功能" class="headerlink" title="右键创建文件功能"></a>右键创建文件功能</h1><p>kali右键没有创建文件的功能，解决方法是，在家目录的Templates目录下放入你想要创建的模板类型即可</p>
+<h2 id="修复apt-add-repository命令"><a href="#修复apt-add-repository命令" class="headerlink" title="修复apt-add-repository命令"></a>修复apt-add-repository命令</h2><pre class=" language-bash"><code class="language-bash"><span class="token function">mv</span> /usr/bin/add-apt-repository /usr/bin/add-apt-repository-bak
+<span class="token function">touch</span> /usr/sbin/add-apt-repository <span class="token operator">&amp;&amp;</span> <span class="token function">chmod</span> +x /usr/sbin/add-apt-repository <span class="token operator">&amp;&amp;</span> <span class="token function">vi</span> /usr/sbin/add-apt-repository
+</code></pre>
+<p>添加一下内容：</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+<span class="token keyword">if</span> <span class="token punctuation">[</span> $<span class="token comment" spellcheck="true"># -eq 1 ]</span>
+NM<span class="token operator">=</span><span class="token variable"><span class="token variable">`</span><span class="token function">uname</span> -a <span class="token operator">&amp;&amp;</span> <span class="token function">date</span><span class="token variable">`</span></span>
+NAME<span class="token operator">=</span>`echo <span class="token variable">$NM</span> <span class="token operator">|</span> md5sum <span class="token operator">|</span> <span class="token function">cut</span> -f1 -d<span class="token string">" "</span><span class="token variable"><span class="token variable">`</span>
+<span class="token keyword">then</span>
+  ppa_name<span class="token operator">=</span><span class="token variable">`</span></span><span class="token keyword">echo</span> <span class="token string">"<span class="token variable">$1</span>"</span> <span class="token operator">|</span> <span class="token function">cut</span> -d<span class="token string">":"</span> -f2 -s`
+  <span class="token keyword">if</span> <span class="token punctuation">[</span> -z <span class="token string">"<span class="token variable">$ppa_name</span>"</span> <span class="token punctuation">]</span>
+  <span class="token keyword">then</span>
+    <span class="token keyword">echo</span> <span class="token string">"PPA name not found"</span>
+    <span class="token keyword">echo</span> <span class="token string">"Utility to add PPA repositories in your debian machine"</span>
+    <span class="token keyword">echo</span> <span class="token string">"<span class="token variable">$0</span> ppa:user/ppa-name"</span>
+  <span class="token keyword">else</span>
+    <span class="token keyword">echo</span> <span class="token string">"<span class="token variable">$ppa_name</span>"</span>
+    <span class="token keyword">echo</span> <span class="token string">"deb http://ppa.launchpad.net/<span class="token variable">$ppa_name</span>/ubuntu xenial main"</span> <span class="token operator">>></span> /etc/apt/sources.list
+    <span class="token function">apt-get</span> update <span class="token operator">>></span> /dev/null 2<span class="token operator">></span> /tmp/<span class="token variable">${NAME}</span>_apt_add_key.txt
+    key<span class="token operator">=</span>`cat /tmp/<span class="token variable">${NAME}</span>_apt_add_key.txt <span class="token operator">|</span> <span class="token function">cut</span> -d<span class="token string">":"</span> -f6 <span class="token operator">|</span> <span class="token function">cut</span> -d<span class="token string">" "</span> -f3`
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys <span class="token variable">$key</span>
+    <span class="token function">rm</span> -rf /tmp/<span class="token variable">${NAME}</span>_apt_add_key.txt
+  <span class="token keyword">fi</span>
+<span class="token keyword">else</span>
+  <span class="token keyword">echo</span> <span class="token string">"Utility to add PPA repositories in your debian machine"</span>
+  <span class="token keyword">echo</span> <span class="token string">"<span class="token variable">$0</span> ppa:user/ppa-name"</span>
+<span class="token keyword">fi</span>
+
+</code></pre>
+<h2 id="修复wireshark启动报错"><a href="#修复wireshark启动报错" class="headerlink" title="修复wireshark启动报错"></a>修复wireshark启动报错</h2><p>报错如下：</p>
+<pre class=" language-bash"><code class="language-bash">Lua: Error during loading:
+ /usr/share/wireshark/init.lua:32: dofile has been disabled due to running Wireshark as superuser. See https://wiki.wireshark.org/CaptureSetup/CapturePrivileges <span class="token keyword">for</span> <span class="token function">help</span> <span class="token keyword">in</span> running Wireshark as an unprivileged user
+</code></pre>
+<p>修改<code>/usr/share/wireshark/init.lua</code>文件，倒数第二行找到：</p>
+<pre class=" language-bash"><code class="language-bash">dofile<span class="token punctuation">(</span>DATA_DIR<span class="token punctuation">..</span><span class="token string">"console.lua"</span><span class="token punctuation">)</span>
+
+<span class="token comment" spellcheck="true"># 改为</span>
+--dofile<span class="token punctuation">(</span>DATA_DIR<span class="token punctuation">..</span><span class="token string">"console.lua"</span><span class="token punctuation">)</span>
+</code></pre>
+<h2 id="解决启动时默认静音问题"><a href="#解决启动时默认静音问题" class="headerlink" title="解决启动时默认静音问题"></a>解决启动时默认静音问题</h2><pre class=" language-bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> alsa-utils -y
+</code></pre>
+<h2 id="解决root权限下无法运行chrome问题"><a href="#解决root权限下无法运行chrome问题" class="headerlink" title="解决root权限下无法运行chrome问题"></a>解决root权限下无法运行chrome问题</h2><p>修改<code>/usr/bin/google-chrome-stable</code>文件：</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">exec</span> -a <span class="token string">"<span class="token variable">$0</span>"</span> <span class="token string">"<span class="token variable">$HERE</span>/chrome"</span> <span class="token string">"<span class="token variable">$@</span>"</span> --no-sandbox --user-data-dir
+</code></pre>
+<p>chromium也而是类似<code>/usr/share/applications/chromium.desktop</code></p>
+<pre class=" language-bash"><code class="language-bash">Exec<span class="token operator">=</span>/usr/bin/chromium %U --no-sandbox --user-data-dir
+</code></pre>
+<p>在系统语言为英文的情况下，设置启动chrome时显示为中文<br>修改<code>/usr/bin/google-chrome-stable</code>文件，添加一行即可</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">export</span> LANGUAGE<span class="token operator">=</span>zh-cn /opt/google/chrome/google-chrome %U
+</code></pre>
+<h2 id="vmware安装虚拟机增强工具"><a href="#vmware安装虚拟机增强工具" class="headerlink" title="vmware安装虚拟机增强工具"></a>vmware安装虚拟机增强工具</h2><pre class=" language-bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> open-vm-tools-desktop
+</code></pre>
+<h2 id="永久开启ip转发功能"><a href="#永久开启ip转发功能" class="headerlink" title="永久开启ip转发功能"></a>永久开启ip转发功能</h2><pre class=" language-bash"><code class="language-bash"><span class="token keyword">echo</span> <span class="token string">"net.ipv4.ip_forward=1"</span> <span class="token operator">>></span> /etc/sysctl.conf   
+</code></pre>
+<p><code>ipv6</code>网络转发：</p>
+<pre class=" language-bash"><code class="language-bash"> <span class="token keyword">echo</span> 1 <span class="token operator">></span> /proc/sys/net/ipv6/conf/all/forwarding
+</code></pre>
+
+            </div>
+            <hr>
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff;
+        background-color: #22AB38;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff;
+        background-color: #019FE8;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a class="reward-link btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">您的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs">
+                        <li class="tab wechat-tab waves-effect waves-light"><a class="active" href="#wechat">微信</a></li>
+                        <li class="tab alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                    </ul>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.jpg" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('#reward .reward-link').on('click', function () {
+            $('#rewardModal').openModal();
+        });
+
+        $('#rewardModal .close').on('click', function () {
+            $('#rewardModal').closeModal();
+        });
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            <div class="reprint">
+                <p>
+                    <span class="reprint-tip">转载请注明: </span>
+                    <a href="https://ssooking.github.io" class="b-link-green">ssooking's blog</a>
+                    <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
+                    <a href="/2018/09/23/kali-rolling-an-zhuang-zhi-hou-de-yi-xie-chang-yong-pei-zhi-zong-jie.md/" class="b-link-green">kali Rolling安装之后的一些常用配置总结</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">本篇</div>
+            <div class="card">
+                <a href="/2018/09/23/kali-rolling-an-zhuang-zhi-hou-de-yi-xie-chang-yong-pei-zhi-zong-jie.md/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="kali Rolling安装之后的一些常用配置总结">
+                        
+                        <span class="card-title">kali Rolling安装之后的一些常用配置总结</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary">添加普通用户
+useradd -m -G sudo,video,audio,cdrom -s /bin/bash ssooking
+
+把某个用户添加到组中: sudo usermod -a 用户名 -G 组名递归更改目录/文件所属用户组： </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-09-23
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/神兵利器/" class="post-category" target="_blank">
+                                    神兵利器
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/kali/" target="_blank">
+                        <span class="chip bg-color">kali</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">下一篇</div>
+            <div class="card">
+                <a href="/2017/12/23/gou-jian-ji-yu-suricata-splunk-de-ids-ru-qin-jian-ce-xi-tong/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="构建基于Suricata+Splunk的IDS入侵检测系统">
+                        
+                        <span class="card-title">构建基于Suricata+Splunk的IDS入侵检测系统</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary">一.什么是IDS和IPSIDS（Intrusion Detection Systems）：
+入侵检测系统，是一种网络安全设备或应用软件，可以依照一定的安全策略，对网络、系统的运行状况进行监视，尽可能发现各种攻击企图、攻击行为或者攻击结果，并</div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2017-12-23
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/安全建设/" class="post-category" target="_blank">
+                                    安全建设
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/IDS/" target="_blank">
+                        <span class="chip bg-color">IDS</span>
+                    </a>
+                    
+                    <a href="/tags/Snort/" target="_blank">
+                        <span class="chip bg-color">Snort</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+    </div>
+    <div class="col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title">目录</div>
+            <div id="toc-content">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingSelector: 'h1, h2, h3'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+    });
+</script>
+    
+
+</main>
+
+<footer class="page-footer bg-color">
+    <div class="container row center-align">
+       <div class="col s12 m8 l8 copy-right">
+            copyright &copy; <a href="https://ssooking.github.io/" target="_blank">ssooking</a>. 关注安全动态，分享优质文章！
+        </div>
+
+        <div class="col s12 m4 l4 social-link"><a href="https://github.com/ssooking" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+    <i class="fa fa-github"></i>
+</a>
+<a href="mailto:ssooking@yeah.net" class="tooltipped" target="_blank" data-tooltip="mail：ssooking@yeah.net" data-position="top" data-delay="50">
+    <i class="fa fa-envelope-open"></i>
+</a>
+
+<a href="#!" class="tooltipped" data-tooltip="wechat: licg18238296977" data-position="top" data-delay="50">
+    <i class="fa fa-wechat"></i>
+</a>
+
+<a href="#!" class="tooltipped" data-tooltip="QQ: 1652010949" data-position="top" data-delay="50">
+    <i class="fa fa-qq"></i>
+</a>
+
+<a href="https://join.skype.com/invite/PWgoTe4YvrbH" class="tooltipped" target="_blank" data-tooltip="skype：ssooking" data-position="top" data-delay="50">
+    <i class="fa fa-skype"></i>
+</a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+<!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title">搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字" class="search-input" autofocus>
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+</script>
+<!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+<script src="/libs/materialize/js/materialize.min.js"></script>
+<script src="/libs/masonry/masonry.pkgd.min.js"></script>
+<script src="/libs/aos/aos.js"></script>
+<script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+<script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+<script src="/js/matery.js"></script>
+</body>
+</html>
