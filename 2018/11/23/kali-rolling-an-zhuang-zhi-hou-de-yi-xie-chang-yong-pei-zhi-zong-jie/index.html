@@ -495,11 +495,9 @@ chsh -s /bin/zsh
 <li>conky ： /etc/conky/</li>
 </ul>
 <h2 id="修改背景图片"><a href="#修改背景图片" class="headerlink" title="修改背景图片"></a>修改背景图片</h2><p>/usr/share/images/desktop-base    </p>
-<ul>
-<li>login-background.png　　　　进入系统界面的背景图</li>
-<li>kali-grub.png　　　　　　　　grub的背景图片(/usr/share/images/desktop-base)</li>
-<li>kali-wallpaper_1024×786　　之类的是桌面背景图</li>
-</ul>
+<blockquote>
+<p>login-background.png　　进入系统界面的背景图<br>kali-grub.png　　　　　 grub的背景图片(/usr/share/images/desktop-base)<br>kali-wallpaper_1024×786 之类的是桌面背景图</p>
+</blockquote>
 <p>修改登录界面图片</p>
 <ul>
 <li>/usr/share/gnome-shell/theme/KaliLogin.png  </li>
@@ -507,12 +505,9 @@ chsh -s /bin/zsh
 </ul>
 <h2 id="修改主题"><a href="#修改主题" class="headerlink" title="修改主题"></a>修改主题</h2><p>主题文件位置：</p>
 <p>gnome主题网站： <a href="https://www.gnome-look.org/" target="_blank" rel="noopener">gnome-look.org</a> </p>
-<p>1.选择GTK主题</p>
-<p>去 <a href="https://www.gnome-look.org/browse/cat/135/" target="_blank" rel="noopener">gnome-look.org</a> 网站下载喜欢的<code>GTK</code>主题。这里我用的是<a href="https://www.opendesktop.org/p/1263666/" target="_blank" rel="noopener">McOS-MJV-Gnome-3.30</a> ，把下载的theme包解压到<code>/usr/share/themes</code>下。</p>
-<p>2.选择图标icons主题</p>
-<p>这里我使用的是：<a href="https://www.opendesktop.org/p/1256209/" target="_blank" rel="noopener">Korla icon theme</a> ，下载完后，把图标主题包解压到<code>/usr/share/icons</code>下。</p>
-<p>3.选择鼠标主题</p>
-<p><a href="https://www.gnome-look.org/browse/cat/107/" target="_blank" rel="noopener">Cursors主题下载</a> ，这里我用的是<a href="https://www.opendesktop.org/p/999353/" target="_blank" rel="noopener">Breeze Black</a> ,下载完后，把鼠标主题解压到<code>/usr/share/icons</code>下。</p>
+<h2 id="1-选择GTK主题"><a href="#1-选择GTK主题" class="headerlink" title="1.选择GTK主题"></a>1.选择GTK主题</h2><p>去 <a href="https://www.gnome-look.org/browse/cat/135/" target="_blank" rel="noopener">gnome-look.org</a> 网站下载喜欢的<code>GTK</code>主题。这里我用的是<a href="https://www.opendesktop.org/p/1263666/" target="_blank" rel="noopener">McOS-MJV-Gnome-3.30</a> ，把下载的theme包解压到<code>/usr/share/themes</code>下。</p>
+<h2 id="2-选择图标icons主题"><a href="#2-选择图标icons主题" class="headerlink" title="2.选择图标icons主题"></a>2.选择图标icons主题</h2><p>这里我使用的是：<a href="https://www.opendesktop.org/p/1256209/" target="_blank" rel="noopener">Korla icon theme</a> ，下载完后，把图标主题包解压到<code>/usr/share/icons</code>下。</p>
+<h2 id="3-选择鼠标主题"><a href="#3-选择鼠标主题" class="headerlink" title="3.选择鼠标主题"></a>3.选择鼠标主题</h2><p><a href="https://www.gnome-look.org/browse/cat/107/" target="_blank" rel="noopener">Cursors主题下载</a> ，这里我用的是<a href="https://www.opendesktop.org/p/999353/" target="_blank" rel="noopener">Breeze Black</a> ,下载完后，把鼠标主题解压到<code>/usr/share/icons</code>下。</p>
 <p>打开<code>gnome-tweaks</code>，在外观处选择对应主题</p>
 <p><img src="https://raw.githubusercontent.com/ssooking/imgbed/master/img/kali-rolling-install/20181201142929.png" alt=""></p>
 <p>默认的窗口按钮在右边，gnome环境下，将其换到左边的命令为：</p>
@@ -567,12 +562,12 @@ scrot -d 5 //延时5秒截图
 <p><img src="https://raw.githubusercontent.com/ssooking/imgbed/master/img/kali-rolling-install/20181201151744.png" alt=""></p>
 <h2 id="右键功能拓展"><a href="#右键功能拓展" class="headerlink" title="右键功能拓展"></a>右键功能拓展</h2><p>主要是<code>~/.local/share/nautilus/scripts</code>目录下增加<code>nautilus</code>脚本文件。可以自己编写，也可以从网上下载，这里有很多：<a href="https://www.opendesktop.org/browse/cat/126/。" target="_blank" rel="noopener">https://www.opendesktop.org/browse/cat/126/。</a></p>
 <h1 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h1><h2 id="网络设备未托管"><a href="#网络设备未托管" class="headerlink" title="网络设备未托管"></a>网络设备未托管</h2><p>此问题表现症状可能是无法正常显示网络连接，比如无线：</p>
-<p><code>vi /etc/NetworkManager/NetworkManager.conf</code>把 <code>managed=false</code> 的 <code>false</code> 改为<code>true</code></p>
-<h1 id="右键创建文件功能"><a href="#右键创建文件功能" class="headerlink" title="右键创建文件功能"></a>右键创建文件功能</h1><p>kali右键没有创建文件的功能，解决方法是，在家目录的Templates目录下放入你想要创建的模板类型即可</p>
+<p>修改<code>/etc/NetworkManager/NetworkManager.conf</code>文件，把 <code>managed=false</code> 的 <code>false</code> 改为<code>true</code></p>
+<h2 id="右键创建文件功能"><a href="#右键创建文件功能" class="headerlink" title="右键创建文件功能"></a>右键创建文件功能</h2><p>kali右键没有创建文件的功能，解决方法是，在家目录的Templates目录下放入你想要创建的模板类型即可</p>
 <h2 id="修复apt-add-repository命令"><a href="#修复apt-add-repository命令" class="headerlink" title="修复apt-add-repository命令"></a>修复apt-add-repository命令</h2><pre class=" language-bash"><code class="language-bash"><span class="token function">mv</span> /usr/bin/add-apt-repository /usr/bin/add-apt-repository-bak
 <span class="token function">touch</span> /usr/sbin/add-apt-repository <span class="token operator">&amp;&amp;</span> <span class="token function">chmod</span> +x /usr/sbin/add-apt-repository <span class="token operator">&amp;&amp;</span> <span class="token function">vi</span> /usr/sbin/add-apt-repository
 </code></pre>
-<p>添加一下内容：</p>
+<p>添加以下内容：</p>
 <pre class=" language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
 <span class="token keyword">if</span> <span class="token punctuation">[</span> $<span class="token comment" spellcheck="true"># -eq 1 ]</span>
 NM<span class="token operator">=</span><span class="token variable"><span class="token variable">`</span><span class="token function">uname</span> -a <span class="token operator">&amp;&amp;</span> <span class="token function">date</span><span class="token variable">`</span></span>
@@ -610,10 +605,10 @@ NAME<span class="token operator">=</span>`echo <span class="token variable">$NM<
 </code></pre>
 <h2 id="解决启动时默认静音问题"><a href="#解决启动时默认静音问题" class="headerlink" title="解决启动时默认静音问题"></a>解决启动时默认静音问题</h2><pre class=" language-bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> alsa-utils -y
 </code></pre>
-<h2 id="解决root权限下无法运行chrome问题"><a href="#解决root权限下无法运行chrome问题" class="headerlink" title="解决root权限下无法运行chrome问题"></a>解决root权限下无法运行chrome问题</h2><p>修改<code>/usr/bin/google-chrome-stable</code>文件：</p>
+<h2 id="解决root权限下无法运行chrome"><a href="#解决root权限下无法运行chrome" class="headerlink" title="解决root权限下无法运行chrome"></a>解决root权限下无法运行chrome</h2><p>修改<code>/usr/bin/google-chrome-stable</code>文件：</p>
 <pre class=" language-bash"><code class="language-bash"><span class="token function">exec</span> -a <span class="token string">"<span class="token variable">$0</span>"</span> <span class="token string">"<span class="token variable">$HERE</span>/chrome"</span> <span class="token string">"<span class="token variable">$@</span>"</span> --no-sandbox --user-data-dir
 </code></pre>
-<p>chromium也而是类似<code>/usr/share/applications/chromium.desktop</code></p>
+<p>chromium也而是类似，修改<code>/usr/share/applications/chromium.desktop</code>文件：</p>
 <pre class=" language-bash"><code class="language-bash">Exec<span class="token operator">=</span>/usr/bin/chromium %U --no-sandbox --user-data-dir
 </code></pre>
 <p>在系统语言为英文的情况下，设置启动chrome时显示为中文<br>修改<code>/usr/bin/google-chrome-stable</code>文件，添加一行即可</p>
