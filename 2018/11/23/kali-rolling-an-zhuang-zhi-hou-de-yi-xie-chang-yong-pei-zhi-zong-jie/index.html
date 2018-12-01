@@ -494,20 +494,20 @@ chsh -s /bin/zsh
 <li>背景壁纸： /usr/share/background/ 、 /usr/share/wallpapers</li>
 <li>conky ： /etc/conky/</li>
 </ul>
-<h2 id="修改背景图片"><a href="#修改背景图片" class="headerlink" title="修改背景图片"></a>修改背景图片</h2><p>/usr/share/images/desktop-base    </p>
-<blockquote>
-<p>login-background.png　　进入系统界面的背景图<br>kali-grub.png　　　　　 grub的背景图片(/usr/share/images/desktop-base)<br>kali-wallpaper_1024×786 之类的是桌面背景图</p>
-</blockquote>
+<h2 id="修改背景图片"><a href="#修改背景图片" class="headerlink" title="修改背景图片"></a>修改背景图片</h2><p><code>/usr/share/images/desktop-base</code></p>
+<pre class=" language-bash"><code class="language-bash">login-background.png　<span class="token comment" spellcheck="true">#进入系统界面的背景图</span>
+kali-grub.png　　　　　<span class="token comment" spellcheck="true">#grub的背景图片(/usr/share/images/desktop-base)</span>
+kali-wallpaper_1024×786 <span class="token comment" spellcheck="true">#类似的都是桌面背景图</span>
+</code></pre>
 <p>修改登录界面图片</p>
-<ul>
-<li>/usr/share/gnome-shell/theme/KaliLogin.png  </li>
-<li>/usr/share/images/desktop-base  desktop-grub.png  kali-grub.png</li>
-</ul>
+<pre class=" language-bash"><code class="language-bash">/usr/share/gnome-shell/theme/KaliLogin.png  
+/usr/share/images/desktop-base  desktop-grub.png  kali-grub.png
+</code></pre>
 <h2 id="修改主题"><a href="#修改主题" class="headerlink" title="修改主题"></a>修改主题</h2><p>主题文件位置：</p>
 <p>gnome主题网站： <a href="https://www.gnome-look.org/" target="_blank" rel="noopener">gnome-look.org</a> </p>
-<h2 id="1-选择GTK主题"><a href="#1-选择GTK主题" class="headerlink" title="1.选择GTK主题"></a>1.选择GTK主题</h2><p>去 <a href="https://www.gnome-look.org/browse/cat/135/" target="_blank" rel="noopener">gnome-look.org</a> 网站下载喜欢的<code>GTK</code>主题。这里我用的是<a href="https://www.opendesktop.org/p/1263666/" target="_blank" rel="noopener">McOS-MJV-Gnome-3.30</a> ，把下载的theme包解压到<code>/usr/share/themes</code>下。</p>
-<h2 id="2-选择图标icons主题"><a href="#2-选择图标icons主题" class="headerlink" title="2.选择图标icons主题"></a>2.选择图标icons主题</h2><p>这里我使用的是：<a href="https://www.opendesktop.org/p/1256209/" target="_blank" rel="noopener">Korla icon theme</a> ，下载完后，把图标主题包解压到<code>/usr/share/icons</code>下。</p>
-<h2 id="3-选择鼠标主题"><a href="#3-选择鼠标主题" class="headerlink" title="3.选择鼠标主题"></a>3.选择鼠标主题</h2><p><a href="https://www.gnome-look.org/browse/cat/107/" target="_blank" rel="noopener">Cursors主题下载</a> ，这里我用的是<a href="https://www.opendesktop.org/p/999353/" target="_blank" rel="noopener">Breeze Black</a> ,下载完后，把鼠标主题解压到<code>/usr/share/icons</code>下。</p>
+<h3 id="1-选择GTK主题"><a href="#1-选择GTK主题" class="headerlink" title="1.选择GTK主题"></a>1.选择GTK主题</h3><p>去 <a href="https://www.gnome-look.org/browse/cat/135/" target="_blank" rel="noopener">gnome-look.org</a> 网站下载喜欢的<code>GTK</code>主题。这里我用的是<a href="https://www.opendesktop.org/p/1263666/" target="_blank" rel="noopener">McOS-MJV-Gnome-3.30</a> ，把下载的theme包解压到<code>/usr/share/themes</code>下。</p>
+<h3 id="2-选择图标icons主题"><a href="#2-选择图标icons主题" class="headerlink" title="2.选择图标icons主题"></a>2.选择图标icons主题</h3><p>这里我使用的是：<a href="https://www.opendesktop.org/p/1256209/" target="_blank" rel="noopener">Korla icon theme</a> ，下载完后，把图标主题包解压到<code>/usr/share/icons</code>下。</p>
+<h3 id="3-选择鼠标主题"><a href="#3-选择鼠标主题" class="headerlink" title="3.选择鼠标主题"></a>3.选择鼠标主题</h3><p><a href="https://www.gnome-look.org/browse/cat/107/" target="_blank" rel="noopener">Cursors主题下载</a> ，这里我用的是<a href="https://www.opendesktop.org/p/999353/" target="_blank" rel="noopener">Breeze Black</a> ,下载完后，把鼠标主题解压到<code>/usr/share/icons</code>下。</p>
 <p>打开<code>gnome-tweaks</code>，在外观处选择对应主题</p>
 <p><img src="https://raw.githubusercontent.com/ssooking/imgbed/master/img/kali-rolling-install/20181201142929.png" alt=""></p>
 <p>默认的窗口按钮在右边，gnome环境下，将其换到左边的命令为：</p>
