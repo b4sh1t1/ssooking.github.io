@@ -640,6 +640,7 @@ NAME<span class="token operator">=</span>`echo <span class="token variable">$NM<
 <span class="token keyword">echo</span> <span class="token string">"=========================================================================="</span>
 <span class="token keyword">echo</span> <span class="token string">"=               Kali Auto Init Tool                                      ="</span>
 <span class="token keyword">echo</span> <span class="token string">"=                      Powered by ssooking                               ="</span>
+<span class="token keyword">echo</span> <span class="token string">"=                      https://ssooking.github.io                        ="</span>
 <span class="token keyword">echo</span> <span class="token string">"=========================================================================="</span>
 
 <span class="token keyword">echo</span> <span class="token string">""</span>
@@ -700,8 +701,6 @@ apt-key adv --recv ED444FF07D8D0BF6
 <span class="token keyword">echo</span> <span class="token string">"[ok] 安装服务器连接管理工具成功!"</span>
 <span class="token keyword">echo</span> <span class="token string">""</span>
 
-
-
 <span class="token comment" spellcheck="true"># 美化</span>
 <span class="token keyword">echo</span> <span class="token string">"[+] 设置窗口按钮到左侧"</span>
 gsettings <span class="token keyword">set</span> org.gnome.desktop.wm.preferences button-layout <span class="token string">'close,maximize,minimize:'</span>
@@ -734,7 +733,6 @@ gsettings <span class="token keyword">set</span> org.gnome.desktop.wm.preference
 <span class="token comment" spellcheck="true">#systemctl enable firewalld.service</span>
 <span class="token keyword">echo</span> <span class="token string">"[ok] 安装成功！"</span>
 <span class="token keyword">echo</span> <span class="token string">""</span>
-
 
 <span class="token comment" spellcheck="true"># Install sublime text 3</span>
 <span class="token keyword">echo</span> <span class="token string">"[+] 安装sublime text 3，速度可能会比较慢"</span>
@@ -771,8 +769,6 @@ gsettings <span class="token keyword">set</span> org.gnome.desktop.wm.preference
 <span class="token keyword">echo</span> <span class="token string">"[+] 清除垃圾 ......"</span>
 <span class="token function">apt-get</span> clean <span class="token operator">&amp;&amp;</span> <span class="token function">apt-get</span> autoclean <span class="token operator">&amp;&amp;</span>  <span class="token function">apt-get</span> autoremove -y　
 <span class="token keyword">echo</span> <span class="token string">"[+] Cleaning OK!"</span>
-
-
 
 <span class="token comment" spellcheck="true"># Install oh-my-zsh</span>
 <span class="token comment" spellcheck="true"># 普通用户就以普通权限安装</span>
