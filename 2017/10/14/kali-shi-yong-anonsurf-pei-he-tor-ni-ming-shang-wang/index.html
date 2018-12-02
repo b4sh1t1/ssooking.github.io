@@ -18,8 +18,14 @@ var _hmt = _hmt || [];
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="ssooking&#39;s blog">
-    <meta name="description" content="ssooking&#39;s blog">
+    <meta name="keywords" content="kali使用anonsurf配合tor匿名上网, ssooking&#39;s blog">
+    <meta name="description" content="整个系统应用TOR匿名，Anonsurf在后台运行并不断更改IP地址。
+
+注意，国内环境下前提是你的kali能够翻&amp;amp;墙
+
+安装配置torapt-get install tor
+
+去bridges.torproject.org获取br">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -27,7 +33,7 @@ var _hmt = _hmt || [];
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>ssooking&#39;s blog</title>
+    <title>kali使用anonsurf配合tor匿名上网 | ssooking&#39;s blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -268,13 +274,13 @@ var _hmt = _hmt || [];
 
 
 
-<div class="bg-cover post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        
+                        kali使用anonsurf配合tor匿名上网
                     </div>
                 </div>
             </div>
@@ -383,76 +389,126 @@ var _hmt = _hmt || [];
     <div class="card">
         <div class="card-content article-info">
             
+            <div class="article-tag">
+                
+                <a href="/tags/kali/" target="_blank">
+                    <span class="chip bg-color">kali</span>
+                </a>
+                
+                <a href="/tags/linux/" target="_blank">
+                    <span class="chip bg-color">linux</span>
+                </a>
+                
+                <a href="/tags/tor/" target="_blank">
+                    <span class="chip bg-color">tor</span>
+                </a>
+                
+            </div>
+            
             <div class="post-info">
+                
+                <span class="post-cate">
+                    <i class="fa fa-bookmark fa-fw icon-category"></i>
+                    
+                    <a href="/categories/科学上网/" class="post-category" target="_blank">
+                        科学上网
+                    </a>
+                    
+                </span>
                 
 
                 <span class="post-date">
-                    <i class="fa fa-clock-o fa-fw"></i>2018-11-29
+                    <i class="fa fa-clock-o fa-fw"></i>2017-10-14
                 </span>
             </div>
         </div>
         <hr>
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head><meta name="generator" content="Hexo 3.8.0">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>404-对不起！您访问的页面不存在</title>
-<style type="text/css">
-.head404{ width:580px; height:234px; margin:50px auto 0 auto; background:url(404/404.png) no-repeat; }
-.txtbg404{ width:499px; height:169px; margin:10px auto 0 auto; background:url(404/txt404.png) no-repeat;}
-.txtbg404 .txtbox{ width:390px; position:relative; top:30px; left:60px;color:#eee; font-size:13px;}
-.txtbg404 .txtbox p {margin:5px 0; line-height:18px;}
-.txtbg404 .txtbox .paddingbox { padding-top:15px;}
-.txtbg404 .txtbox p a { color:#eee; text-decoration:none;}
-.txtbg404 .txtbox p a:hover { color:#FC9D1D; text-decoration:underline;}
-</style>
-<link rel="stylesheet" href="/css/prism-xonokai.css" type="text/css"></head>
+                <p>整个系统应用TOR匿名，<code>Anonsurf</code>在后台运行并不断更改IP地址。</p>
+<blockquote>
+<p>注意，国内环境下前提是你的kali能够翻&amp;墙</p>
+</blockquote>
+<h1 id="安装配置tor"><a href="#安装配置tor" class="headerlink" title="安装配置tor"></a>安装配置tor</h1><pre class=" language-bash"><code class="language-bash"><span class="token function">apt-get</span> <span class="token function">install</span> tor
+</code></pre>
+<p>去<code>bridges.torproject.org</code>获取bridges信息，然后修改<code>/etc/tor/torrc</code>文件，添加如下内容：</p>
+<pre class=" language-bash"><code class="language-bash">Bridge 158.69.204.189:990 5A5103F99EDA9E2F136CE38F3C041C0D67320EFC
+Bridge 77.198.28.226:37911 E27AAA7EE9F15324A02115ADD85136295F796211
+Bridge 96.230.139.74:9001 5F3B7E2CDB9D420F9FBAC6C764BA62D49CF68DE3
 
-<body bgcolor="#494949">
-   	<div class="head404">
+VirtualAddrNetwork 10.192.0.0/10
+AutomapHostsOnResolve 1
+TransPort 9040
+SocksPort 9050
+DNSPort 53
+RunAsDaemon 1
+SocksListenAddress 127.0.0.1
+</code></pre>
+<p>开启tor服务，测试可用性：</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">service</span> tor start
+systemctl status tor
+<span class="token function">netstat</span> -antu <span class="token operator">|</span> <span class="token function">grep</span> 9050
+tcp        0      0 127.0.0.1:9050          0.0.0.0:*               LISTEN
+</code></pre>
+<p>此时，为浏览器设置socks5代理，端口设置为<code>9050</code>。此时我们访问任意<code>.onion</code>站点，如<a href="http://3g2upl4pq6kufc4m.onion/" target="_blank" rel="noopener">DuckDuckGo</a>，测试是否处于tor网络下。如果能够正常访问<code>onion</code>网站以及其他网站，说明tor配置正确。</p>
+<h1 id="安装Anonsurf"><a href="#安装Anonsurf" class="headerlink" title="安装Anonsurf"></a>安装Anonsurf</h1><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> clone https://github.com/Und3rf10w/kali-anonsurf.git
+<span class="token function">cd</span> kali-anonsurf/
+<span class="token function">sudo</span> ./installer.sh
+</code></pre>
+<p>在Kali Linux，安装完毕后，anonsurf会自动更新编辑<code>/etc/tor/torrc</code>文件并添加以下几行：</p>
+<pre class=" language-bash"><code class="language-bash">VirtualAddrNetwork 10.192.0.0/10
+AutomapHostsOnResolve 1
+TransPort 9040
+SocksPort 9050
+DNSPort 53
+RunAsDaemon 1
+</code></pre>
+<p>它还会将解析程序配置更改为以下内容：</p>
+<pre class=" language-bash"><code class="language-bash">nameserver 127.0.0.1
+nameserver 209.222.18.222
+nameserver 209.222.18.218
+</code></pre>
+<p>如果你不喜欢使用<a href="https://www.blackmoreops.com/2015/03/01/setup-vpn-on-kali-linux" target="_blank" rel="noopener">专用Internet访问DNS</a>，只需在<code>/etc/init.d/anonsurf</code>脚本中更改以下行中的DNS ：</p>
+<pre class=" language-bash"><code class="language-bash"> <span class="token keyword">echo</span> -e <span class="token string">'nameserver 127.0.0.1\nnameserver 209.222.18.222\nnameserver 209.222.18.218'</span> <span class="token operator">></span> /etc/resolv.conf
+ <span class="token keyword">echo</span> -e <span class="token string">" <span class="token variable">$GREEN*</span><span class="token variable">$BLUE</span> Modified resolv.conf to use Tor and Private Internet Access DNS"</span>
+</code></pre>
+<p>我们可以启动anonsurf，通过tor传输数据：</p>
+<p>以后使用时，我们不必提前开启tor服务，anonsurf会自动帮我们完成。</p>
+<pre class=" language-bash"><code class="language-bash">anonsurf start
+</code></pre>
+<p>关闭anonsurf</p>
+<pre class=" language-bash"><code class="language-bash">anonsurf stop
+</code></pre>
+<p>帮助命令</p>
+<pre class=" language-bash"><code class="language-bash">anonsurf       <span class="token comment" spellcheck="true">#查看帮助</span>
+anonsurf start  <span class="token comment" spellcheck="true">#开启隐身</span>
+anonsurf myip      <span class="token comment" spellcheck="true">#查看自己的ip</span>
+anonsurf restart <span class="token comment" spellcheck="true">#可以更换代理IP</span>
+anonsurf stop      <span class="token comment" spellcheck="true">#停止隐身</span>
+anonsurf starti2p <span class="token comment" spellcheck="true">#开启i2p服务</span>
+anonsurf stopi2p     <span class="token comment" spellcheck="true">#关闭i2p服务</span>
+</code></pre>
+<h1 id="安装I2P-可选"><a href="#安装I2P-可选" class="headerlink" title="安装I2P(可选)"></a>安装I2P(可选)</h1><p>1.添加源</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token keyword">echo</span> <span class="token string">"deb https://deb.i2p2.de/ wheezy main"</span> <span class="token operator">>></span> /etc/apt/sources.list
+</code></pre>
+<p>2.添加<code>deb.i2p2.de</code>的<code>public key</code></p>
+<pre class=" language-bash"><code class="language-bash">apt-key adv --recv 67ECE5605BCF1346
+</code></pre>
+<p>如果不添加public key，等会更新时可能会报错如下：</p>
+<pre class=" language-bash"><code class="language-bash">GPG error: https://deb.i2p2.de wheezy InRelease: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 67ECE5605BCF1346
+</code></pre>
+<p>3.安装i2p</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">apt-get</span> update
+<span class="token function">apt-get</span> <span class="token function">install</span> i2p i2p-keyring
+</code></pre>
+<h1 id="测试匿名性"><a href="#测试匿名性" class="headerlink" title="测试匿名性"></a>测试匿名性</h1><p>我们可以使用<code>anonsurf myip</code>命令查看自己的ip是否已经匿名。</p>
+<p>另外，我们可以访问一下网站检查是否泄漏了DNS</p>
+<p><a href="http://dnsleak.com/" target="_blank" rel="noopener">http://dnsleak.com/</a></p>
+<p><a href="https://www.perfect-privacy.com/dns-leaktest/" target="_blank" rel="noopener">https://www.perfect-privacy.com/</a></p>
+<p>在此处检查是否泄漏了IPv6：<a href="http://ipv6leak.com/" target="_blank" rel="noopener">http://ipv6leak.com/</a></p>
 
-   	</div>
-   	<div class="txtbg404">
-  <div align="center" class="txtbox">
-      <p>对不起，您请求的页面不存在、或已被删除、或暂时不可用</p>
-      <br>
-      <p><font size="4">
-      <a style="cursor:pointer" onclick="history.back()">返回上一页面</a>
-      </font></p>
-      
-      <br>
-
-      <p>
-      <font size="4">
-      	将在 <span id="mes">8</span> 秒后自动返回到网站首页！
-      </font>
-      </p>
-    	
-    	<script>
-    		var i = 8;
-    		var timer;
-    		timer = setInterval("fun()", 1000);
-
-    		function fun() {
-        		if (i == 0) {
-            		window.location.href = "https://ssooking.github.io/";
-            		clearInterval(timer);
-        		}
-        		document.getElementById("mes").innerHTML = i;
-        		i--;
-    		}
-    	</script>
-
-
-    </div>
-  </div>
-
-</body>
-</html>
             </div>
-            <hr/>
+            <hr>
 
             
             <style>
@@ -588,7 +644,7 @@ var _hmt = _hmt || [];
                     <span class="reprint-tip">转载请注明: </span>
                     <a href="https://ssooking.github.io" class="b-link-green">ssooking's blog</a>
                     <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
-                    <a href="/404.html" class="b-link-green"></a>
+                    <a href="/2017/10/14/kali-shi-yong-anonsurf-pei-he-tor-ni-ming-shang-wang/" class="b-link-green">kali使用anonsurf配合tor匿名上网</a>
                 </p>
             </div>
         </div>
@@ -608,76 +664,94 @@ var _hmt = _hmt || [];
     <div class="row article-row">
         
         <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge left-badge text-color">本篇</div>
+            <div class="article-badge left-badge text-color">上一篇</div>
             <div class="card">
-                <a href="/404.html">
+                <a href="/2017/11/18/jupyter-ji-jupyterlab-an-zhuang-shi-yong/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="jupyter及jupyterlab安装使用">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">jupyter及jupyterlab安装使用</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
-                    <div class="summary">
-
-
-
-404-对不起！您访问的页面不存在
-
-.head404{ width:580px; height:234px; margin:50px auto 0 auto; background:url(404/404.png) no-repe</div>
+                    <div class="summary">一.jupyter安装及简单使用Jupyther notebook（曾经的Ipython notebook），是一个可以把代码、图像、注释、公式和作图集于一处，实现可读性及可视化分析的工具，支持多种编程语言。官方使用手册。安装前，你需要装好</div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-11-29
-                            </span>
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2017-11-18
+                        </span>
                         <span class="publish-author">
                             
-                            <i class="fa fa-user fa-fw"></i>
-                            ssooking
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/程序代码/" class="post-category" target="_blank">
+                                    程序代码
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
-
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/python/" target="_blank">
+                        <span class="chip bg-color">python</span>
+                    </a>
+                    
+                    <a href="/tags/jupyter/" target="_blank">
+                        <span class="chip bg-color">jupyter</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
         
         
         <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">本篇</div>
+            <div class="article-badge right-badge text-color">下一篇</div>
             <div class="card">
-                <a href="/404.html">
+                <a href="/2017/10/10/ctf-xian-xia-fang-yu-zhan/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="CTF线下防御战—让你的靶机变成" 铜墙铁壁""="">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">CTF线下防御战—让你的靶机变成"铜墙铁壁"</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
-                    <div class="summary">
-
-
-
-404-对不起！您访问的页面不存在
-
-.head404{ width:580px; height:234px; margin:50px auto 0 auto; background:url(404/404.png) no-repe</div>
+                    <div class="summary">一. 前言　　随着CTF的普及，比赛的形式也有了越来越多的花样，对于线下赛来说，开始出现了安全加固或者防御战之类的环节，亦或者因为拿下靶机后不希望其他攻击者进入而进行“争夺”，无论什么形式，这些都需要我们对于服务器的防护工作有所了解。对于线</div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-11-29
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2017-10-10
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fa fa-user fa-fw"></i>
-                            ssooking
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/CTF/" class="post-category" target="_blank">
+                                    CTF
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
-
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/linux/" target="_blank">
+                        <span class="chip bg-color">linux</span>
+                    </a>
+                    
+                    <a href="/tags/CTF/" target="_blank">
+                        <span class="chip bg-color">CTF</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>

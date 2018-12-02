@@ -3,6 +3,19 @@
 <head>
     
 
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?48851b97e1ed0c9c199b9a7c27cc1cf7";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
     <meta name="keywords" content="kali Rolling安装之后的一些常用配置总结, ssooking&#39;s blog">
@@ -476,7 +489,6 @@ chsh -s /bin/zsh
 <li><code>filezilla</code>：FTP客户端</li>
 <li><code>cherrytree</code>：本地知识树笔记工具</li>
 <li><code>synapse</code>：系统应用程序快速启动工具</li>
-<li><code></code></li>
 </ul>
 <p>其他值得独立安装的工具</p>
 <ul>
@@ -560,9 +572,11 @@ scrot -d 5 //延时5秒截图
 </code></pre>
 <p>下次遇到乱码的文件只需要右键选中，在<code>scripts</code>中选择对应处理脚本即可方便地进行转换了，例如：</p>
 <p><img src="https://raw.githubusercontent.com/ssooking/imgbed/master/img/kali-rolling-install/20181201151744.png" alt=""></p>
-<h2 id="右键功能拓展"><a href="#右键功能拓展" class="headerlink" title="右键功能拓展"></a>右键功能拓展</h2><p>主要是<code>~/.local/share/nautilus/scripts</code>目录下增加<code>nautilus</code>脚本文件。可以自己编写，也可以从网上下载，这里有很多：<a href="https://www.opendesktop.org/browse/cat/126/。" target="_blank" rel="noopener">https://www.opendesktop.org/browse/cat/126/。</a></p>
+<h2 id="右键功能拓展"><a href="#右键功能拓展" class="headerlink" title="右键功能拓展"></a>右键功能拓展</h2><p>主要是<code>~/.local/share/nautilus/scripts</code>目录下增加<code>nautilus</code>脚本文件。可以自己编写，也可以从网上下载，<a href="https://www.opendesktop.org/browse/cat/126/" target="_blank" rel="noopener">这里</a>有很多。</p>
 <h1 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h1><h2 id="网络设备未托管"><a href="#网络设备未托管" class="headerlink" title="网络设备未托管"></a>网络设备未托管</h2><p>此问题表现症状可能是无法正常显示网络连接，比如无线：</p>
-<p>修改<code>/etc/NetworkManager/NetworkManager.conf</code>文件，把 <code>managed=false</code> 的 <code>false</code> 改为<code>true</code></p>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">vi</span> /etc/NetworkManager/NetworkManager.conf
+</code></pre>
+<p>把 <code>managed=false</code> 的 <code>false</code> 改为<code>true</code></p>
 <h2 id="右键创建文件功能"><a href="#右键创建文件功能" class="headerlink" title="右键创建文件功能"></a>右键创建文件功能</h2><p>kali右键没有创建文件的功能，解决方法是，在家目录的Templates目录下放入你想要创建的模板类型即可</p>
 <h2 id="修复apt-add-repository命令"><a href="#修复apt-add-repository命令" class="headerlink" title="修复apt-add-repository命令"></a>修复apt-add-repository命令</h2><pre class=" language-bash"><code class="language-bash"><span class="token function">mv</span> /usr/bin/add-apt-repository /usr/bin/add-apt-repository-bak
 <span class="token function">touch</span> /usr/sbin/add-apt-repository <span class="token operator">&amp;&amp;</span> <span class="token function">chmod</span> +x /usr/sbin/add-apt-repository <span class="token operator">&amp;&amp;</span> <span class="token function">vi</span> /usr/sbin/add-apt-repository
@@ -931,46 +945,31 @@ neofetch
     <div class="row article-row">
         
         <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge left-badge text-color">本篇</div>
+            <div class="article-badge left-badge text-color">上一篇</div>
             <div class="card">
-                <a href="/2018/11/23/kali-rolling-an-zhuang-zhi-hou-de-yi-xie-chang-yong-pei-zhi-zong-jie/">
+                <a href="/2018/12/01/readme/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="kali Rolling安装之后的一些常用配置总结">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
                         
-                        <span class="card-title">kali Rolling安装之后的一些常用配置总结</span>
+                        <span class="card-title"></span>
                     </div>
                 </a>
                 <div class="card-content article-content">
-                    <div class="summary">添加普通用户
-useradd -m -G sudo,video,audio,cdrom -s /bin/bash ssooking
-
-把某个用户添加到组中: sudo usermod -a 用户名 -G 组名递归更改目录/文件所属用户组： </div>
+                    <div class="summary">blogsourceIt is coding.net blogsource file bakcup
+</div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-11-23
-                            </span>
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2018-12-01
+                        </span>
                         <span class="publish-author">
                             
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/神兵利器/" class="post-category" target="_blank">
-                                    神兵利器
-                                </a>
-                            
+                            <i class="fa fa-user fa-fw"></i>
+                            ssooking
                             
                         </span>
                     </div>
-                </div>
-
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/kali/" target="_blank">
-                        <span class="chip bg-color">kali</span>
-                    </a>
-                    
                 </div>
                 
             </div>
