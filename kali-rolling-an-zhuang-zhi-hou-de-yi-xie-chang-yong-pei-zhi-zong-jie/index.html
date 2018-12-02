@@ -577,6 +577,13 @@ scrot -d 5 //延时5秒截图
 </code></pre>
 <p>把 <code>managed=false</code> 的 <code>false</code> 改为<code>true</code></p>
 <h2 id="右键创建文件功能"><a href="#右键创建文件功能" class="headerlink" title="右键创建文件功能"></a>右键创建文件功能</h2><p>kali右键没有创建文件的功能，解决方法是，在家目录的Templates目录下放入你想要创建的模板类型即可</p>
+<h2 id="手工安装其他版本jdk"><a href="#手工安装其他版本jdk" class="headerlink" title="手工安装其他版本jdk"></a>手工安装其他版本jdk</h2><p>去oracle官网下载需要的jdk版本，比如<a href="https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="noopener">jdk8</a>，下载完毕后解压到/opt/目录下，然后编辑<code>/etc/profile</code>文件，添加以下内容：</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">export</span> JAVA_HOME<span class="token operator">=</span>/opt/jdk1.8.0_192
+<span class="token function">export</span> JRE_HOME<span class="token operator">=</span><span class="token variable">${JAVA_HOME}</span>/jre
+<span class="token function">export</span> CLASSPATH<span class="token operator">=</span>.:<span class="token variable">${JAVA_HOME}</span>/lib:<span class="token variable">${JRE_HOME}</span>/lib:<span class="token variable">$CLASSPATH</span>
+<span class="token function">export</span> JAVA_PATH<span class="token operator">=</span><span class="token variable">${JAVA_HOME}</span>/bin:<span class="token variable">${JRE_HOME}</span>/bin
+<span class="token function">export</span> PATH<span class="token operator">=</span><span class="token variable">$PATH</span><span class="token keyword">:</span><span class="token variable">${JAVA_PATH}</span>
+</code></pre>
 <h2 id="修复apt-add-repository命令"><a href="#修复apt-add-repository命令" class="headerlink" title="修复apt-add-repository命令"></a>修复apt-add-repository命令</h2><pre class=" language-bash"><code class="language-bash"><span class="token function">mv</span> /usr/bin/add-apt-repository /usr/bin/add-apt-repository-bak
 <span class="token function">touch</span> /usr/sbin/add-apt-repository <span class="token operator">&amp;&amp;</span> <span class="token function">chmod</span> +x /usr/sbin/add-apt-repository <span class="token operator">&amp;&amp;</span> <span class="token function">vi</span> /usr/sbin/add-apt-repository
 </code></pre>
