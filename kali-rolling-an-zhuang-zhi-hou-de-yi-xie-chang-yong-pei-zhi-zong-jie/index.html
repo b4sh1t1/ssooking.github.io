@@ -417,13 +417,13 @@ useradd -m -G sudo,video,audio,cdrom -s /bin/bash ssooking
 <pre class=" language-bash"><code class="language-bash"><span class="token function">useradd</span> -m -G sudo,video,audio,cdrom -s /bin/bash ssooking
 </code></pre>
 <p>把某个用户添加到组中: <code>sudo usermod -a 用户名 -G 组名</code><br>递归更改目录/文件所属用户组： <code>sudo chgrp 用户名 -R MyDocuments/</code><br>递归更改目录/文件拥有者：<code>sudo chown  用户名 -R MyDocuments/</code></p>
-<h1 id="更新升级"><a href="#更新升级" class="headerlink" title="更新升级"></a>更新升级</h1><h2 id="1-添加源："><a href="#1-添加源：" class="headerlink" title="1.添加源："></a>1.添加源：</h2><p><code>vi /etc/apt/sources.list</code>，比较好用的kali源</p>
+<h1 id="一、更新升级"><a href="#一、更新升级" class="headerlink" title="一、更新升级"></a>一、更新升级</h1><h2 id="1-添加源："><a href="#1-添加源：" class="headerlink" title="1.添加源："></a>1.添加源：</h2><p><code>vi /etc/apt/sources.list</code>，比较好用的kali源</p>
 <pre class=" language-bash"><code class="language-bash">deb http://http.kali.org/kali kali-rolling main non-free contrib
 deb http://mirrors.aliyun.com/debian stable main contrib non-free
 deb http://mirrors.ustc.edu.cn/kali kali-rolling main non-free contrib
 </code></pre>
 <p>如果是其他系统导入kali源，比如<code>ubuntu</code>，需要导入kali公钥</p>
-<pre class=" language-bash"><code class="language-bash">apt-key adv --recv ED444FF07D8D0BF6
+<pre class=" language-bash"><code class="language-bash">apt-key adv --keyserver pgp.mit.edu --recv-keys ED444FF07D8D0BF6
 </code></pre>
 <h2 id="2-更新软件列表并更新软件"><a href="#2-更新软件列表并更新软件" class="headerlink" title="2.更新软件列表并更新软件"></a>2.更新软件列表并更新软件</h2><pre class=" language-bash"><code class="language-bash"><span class="token function">apt-get</span> update <span class="token operator">&amp;</span> <span class="token function">apt-get</span> upgrade -y
 </code></pre>
@@ -452,7 +452,7 @@ dpkg --get-selections <span class="token operator">|</span> <span class="token f
 <p>清理系统残存配置:</p>
 <pre class=" language-bash"><code class="language-bash">dpkg -l <span class="token operator">|</span><span class="token function">grep</span> ^rc<span class="token operator">|</span><span class="token function">awk</span> <span class="token string">'{print <span class="token variable">$2</span>}'</span> <span class="token operator">|</span><span class="token function">sudo</span> <span class="token function">xargs</span> dpkg -P
 </code></pre>
-<h1 id="安装常用工具"><a href="#安装常用工具" class="headerlink" title="安装常用工具"></a>安装常用工具</h1><h2 id="谷歌拼音"><a href="#谷歌拼音" class="headerlink" title="谷歌拼音"></a>谷歌拼音</h2><pre class=" language-bash"><code class="language-bash"><span class="token function">apt-get</span> <span class="token function">install</span> fcitx fcitx-googlepinyin
+<h1 id="二、安装常用工具"><a href="#二、安装常用工具" class="headerlink" title="二、安装常用工具"></a>二、安装常用工具</h1><h2 id="谷歌拼音"><a href="#谷歌拼音" class="headerlink" title="谷歌拼音"></a>谷歌拼音</h2><pre class=" language-bash"><code class="language-bash"><span class="token function">apt-get</span> <span class="token function">install</span> fcitx fcitx-googlepinyin
 </code></pre>
 <p>安装完毕后重启生效，打开<code>Fcitx Configuration</code></p>
 <p>点左下角那个“+” ，–&gt; 去掉”仅显示当前语言”的勾 –&gt; 找到“googlepinyin”并添加。</p>
@@ -498,14 +498,14 @@ chsh -s /bin/zsh
 <li><a href="http://www.sublimetext.com/" target="_blank" rel="noopener">sublime text 3</a>：代码编辑器</li>
 <li><a href="https://github.com/oguzhaninan/Stacer" target="_blank" rel="noopener">stacer</a>：图形化系统优化管理工具</li>
 </ul>
-<h1 id="系统美化"><a href="#系统美化" class="headerlink" title="系统美化"></a>系统美化</h1><p>全局设置:</p>
+<h1 id="三、系统美化"><a href="#三、系统美化" class="headerlink" title="三、系统美化"></a>三、系统美化</h1><p>全局设置:</p>
 <ul>
 <li>主题文件： /usr/share/themes/    </li>
 <li>图标文件： /usr/share/icons/            </li>
 <li>背景壁纸： /usr/share/background/ 、 /usr/share/wallpapers</li>
 <li>conky ： /etc/conky/</li>
 </ul>
-<h2 id="修改背景图片"><a href="#修改背景图片" class="headerlink" title="修改背景图片"></a>修改背景图片</h2><p><code>/usr/share/images/desktop-base</code></p>
+<h2 id="1-修改背景图片"><a href="#1-修改背景图片" class="headerlink" title="1.修改背景图片"></a>1.修改背景图片</h2><p><code>/usr/share/images/desktop-base</code></p>
 <pre class=" language-bash"><code class="language-bash">login-background.png　<span class="token comment" spellcheck="true">#进入系统界面的背景图</span>
 kali-grub.png　　　　　<span class="token comment" spellcheck="true">#grub的背景图片(/usr/share/images/desktop-base)</span>
 kali-wallpaper_1024×786 <span class="token comment" spellcheck="true">#类似的都是桌面背景图</span>
@@ -514,11 +514,11 @@ kali-wallpaper_1024×786 <span class="token comment" spellcheck="true">#类似�
 <pre class=" language-bash"><code class="language-bash">/usr/share/gnome-shell/theme/KaliLogin.png  
 /usr/share/images/desktop-base  desktop-grub.png  kali-grub.png
 </code></pre>
-<h2 id="修改主题"><a href="#修改主题" class="headerlink" title="修改主题"></a>修改主题</h2><p>主题文件位置：</p>
+<h2 id="2-修改主题"><a href="#2-修改主题" class="headerlink" title="2.修改主题"></a>2.修改主题</h2><p>主题文件位置：</p>
 <p>gnome主题网站： <a href="https://www.gnome-look.org/" target="_blank" rel="noopener">gnome-look.org</a> </p>
-<h3 id="1-选择GTK主题"><a href="#1-选择GTK主题" class="headerlink" title="1.选择GTK主题"></a>1.选择GTK主题</h3><p>去 <a href="https://www.gnome-look.org/browse/cat/135/" target="_blank" rel="noopener">gnome-look.org</a> 网站下载喜欢的<code>GTK</code>主题。这里我用的是<a href="https://www.opendesktop.org/p/1263666/" target="_blank" rel="noopener">McOS-MJV-Gnome-3.30</a> ，把下载的theme包解压到<code>/usr/share/themes</code>下。</p>
-<h3 id="2-选择图标icons主题"><a href="#2-选择图标icons主题" class="headerlink" title="2.选择图标icons主题"></a>2.选择图标icons主题</h3><p>这里我使用的是：<a href="https://www.opendesktop.org/p/1256209/" target="_blank" rel="noopener">Korla icon theme</a> ，下载完后，把图标主题包解压到<code>/usr/share/icons</code>下。</p>
-<h3 id="3-选择鼠标主题"><a href="#3-选择鼠标主题" class="headerlink" title="3.选择鼠标主题"></a>3.选择鼠标主题</h3><p><a href="https://www.gnome-look.org/browse/cat/107/" target="_blank" rel="noopener">Cursors主题下载</a> ，这里我用的是<a href="https://www.opendesktop.org/p/999353/" target="_blank" rel="noopener">Breeze Black</a> ,下载完后，把鼠标主题解压到<code>/usr/share/icons</code>下。</p>
+<h3 id="选择GTK主题"><a href="#选择GTK主题" class="headerlink" title="选择GTK主题"></a>选择GTK主题</h3><p>去 <a href="https://www.gnome-look.org/browse/cat/135/" target="_blank" rel="noopener">gnome-look.org</a> 网站下载喜欢的<code>GTK</code>主题。这里我用的是<a href="https://www.opendesktop.org/p/1263666/" target="_blank" rel="noopener">McOS-MJV-Gnome-3.30</a> ，把下载的theme包解压到<code>/usr/share/themes</code>下。</p>
+<h3 id="选择图标icons主题"><a href="#选择图标icons主题" class="headerlink" title="选择图标icons主题"></a>选择图标icons主题</h3><p>这里我使用的是：<a href="https://www.opendesktop.org/p/1256209/" target="_blank" rel="noopener">Korla icon theme</a> ，下载完后，把图标主题包解压到<code>/usr/share/icons</code>下。</p>
+<h3 id="选择鼠标主题"><a href="#选择鼠标主题" class="headerlink" title="选择鼠标主题"></a>选择鼠标主题</h3><p><a href="https://www.gnome-look.org/browse/cat/107/" target="_blank" rel="noopener">Cursors主题下载</a> ，这里我用的是<a href="https://www.opendesktop.org/p/999353/" target="_blank" rel="noopener">Breeze Black</a> ,下载完后，把鼠标主题解压到<code>/usr/share/icons</code>下。</p>
 <p>打开<code>gnome-tweaks</code>，在外观处选择对应主题</p>
 <p><img src="https://raw.githubusercontent.com/ssooking/imgbed/master/img/kali-rolling-install/20181201142929.png" alt=""></p>
 <p>默认的窗口按钮在右边，gnome环境下，将其换到左边的命令为：</p>
@@ -527,7 +527,7 @@ kali-wallpaper_1024×786 <span class="token comment" spellcheck="true">#类似�
 <p>整体效果</p>
 <p><img src="https://raw.githubusercontent.com/ssooking/imgbed/master/img/kali-rolling-install/kali.png" alt=""></p>
 <p> 除了基本美化，还可以使用<code>conky</code>进行美化。</p>
-<h2 id="添加gnome插件"><a href="#添加gnome插件" class="headerlink" title="添加gnome插件"></a>添加gnome插件</h2><p>gnome提供了很多插件，用于丰富gnome功能，我们可以根据需要添加 <a href="https://extensions.gnome.org/" target="_blank" rel="noopener">gnome extensions</a>来拓展功能。但是插件装的太多，会比较卡。插件存放路径：<code>~/.local/share/gnome-shell/extensions/</code>。</p>
+<h2 id="3-添加gnome插件"><a href="#3-添加gnome插件" class="headerlink" title="3.添加gnome插件"></a>3.添加gnome插件</h2><p>gnome提供了很多插件，用于丰富gnome功能，我们可以根据需要添加 <a href="https://extensions.gnome.org/" target="_blank" rel="noopener">gnome extensions</a>来拓展功能。但是插件装的太多，会比较卡。插件存放路径：<code>~/.local/share/gnome-shell/extensions/</code>。</p>
 <p>每次装完插件，我们可以按下<code>Alt+F2</code>— 输入<code>r</code>—回车 ，以此重启刷新gnome。</p>
 <p>下面是一些插件举例：</p>
 <ul>
@@ -550,7 +550,7 @@ kali-wallpaper_1024×786 <span class="token comment" spellcheck="true">#类似�
 <li><code>Places Status Indicator</code>为一些常用目录提供快速入口 </li>
 <li><code>system-monitor</code>  顶栏显示CPU、内存、网速、温度、电池电量等信息，安装前需要解决依赖</li>
 </ul>
-<h1 id="优化设置"><a href="#优化设置" class="headerlink" title="优化设置"></a>优化设置</h1><h2 id="自定义快捷键延时截图"><a href="#自定义快捷键延时截图" class="headerlink" title="自定义快捷键延时截图"></a>自定义快捷键延时截图</h2><pre class=" language-bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> scrot
+<h1 id="四、优化设置"><a href="#四、优化设置" class="headerlink" title="四、优化设置"></a>四、优化设置</h1><h2 id="自定义快捷键延时截图"><a href="#自定义快捷键延时截图" class="headerlink" title="自定义快捷键延时截图"></a>自定义快捷键延时截图</h2><pre class=" language-bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> scrot
 scrot -d 5 //延时5秒截图
 </code></pre>
 <p>在<code>系统设置</code>—<code>Keyboard</code>设置中添加快捷键</p>
@@ -572,7 +572,7 @@ scrot -d 5 //延时5秒截图
 <p>下次遇到乱码的文件只需要右键选中，在<code>scripts</code>中选择对应处理脚本即可方便地进行转换了，例如：</p>
 <p><img src="https://raw.githubusercontent.com/ssooking/imgbed/master/img/kali-rolling-install/20181201151744.png" alt=""></p>
 <h2 id="右键功能拓展"><a href="#右键功能拓展" class="headerlink" title="右键功能拓展"></a>右键功能拓展</h2><p>主要是<code>~/.local/share/nautilus/scripts</code>目录下增加<code>nautilus</code>脚本文件。可以自己编写，也可以从网上下载，<a href="https://www.opendesktop.org/browse/cat/126/" target="_blank" rel="noopener">这里</a>有很多。</p>
-<h1 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h1><h2 id="网络设备未托管"><a href="#网络设备未托管" class="headerlink" title="网络设备未托管"></a>网络设备未托管</h2><p>此问题表现症状可能是无法正常显示网络连接，比如无线：</p>
+<h1 id="五、常见问题"><a href="#五、常见问题" class="headerlink" title="五、常见问题"></a>五、常见问题</h1><h2 id="网络设备未托管"><a href="#网络设备未托管" class="headerlink" title="网络设备未托管"></a>网络设备未托管</h2><p>此问题表现症状可能是无法正常显示网络连接，比如无线：</p>
 <pre class=" language-bash"><code class="language-bash"><span class="token function">vi</span> /etc/NetworkManager/NetworkManager.conf
 </code></pre>
 <p>把 <code>managed=false</code> 的 <code>false</code> 改为<code>true</code></p>
