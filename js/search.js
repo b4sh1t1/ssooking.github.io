@@ -73,7 +73,7 @@ var searchFunc = function (path, search_id, content_id) {
                             });
 
                             //str += "<p class=\"search-result\">" + match_content + "...</p>"
-                            str += "<p class=\"search-result\">"  + "...</p>"
+                            str += "<p class=\"search-result\">"
                         }
                         str += "</li>";
                     }
