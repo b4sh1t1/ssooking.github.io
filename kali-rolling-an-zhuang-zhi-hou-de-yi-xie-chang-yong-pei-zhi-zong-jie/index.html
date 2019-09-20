@@ -418,6 +418,7 @@ deb http://mirrors.ustc.edu.cn/kali kali-rolling main non-free contrib
 </code></pre>
 <p>如果是其他系统导入kali源，比如<code>ubuntu</code>，需要导入kali公钥</p>
 <pre class=" language-bash"><code class="language-bash">apt-key adv --keyserver pgp.mit.edu --recv-keys ED444FF07D8D0BF6
+<span class="token function">wget</span> -q -O - https://archive.kali.org/archive-key.asc <span class="token operator">|</span> apt-key add
 </code></pre>
 <h2 id="2-更新软件列表并更新软件"><a href="#2-更新软件列表并更新软件" class="headerlink" title="2.更新软件列表并更新软件"></a>2.更新软件列表并更新软件</h2><pre class=" language-bash"><code class="language-bash"><span class="token function">apt-get</span> update <span class="token operator">&amp;</span> <span class="token function">apt-get</span> upgrade -y
 </code></pre>
