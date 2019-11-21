@@ -1,418 +1,168 @@
-<!DOCTYPE HTML>
-<html lang="zh-CN">
-<head>
-    
-
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?48851b97e1ed0c9c199b9a7c27cc1cf7";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-
-
-
+<!DOCTYPE html>
+<html lang=zh>
 <head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
     <meta charset="utf-8">
-    <meta name="keywords" content="域渗透之NTML-Hash, ssooking&#39;s blog">
-    <meta name="description" content="一、认识Windows HASH​    早期SMB协议在网络上传输明文口令。后来出现”LAN Manager Challenge/Response”验证机制，简称LM，它是如此简单以至很容易被破解。微软提出了WindowsNT挑战/响应验">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="renderer" content="webkit|ie-stand|ie-comp">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>域渗透之NTML-Hash | ssooking&#39;s blog</title>
-    <link rel="icon" type="image/png" href="/favicon.png">
-
-    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/materialize/css/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
-    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/matery.css">
-    <link rel="stylesheet" type="text/css" href="/css/my.css">
-
-    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="一、认识Windows HASH​    早期SMB协议在网络上传输明文口令。后来出现”LAN Manager Challenge/Response”验证机制，简称LM，它是如此简单以至很容易被破解。微软提出了WindowsNT挑战/响应验证机制，称之为NTLM。现在已经有了更新的NTLMv2以及Kerberos验证体系。Windows加密过的密码口令，我们称之为hash（中文：哈希），Windo">
+<meta name="keywords" content="内网渗透,域渗透,NTML-Hash">
+<meta property="og:type" content="article">
+<meta property="og:title" content="域渗透之NTML-Hash">
+<meta property="og:url" content="https://ssooking.github.io/yu-shen-tou-zhi-ntml-hash/index.html">
+<meta property="og:site_name" content="ssooking">
+<meta property="og:description" content="一、认识Windows HASH​    早期SMB协议在网络上传输明文口令。后来出现”LAN Manager Challenge/Response”验证机制，简称LM，它是如此简单以至很容易被破解。微软提出了WindowsNT挑战/响应验证机制，称之为NTLM。现在已经有了更新的NTLMv2以及Kerberos验证体系。Windows加密过的密码口令，我们称之为hash（中文：哈希），Windo">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/ssooking/imgbed/master/img/yushentou-ntml-hash/20181204130140.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ssooking/imgbed/master/img/yushentou-ntml-hash/20181204130759.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ssooking/imgbed/master/img/yushentou-ntml-hash/20181204134230.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ssooking/imgbed/master/img/yushentou-ntml-hash/20181203201319.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ssooking/imgbed/master/img/yushentou-ntml-hash/20181203212818.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ssooking/imgbed/master/img/yushentou-ntml-hash/20181204094217.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ssooking/imgbed/master/img/yushentou-ntml-hash/20181203225415.png">
+<meta property="og:updated_time" content="2019-09-26T16:09:41.355Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="域渗透之NTML-Hash">
+<meta name="twitter:description" content="一、认识Windows HASH​    早期SMB协议在网络上传输明文口令。后来出现”LAN Manager Challenge/Response”验证机制，简称LM，它是如此简单以至很容易被破解。微软提出了WindowsNT挑战/响应验证机制，称之为NTLM。现在已经有了更新的NTLMv2以及Kerberos验证体系。Windows加密过的密码口令，我们称之为hash（中文：哈希），Windo">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ssooking/imgbed/master/img/yushentou-ntml-hash/20181204130140.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.png">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>域渗透之NTML-Hash</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
 <link rel="stylesheet" href="/css/prism-xonokai.css" type="text/css"></head>
 
-</head>
-
-<body>
-
-<header class="navbar-fixed">
-    <nav id="headNav" class="bg-color nav-transparent">
-        <div id="navContainer" class="container">
-            <div class="nav-wrapper">
-                <div class="brand-logo">
-                    <a href="/" class="waves-effect waves-light">
-                        
-                        <img src="/medias/logo.png" class="logo-img hide-on-small-only">
-                        
-                        <span class="logo-span">ssooking's blog</span>
-                    </a>
-                </div>
-                <a href="#" data-activates="mobile-nav" class="button-collapse"><i class="fa fa-navicon"></i></a>
-<ul class="right">
+<body class="max-width mx-auto px3 ltr">
     
-    <li class="hide-on-med-and-down">
-        <a href="/" class="waves-effect waves-light">
-            
-            <i class="fa fa-home"></i>
-            
-            <span>Index</span>
-        </a>
-    </li>
-    
-    <li class="hide-on-med-and-down">
-        <a href="/tags" class="waves-effect waves-light">
-            
-            <i class="fa fa-tags"></i>
-            
-            <span>Tags</span>
-        </a>
-    </li>
-    
-    <li class="hide-on-med-and-down">
-        <a href="/categories" class="waves-effect waves-light">
-            
-            <i class="fa fa-bookmark"></i>
-            
-            <span>Categories</span>
-        </a>
-    </li>
-    
-    <li class="hide-on-med-and-down">
-        <a href="/archives" class="waves-effect waves-light">
-            
-            <i class="fa fa-archive"></i>
-            
-            <span>Archives</span>
-        </a>
-    </li>
-    
-    <li class="hide-on-med-and-down">
-        <a href="/about" class="waves-effect waves-light">
-            
-            <i class="fa fa-user-circle-o"></i>
-            
-            <span>About</span>
-        </a>
-    </li>
-    
-    <li>
-        <a id="toggleSearch" class="waves-effect waves-light">
-            <i id="searchIcon" class="mdi-action-search"></i>
-        </a>
-    </li>
-
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Articles</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/tags/">Tags</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/kali-rolling-an-zhuang-zhi-hou-de-yi-xie-chang-yong-pei-zhi-zong-jie/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://ssooking.github.io/yu-shen-tou-zhi-ntml-hash/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://ssooking.github.io/yu-shen-tou-zhi-ntml-hash/&text=域渗透之NTML-Hash"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://ssooking.github.io/yu-shen-tou-zhi-ntml-hash/&title=域渗透之NTML-Hash"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://ssooking.github.io/yu-shen-tou-zhi-ntml-hash/&is_video=false&description=域渗透之NTML-Hash"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=域渗透之NTML-Hash&body=Check out this article: https://ssooking.github.io/yu-shen-tou-zhi-ntml-hash/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://ssooking.github.io/yu-shen-tou-zhi-ntml-hash/&title=域渗透之NTML-Hash"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://ssooking.github.io/yu-shen-tou-zhi-ntml-hash/&title=域渗透之NTML-Hash"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://ssooking.github.io/yu-shen-tou-zhi-ntml-hash/&title=域渗透之NTML-Hash"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://ssooking.github.io/yu-shen-tou-zhi-ntml-hash/&title=域渗透之NTML-Hash"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://ssooking.github.io/yu-shen-tou-zhi-ntml-hash/&name=域渗透之NTML-Hash&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
-<div class="side-nav" id="mobile-nav">
-
-    <div class="mobile-head bg-color">
-        
-        <img src="/medias/logo.png" class="logo-img circle responsive-img">
-        
-        <div class="logo-name">ssooking's blog</div>
-        <div class="logo-desc">
-            
-            征途漫漫，步履铿锵，无畏、无惧、无阻！
-            
-        </div>
     </div>
-
-    <ul class="menu-list mobile-menu-list">
-        
-        <li>
-            <a href="/" class="waves-effect waves-light">
-                
-                <i class="fa fa-fw fa-home"></i>
-                
-                Index
-            </a>
-        </li>
-        
-        <li>
-            <a href="/tags" class="waves-effect waves-light">
-                
-                <i class="fa fa-fw fa-tags"></i>
-                
-                Tags
-            </a>
-        </li>
-        
-        <li>
-            <a href="/categories" class="waves-effect waves-light">
-                
-                <i class="fa fa-fw fa-bookmark"></i>
-                
-                Categories
-            </a>
-        </li>
-        
-        <li>
-            <a href="/archives" class="waves-effect waves-light">
-                
-                <i class="fa fa-fw fa-archive"></i>
-                
-                Archives
-            </a>
-        </li>
-        
-        <li>
-            <a href="/about" class="waves-effect waves-light">
-                
-                <i class="fa fa-fw fa-user-circle-o"></i>
-                
-                About
-            </a>
-        </li>
-        
-        
-        <li><div class="divider"></div></li>
-        <li>
-            <a href="https://github.com/ssooking" class="waves-effect waves-light" target="_blank">
-                <i class="fa fa-github-square fa-fw"></i>Fork Me
-            </a>
-        </li>
-        
-    </ul>
-
-    <div class="social-link"><a href="https://github.com/ssooking" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
-    <i class="fa fa-github"></i>
-</a>
-<a href="mailto:ssooking@yeah.net" class="tooltipped" target="_blank" data-tooltip="mail：ssooking@yeah.net" data-position="top" data-delay="50">
-    <i class="fa fa-envelope-open"></i>
-</a>
-
-
-
-<a href="https://join.skype.com/invite/PWgoTe4YvrbH" class="tooltipped" target="_blank" data-tooltip="skype：ssooking" data-position="top" data-delay="50">
-    <i class="fa fa-skype"></i>
-</a>
-
-</div>
-</div>
-
-            </div>
-        </div>
-
-        
-        <style>
-    .nav-transparent .github-corner {
-        display: none !important;
-    }
-
-    .github-corner {
-        position: absolute;
-        z-index: 10;
-        top: 0;
-        right: 0;
-        border: 0;
-        transform: scale(1.1);
-    }
-
-    .github-corner svg {
-        color: #0f9d58;
-        fill: #fff;
-        height: 64px;
-        width: 64px;
-    }
-
-    .github-corner:hover .octo-arm {
-        animation: a 0.56s ease-in-out;
-    }
-
-    .github-corner .octo-arm {
-        animation: none;
-    }
-
-    @keyframes a {
-        0%,
-        to {
-            transform: rotate(0);
-        }
-        20%,
-        60% {
-            transform: rotate(-25deg);
-        }
-        40%,
-        80% {
-            transform: rotate(10deg);
-        }
-    }
-</style>
-
-<a href="https://github.com/ssooking" class="github-corner tooltipped hide-on-med-and-down" target="_blank" data-tooltip="Fork Me" data-position="left" data-delay="50">
-    <svg viewbox="0 0 250 250" aria-hidden="true">
-        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/>
-        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/>
-        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/>
-    </svg>
-</a>
-        
-    </nav>
-</header>
-
-
-
-<div class="bg-cover post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
-    <div class="container">
-        <div class="row">
-            <div class="col s12 m12 l12">
-                <div class="brand">
-                    <div class="description center-align post-title">
-                        域渗透之NTML-Hash
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、认识Windows-HASH"><span class="toc-number">1.</span> <span class="toc-text">一、认识Windows HASH</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#LM-HASH"><span class="toc-number">1.1.</span> <span class="toc-text">LM HASH</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NTLM-HASH"><span class="toc-number">1.2.</span> <span class="toc-text">NTLM HASH</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NTLM-Hash的生成"><span class="toc-number">1.3.</span> <span class="toc-text">NTLM-Hash的生成</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、NTML网络认证机制"><span class="toc-number">2.</span> <span class="toc-text">二、NTML网络认证机制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#NTLM-协议"><span class="toc-number">2.1.</span> <span class="toc-text">NTLM 协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基于NTML协议的身份认证机制"><span class="toc-number">2.2.</span> <span class="toc-text">基于NTML协议的身份认证机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#工作组环境NTML认证流程"><span class="toc-number">2.3.</span> <span class="toc-text">工作组环境NTML认证流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#域环境NTML认证流程"><span class="toc-number">2.4.</span> <span class="toc-text">域环境NTML认证流程</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、如何拿到Hash"><span class="toc-number">3.</span> <span class="toc-text">三、如何拿到Hash?</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-本地获取"><span class="toc-number">3.1.</span> <span class="toc-text">1.本地获取</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#QuarksPwDump"><span class="toc-number">3.1.1.</span> <span class="toc-text">QuarksPwDump</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mimikatz"><span class="toc-number">3.1.2.</span> <span class="toc-text">Mimikatz</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ProDump"><span class="toc-number">3.1.3.</span> <span class="toc-text">ProDump</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Metasploit"><span class="toc-number">3.1.4.</span> <span class="toc-text">Metasploit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cobaltstrike"><span class="toc-number">3.1.5.</span> <span class="toc-text">Cobaltstrike</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-网络欺骗"><span class="toc-number">3.2.</span> <span class="toc-text">2.网络欺骗</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Responder"><span class="toc-number">3.2.1.</span> <span class="toc-text">Responder</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-其他技巧"><span class="toc-number">3.3.</span> <span class="toc-text">3.其他技巧</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、如何利用Hash？"><span class="toc-number">4.</span> <span class="toc-text">四、如何利用Hash？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-解密Hash"><span class="toc-number">4.1.</span> <span class="toc-text">1.解密Hash</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#在线解密"><span class="toc-number">4.1.1.</span> <span class="toc-text">在线解密</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#本地破解"><span class="toc-number">4.1.2.</span> <span class="toc-text">本地破解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#John"><span class="toc-number">4.1.2.1.</span> <span class="toc-text">John</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hashcat"><span class="toc-number">4.1.2.2.</span> <span class="toc-text">Hashcat</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Pass-The-Hash"><span class="toc-number">4.2.</span> <span class="toc-text">2.Pass-The-Hash</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Crackmapexec"><span class="toc-number">4.2.1.</span> <span class="toc-text">Crackmapexec</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Metasploit-1"><span class="toc-number">4.2.2.</span> <span class="toc-text">Metasploit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mimikatz-1"><span class="toc-number">4.2.3.</span> <span class="toc-text">Mimikatz</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#wmiexec-py"><span class="toc-number">4.2.4.</span> <span class="toc-text">wmiexec.py</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Powershell"><span class="toc-number">4.2.5.</span> <span class="toc-text">Powershell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PTH-EXEC"><span class="toc-number">4.2.6.</span> <span class="toc-text">PTH-EXEC</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、防御思路"><span class="toc-number">5.</span> <span class="toc-text">五、防御思路</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#六、后渗透思路拓展"><span class="toc-number">6.</span> <span class="toc-text">六、后渗透思路拓展</span></a></li></ol>
     </div>
+  </span>
 </div>
-
-
-
-<main class="post-container content">
 
     
-    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
-<style>
-    #articleContent h1,
-    #articleContent h2,
-    #articleContent h3,
-    #articleContent h4,
-    #articleContent h5,
-    #articleContent h6 {
-        padding-top: 76px;
-        margin-top: -76px;
-    }
+    <div class="content index py4">
+        
+        <article class="post" itemscope="" itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        域渗透之NTML-Hash
+    </h1>
 
-    #articleContent h1 {
-        line-height: 3.5rem;
-    }
 
-    #articleContent h2 {
-        line-height: 3.2rem;
-    }
 
-    #articleContent h3 {
-        line-height: 2.8rem;
-    }
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+        <span itemprop="name">ssooking</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2018-12-03T01:25:00.000Z" itemprop="datePublished">2018-12-03</time>
+        
+      
+    </div>
 
-    #articleContent h4 {
-        line-height: 2.5rem;
-    }
 
-    #articleContent h5 {
-        line-height: 2.2rem;
-    }
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/攻防渗透/">攻防渗透</a>
+    </div>
 
-    #articleContent h6 {
-        line-height: 1.9rem;
-    }
 
-    #articleContent :focus {
-        outline: none;
-    }
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/NTML-Hash/">NTML-Hash</a>, <a class="tag-link" href="/tags/内网渗透/">内网渗透</a>, <a class="tag-link" href="/tags/域渗透/">域渗透</a>
+    </div>
 
-    .toc-fixed {
-        position: fixed;
-        top: 64px;
-    }
 
-    .toc-widget {
-        padding-left: 20px;
-    }
+    </div>
+  </header>
+  
 
-    .toc-widget .toc-title {
-        margin: 35px 0 15px 0;
-        padding-left: 17px;
-        font-size: 1.5rem;
-        font-weight: bold;
-        line-height: 1.5rem;
-    }
-
-    .toc-widget ol {
-        padding: 0;
-        list-style: none;
-    }
-
-    #toc-content ol {
-        padding-left: 10px;
-    }
-
-    #toc-content ol li {
-        padding-left: 10px;
-    }
-
-    #toc-content .toc-link:hover {
-        color: #42b983;
-        font-weight: 700;
-        text-decoration: underline;
-    }
-
-    #toc-content .toc-link::before {
-        background-color: transparent;
-        max-height: 25px;
-    }
-
-    #toc-content .is-active-link {
-        color: #42b983;
-    }
-
-    #toc-content .is-active-link::before {
-        background-color: #42b983;
-    }
-</style>
-<div class="row">
-    <div class="col s12 m12 l9">
-        <!-- 文章内容详情 -->
-<div id="artDetail">
-    <div class="card">
-        <div class="card-content article-info">
-            
-            <div class="article-tag">
-                
-                <a href="/tags/内网渗透/" target="_blank">
-                    <span class="chip bg-color">内网渗透</span>
-                </a>
-                
-                <a href="/tags/域渗透/" target="_blank">
-                    <span class="chip bg-color">域渗透</span>
-                </a>
-                
-                <a href="/tags/NTML-Hash/" target="_blank">
-                    <span class="chip bg-color">NTML-Hash</span>
-                </a>
-                
-            </div>
-            
-            <div class="post-info">
-                
-                <span class="post-cate">
-                    <i class="fa fa-bookmark fa-fw icon-category"></i>
-                    
-                    <a href="/categories/攻防渗透/" class="post-category" target="_blank">
-                        攻防渗透
-                    </a>
-                    
-                </span>
-                
-
-                <span class="post-date">
-                    <i class="fa fa-clock-o fa-fw"></i>2018-12-03
-                </span>
-            </div>
-        </div>
-        <hr>
-        <div class="card-content article-card-content">
-            <div id="articleContent">
-                <h1 id="一、认识Windows-HASH"><a href="#一、认识Windows-HASH" class="headerlink" title="一、认识Windows HASH"></a>一、认识Windows HASH</h1><p>​    早期SMB协议在网络上传输明文口令。后来出现”LAN Manager Challenge/Response”验证机制，简称LM，它是如此简单以至很容易被破解。微软提出了WindowsNT挑战/响应验证机制，称之为NTLM。现在已经有了更新的NTLMv2以及Kerberos验证体系。Windows加密过的密码口令，我们称之为hash（中文：哈希），Windows的系统密码hash默认情况下一般由两部分组成：第一部分是LM-hash，第二部分是NTLM-hash。</p>
+  <div class="content" itemprop="articleBody">
+    <h1 id="一、认识Windows-HASH"><a href="#一、认识Windows-HASH" class="headerlink" title="一、认识Windows HASH"></a>一、认识Windows HASH</h1><p>​    早期SMB协议在网络上传输明文口令。后来出现”LAN Manager Challenge/Response”验证机制，简称LM，它是如此简单以至很容易被破解。微软提出了WindowsNT挑战/响应验证机制，称之为NTLM。现在已经有了更新的NTLMv2以及Kerberos验证体系。Windows加密过的密码口令，我们称之为hash（中文：哈希），Windows的系统密码hash默认情况下一般由两部分组成：第一部分是LM-hash，第二部分是NTLM-hash。</p>
 <p>​     NTLM-Hash与LM-Hash算法相比，明文口令大小写敏感，但无法根据NTLM-Hash判断原始明文口令是否小于8字节，摆脱了魔术字符串<code>KGS!@#$%</code>。MD4是真正的单向哈希函数，穷举做为数据源出现的明文，难度较大。问题在于，微软一味强调NTLM-Hash的强度高，却避而不谈一个事实，为了保持向后兼容性，NTLM-Hash缺省总是与LM-Hash一起使用的。这意味着NTLM-Hash强调再高也是无助于安全的，相反潜在损害着安全性。增加NTLM-Hash后，首先利用LM-Hash的弱点穷举出原始明文口令的大小写不敏感版本，再利用NTLM-Hash修正出原始明文口令的大小写敏感版本</p>
 <h2 id="LM-HASH"><a href="#LM-HASH" class="headerlink" title="LM HASH"></a>LM HASH</h2><p>​    <code>LM HASH</code>是一种较古老的Hash，在<code>LAN Manager</code>协议中使用，非常容易通过暴力破解获取明文凭据。Vista以前的Windows OS使用它，Vista之后的版本默认禁用了LM协议，但某些情况下还是可以使用。</p>
 <p><strong>补充：</strong></p>
@@ -828,368 +578,129 @@ pth-winexe -U administrator%AAD3B435B51404EEAAD3B435B51404EE:AFC44EE7351D61D0069
 <li><a href="https://byt3bl33d3r.github.io/getting-the-goods-with-crackmapexec-part-1.html" target="_blank" rel="noopener">https://byt3bl33d3r.github.io/getting-the-goods-with-crackmapexec-part-1.html</a></li>
 </ul>
 
-            </div>
-            <hr>
-
-            
-            <style>
-    #reward {
-        margin: 40px 0;
-        text-align: center;
-    }
-
-    #reward .reward-link {
-        font-size: 1.88rem;
-    }
-
-    #reward .btn-floating:hover {
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    #rewardModal {
-        width: 320px;
-        height: 350px;
-    }
-
-    #rewardModal .reward-title {
-        margin: 15px auto;
-        padding-bottom: 5px;
-    }
-
-    #rewardModal .modal-content {
-        padding: 10px;
-    }
-
-    #rewardModal .close {
-        position: absolute;
-        right: 15px;
-        top: 15px;
-        color: rgba(0, 0, 0, 0.5);
-        font-size: 1.3rem;
-        line-height: 20px;
-        cursor: pointer;
-    }
-
-    #rewardModal .reward-tabs {
-        margin: 0 auto;
-        width: 210px;
-    }
-
-    .reward-tabs .tabs {
-        height: 38px;
-        margin: 10px auto;
-        padding-left: 0;
-    }
-
-    .reward-tabs .tabs .tab {
-        height: 38px;
-        line-height: 38px;
-    }
-
-    .reward-tabs .tab a {
-        color: #fff;
-        background-color: #ccc;
-    }
-
-    .reward-tabs .tab a:hover {
-        color: #fff;
-    }
-
-    .reward-tabs .wechat-tab .active {
-        color: #fff;
-        background-color: #22AB38;
-    }
-
-    .reward-tabs .alipay-tab .active {
-        color: #fff;
-        background-color: #019FE8;
-    }
-
-    .reward-tabs .reward-img {
-        width: 210px;
-        height: 210px;
-    }
-</style>
-
-<div id="reward">
-    <a class="reward-link btn-floating btn-large waves-effect waves-light red">赏</a>
-
-    <!-- Modal Structure -->
-    <div id="rewardModal" class="modal">
-        <div class="modal-content">
-            <a class="close"><i class="fa fa-close"></i></a>
-            <h4 class="reward-title">您的赏识是我创造的动力!</h4>
-            <div class="reward-content">
-                <div class="reward-tabs">
-                    <ul class="tabs">
-                        <li class="tab wechat-tab waves-effect waves-light"><a class="active" href="#wechat">微信</a></li>
-                        <li class="tab alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
-                    </ul>
-                    <div id="wechat">
-                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
-                    </div>
-                    <div id="alipay">
-                        <img src="/medias/reward/alipay.png" class="reward-img" alt="支付宝打赏二维码">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    $(function () {
-        $('#reward .reward-link').on('click', function () {
-            $('#rewardModal').openModal();
-        });
-
-        $('#rewardModal .close').on('click', function () {
-            $('#rewardModal').closeModal();
-        });
-    });
-</script>
-            
-
-            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
-
-<div id="article-share">
-    
-    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
-    
-</div>
-
-<script src="/libs/share/js/social-share.min.js"></script>
-
-            <div class="reprint">
-                <p>
-                    <span class="reprint-tip">转载请注明: </span>
-                    <a href="https://ssooking.github.io" class="b-link-green">ssooking's blog</a>
-                    <i class="fa fa-angle-right fa-lg fa-fw text-color"></i>
-                    <a href="/yu-shen-tou-zhi-ntml-hash/" class="b-link-green">域渗透之NTML-Hash</a>
-                </p>
-            </div>
-        </div>
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-<article id="prenext-posts" class="prev-next articles">
-    <div class="row article-row">
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge left-badge text-color">本篇</div>
-            <div class="card">
-                <a href="/yu-shen-tou-zhi-ntml-hash/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="域渗透之NTML-Hash">
-                        
-                        <span class="card-title">域渗透之NTML-Hash</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary">一、认识Windows HASH​    早期SMB协议在网络上传输明文口令。后来出现”LAN Manager Challenge/Response”验证机制，简称LM，它是如此简单以至很容易被破解。微软提出了WindowsNT挑战/响应验</div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-12-03
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/攻防渗透/" class="post-category" target="_blank">
-                                    攻防渗透
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/内网渗透/" target="_blank">
-                        <span class="chip bg-color">内网渗透</span>
-                    </a>
-                    
-                    <a href="/tags/域渗透/" target="_blank">
-                        <span class="chip bg-color">域渗透</span>
-                    </a>
-                    
-                    <a href="/tags/NTML-Hash/" target="_blank">
-                        <span class="chip bg-color">NTML-Hash</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">下一篇</div>
-            <div class="card">
-                <a href="/kali-rolling-an-zhuang-zhi-hou-de-yi-xie-chang-yong-pei-zhi-zong-jie/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="kali Rolling安装之后的一些常用配置总结">
-                        
-                        <span class="card-title">kali Rolling安装之后的一些常用配置总结</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary">添加普通用户
-useradd -m -G sudo,video,audio,cdrom -s /bin/bash ssooking
-
-把某个用户添加到组中: sudo usermod -a 用户名 -G 组名递归更改目录/文件所属用户组： </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2018-11-23
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/神兵利器/" class="post-category" target="_blank">
-                                    神兵利器
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/kali/" target="_blank">
-                        <span class="chip bg-color">kali</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-    </div>
+  </div>
 </article>
-</div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Articles</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/tags/">Tags</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
     </div>
-    <div class="col l3 hide-on-med-and-down">
-        <div class="toc-widget">
-            <div class="toc-title">目录</div>
-            <div id="toc-content">
 
-            </div>
-        </div>
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、认识Windows-HASH"><span class="toc-number">1.</span> <span class="toc-text">一、认识Windows HASH</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#LM-HASH"><span class="toc-number">1.1.</span> <span class="toc-text">LM HASH</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NTLM-HASH"><span class="toc-number">1.2.</span> <span class="toc-text">NTLM HASH</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NTLM-Hash的生成"><span class="toc-number">1.3.</span> <span class="toc-text">NTLM-Hash的生成</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、NTML网络认证机制"><span class="toc-number">2.</span> <span class="toc-text">二、NTML网络认证机制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#NTLM-协议"><span class="toc-number">2.1.</span> <span class="toc-text">NTLM 协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基于NTML协议的身份认证机制"><span class="toc-number">2.2.</span> <span class="toc-text">基于NTML协议的身份认证机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#工作组环境NTML认证流程"><span class="toc-number">2.3.</span> <span class="toc-text">工作组环境NTML认证流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#域环境NTML认证流程"><span class="toc-number">2.4.</span> <span class="toc-text">域环境NTML认证流程</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、如何拿到Hash"><span class="toc-number">3.</span> <span class="toc-text">三、如何拿到Hash?</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-本地获取"><span class="toc-number">3.1.</span> <span class="toc-text">1.本地获取</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#QuarksPwDump"><span class="toc-number">3.1.1.</span> <span class="toc-text">QuarksPwDump</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mimikatz"><span class="toc-number">3.1.2.</span> <span class="toc-text">Mimikatz</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ProDump"><span class="toc-number">3.1.3.</span> <span class="toc-text">ProDump</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Metasploit"><span class="toc-number">3.1.4.</span> <span class="toc-text">Metasploit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cobaltstrike"><span class="toc-number">3.1.5.</span> <span class="toc-text">Cobaltstrike</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-网络欺骗"><span class="toc-number">3.2.</span> <span class="toc-text">2.网络欺骗</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Responder"><span class="toc-number">3.2.1.</span> <span class="toc-text">Responder</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-其他技巧"><span class="toc-number">3.3.</span> <span class="toc-text">3.其他技巧</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、如何利用Hash？"><span class="toc-number">4.</span> <span class="toc-text">四、如何利用Hash？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-解密Hash"><span class="toc-number">4.1.</span> <span class="toc-text">1.解密Hash</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#在线解密"><span class="toc-number">4.1.1.</span> <span class="toc-text">在线解密</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#本地破解"><span class="toc-number">4.1.2.</span> <span class="toc-text">本地破解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#John"><span class="toc-number">4.1.2.1.</span> <span class="toc-text">John</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hashcat"><span class="toc-number">4.1.2.2.</span> <span class="toc-text">Hashcat</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Pass-The-Hash"><span class="toc-number">4.2.</span> <span class="toc-text">2.Pass-The-Hash</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Crackmapexec"><span class="toc-number">4.2.1.</span> <span class="toc-text">Crackmapexec</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Metasploit-1"><span class="toc-number">4.2.2.</span> <span class="toc-text">Metasploit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mimikatz-1"><span class="toc-number">4.2.3.</span> <span class="toc-text">Mimikatz</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#wmiexec-py"><span class="toc-number">4.2.4.</span> <span class="toc-text">wmiexec.py</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Powershell"><span class="toc-number">4.2.5.</span> <span class="toc-text">Powershell</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PTH-EXEC"><span class="toc-number">4.2.6.</span> <span class="toc-text">PTH-EXEC</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、防御思路"><span class="toc-number">5.</span> <span class="toc-text">五、防御思路</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#六、后渗透思路拓展"><span class="toc-number">6.</span> <span class="toc-text">六、后渗透思路拓展</span></a></li></ol>
     </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://ssooking.github.io/yu-shen-tou-zhi-ntml-hash/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://ssooking.github.io/yu-shen-tou-zhi-ntml-hash/&text=域渗透之NTML-Hash"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://ssooking.github.io/yu-shen-tou-zhi-ntml-hash/&title=域渗透之NTML-Hash"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://ssooking.github.io/yu-shen-tou-zhi-ntml-hash/&is_video=false&description=域渗透之NTML-Hash"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=域渗透之NTML-Hash&body=Check out this article: https://ssooking.github.io/yu-shen-tou-zhi-ntml-hash/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://ssooking.github.io/yu-shen-tou-zhi-ntml-hash/&title=域渗透之NTML-Hash"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://ssooking.github.io/yu-shen-tou-zhi-ntml-hash/&title=域渗透之NTML-Hash"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://ssooking.github.io/yu-shen-tou-zhi-ntml-hash/&title=域渗透之NTML-Hash"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://ssooking.github.io/yu-shen-tou-zhi-ntml-hash/&title=域渗透之NTML-Hash"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://ssooking.github.io/yu-shen-tou-zhi-ntml-hash/&name=域渗透之NTML-Hash&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
 </div>
 
-<script src="/libs/tocbot/tocbot.min.js"></script>
-<script>
-    $(function () {
-        tocbot.init({
-            tocSelector: '#toc-content',
-            contentSelector: '#articleContent',
-            headingSelector: 'h1, h2, h3'
-        });
-
-        // modify the toc link href to support Chinese.
-        let i = 0;
-        let tocHeading = 'toc-heading-';
-        $('#toc-content a').each(function () {
-            $(this).attr('href', '#' + tocHeading + (++i));
-        });
-
-        // modify the heading title id to support Chinese.
-        i = 0;
-        $('#articleContent').children('h1, h2, h3').each(function () {
-            $(this).attr('id', tocHeading + (++i));
-        });
-
-        // Set scroll toc fixed.
-        let tocHeight = parseInt($(window).height() * 0.4 - 64);
-        let $tocWidget = $('.toc-widget');
-        $(window).scroll(function () {
-            let scroll = $(window).scrollTop();
-            /* add post toc fixed. */
-            if (scroll > tocHeight) {
-                $tocWidget.addClass('toc-fixed');
-            } else {
-                $tocWidget.removeClass('toc-fixed');
-            }
-        });
-    });
-</script>
-    
-
-</main>
-
-<footer class="page-footer bg-color">
-    <div class="container row center-align">
-       <div class="col s12 m8 l8 copy-right">
-            copyright &copy; <a href="https://ssooking.github.io/" target="_blank">ssooking</a>. 关注安全动态，分享优质文章！
-        </div>
-
-        <div class="col s12 m4 l4 social-link"><a href="https://github.com/ssooking" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
-    <i class="fa fa-github"></i>
-</a>
-<a href="mailto:ssooking@yeah.net" class="tooltipped" target="_blank" data-tooltip="mail：ssooking@yeah.net" data-position="top" data-delay="50">
-    <i class="fa fa-envelope-open"></i>
-</a>
-
-
-
-<a href="https://join.skype.com/invite/PWgoTe4YvrbH" class="tooltipped" target="_blank" data-tooltip="skype：ssooking" data-position="top" data-delay="50">
-    <i class="fa fa-skype"></i>
-</a>
-
-</div>
-    </div>
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 ssooking
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Articles</a></li>
+         
+          <li><a href="/categories/">Categories</a></li>
+         
+          <li><a href="/tags/">Tags</a></li>
+         
+          <li><a href="/search/">Search</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
 </footer>
 
-<div class="progress-bar"></div>
-
-
-<!-- 搜索遮罩框 -->
-<div id="searchModal" class="modal">
-    <div class="modal-content">
-        <div class="search-header">
-            <span class="title">搜索</span>
-            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字" class="search-input" autofocus>
-        </div>
-        <div id="searchResult"></div>
     </div>
-</div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
 
-<script src="/js/search.js"></script>
-<script type="text/javascript">
-    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
-</script>
-<!-- 回到顶部按钮 -->
-<div id="backTop" class="top-scroll">
-    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
-        <i class="fa fa-angle-up"></i>
-    </a>
-</div>
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
 
 
-
-<script src="/libs/materialize/js/materialize.min.js"></script>
-<script src="/libs/masonry/masonry.pkgd.min.js"></script>
-<script src="/libs/aos/aos.js"></script>
-<script src="/libs/scrollprogress/scrollProgress.min.js"></script>
-<script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
-<script src="/js/matery.js"></script>
 </body>
 </html>
